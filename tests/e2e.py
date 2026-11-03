@@ -246,7 +246,7 @@ with sync_playwright() as pw:
     check("offline thumbnail download", "已保存" in page.locator("#offline-st").inner_text(), page.locator("#offline-st").inner_text())
     check("about line shows photos / custom / sequences, no 示意图", "示意图" not in page.locator("#about").inner_text() and f"照片 {photos}" in page.locator("#about").inner_text(), page.locator("#about").inner_text()[:60])
     sw_keys = page.evaluate("caches.keys()")
-    check("service worker cache is v3.0.0 and old v2 shell cache is gone", "ps-shell-v3.0.0" in sw_keys and not [k for k in sw_keys if k.startswith("ps-shell-") and k != "ps-shell-v3.0.0"], str(sw_keys))
+    check("service worker cache is v3.1.0 and old v2 shell cache is gone", "ps-shell-v3.1.0" in sw_keys and not [k for k in sw_keys if k.startswith("ps-shell-") and k != "ps-shell-v3.1.0"], str(sw_keys))
     errs = [e for e in errors]
     check("zero console errors / page errors / failed requests", not errs, "; ".join(errs[:5]))
     b.close()

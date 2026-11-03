@@ -13,10 +13,10 @@
 - **连拍**：逐步模式（大字口令、进度点、可选自动翻页/自动朗读）；在「清单」里挑好照片后"存为连拍"即得到自己的连拍组合（v3 起不再有内置连拍，原内置连拍全部由示意图组成，已一并移除）。
 - **清单**：拍摄前挑选，拍摄时打勾，按清单逐个拍。
 - **我的**：自建动作（上传照片 → IndexedDB，仅存本机，含名称/标签/口令）、主题（自动/浅/深）、离线保存全部缩略图、安装到主屏幕。
-- 离线：Service Worker（缓存版本 v3.0.0，升级时自动清掉旧版缓存）预缓存外壳与数据，`/imported/` 照片按需缓存（最多 800 张）。
+- 离线：Service Worker（缓存版本 v3.1.0，升级时自动清掉旧版缓存）预缓存外壳与数据，`/imported/` 照片按需缓存（最多 800 张）。
 
 ## 数据与标签体系
-- `data/taxonomy.json`：标签体系，10 个维度 / 120 个标签（只保留至少有一张照片在用的标签；导入新照片时遇到新值会自动追加，别名指向的标签也会自动恢复）。格式 `{dimensions:[{key,label,tags[],aliases{别名:标准标签}}]}`。**直接编辑即可增加标签/维度**；导入脚本遇到新值也会自动追加。筛选面板只显示当前集合里实际出现的标签。
+- `data/taxonomy.json`：标签体系，10 个维度 / 114 个标签（只保留至少有一张照片在用的标签；导入新照片时遇到新值会自动追加，别名指向的标签也会自动恢复）。格式 `{dimensions:[{key,label,tags[],aliases{别名:标准标签}}]}`。**直接编辑即可增加标签/维度**；导入脚本遇到新值也会自动追加。筛选面板只显示当前集合里实际出现的标签。
 - `data/imported.json`（照片姿势，**只由导入脚本写入**）、`imported/`（照片与 `thumbs/` 缩略图）、`data/sequences_user.json`（可选，随站点发布的连拍，格式 `[{id,title,desc,poses:[姿势id…]}]`，引用不存在的姿势会被静默忽略）。
 - 姿势对象：`{id,type:"image|custom",title,image/thumb,w,h,source_url,kouling,tags:{光线..},extra:[],tips:[],shot:{},note,difficulty}`。
 
@@ -34,9 +34,9 @@
 
 ## 测试
     python3 -m venv /tmp/v && /tmp/v/bin/pip install playwright pillow && /tmp/v/bin/playwright install chromium
-    /tmp/v/bin/python tests/e2e.py . v3 screenshots     # 70 项检查 @390x844：仅照片 UI、旧版(v2)收藏/清单/连拍的静默清理、渲染、搜索、筛选、详情、滑动、收藏、清单、连拍、自建动作(IndexedDB)、深色、SW、可安装性、离线、零控制台错误
+    /tmp/v/bin/python tests/e2e.py . v31 screenshots     # 70 项检查 @390x844：仅照片 UI、旧版(v2)收藏/清单/连拍的静默清理、渲染、搜索、筛选、详情、滑动、收藏、清单、连拍、自建动作(IndexedDB)、深色、SW、可安装性、离线、零控制台错误
     /tmp/v/bin/python tests/shots.py . screenshots v3   # 额外的照片截图 v3-a … v3-e
-`screenshots/` 中 `v3-*` 是 v3.0.0（仅照片，209 张）的截图；`xhs-*`、`pearl-*` 是早期导入阶段（v2 界面）的历史截图。
+`screenshots/` 中 `v31-*` 是 v3.1.0（仅照片，96 张：清理掉 135 张裁切/AI感/带标注/低清照片后，再导入 22 张完整单人照）的截图；`v3-*` 是 v3.0.0（209 张）的旧截图；`xhs-*`、`pearl-*` 是早期导入阶段（v2 界面）的历史截图。
 
 ## 灵感与许可
 界面思路参考 [RuiC-PoseAtlas](https://hruiccc.github.io/RuiC-PoseAtlas/)（作者 hruiccc / RuiC，代码许可 MIT）：照片卡片 + 多维标签筛选 + 详情页 + 随机/收藏等。
