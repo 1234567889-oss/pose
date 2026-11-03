@@ -242,11 +242,11 @@ with sync_playwright() as pw:
     check("OFFLINE sequence step mode works", page.locator("#step").is_visible())
     ctx.set_offline(False); page.wait_for_timeout(500); OFF[0] = False
     # offline download button
-    page.reload(); page.wait_for_selector("body[data-ready='1']"); page.locator("#tabs button[data-v=mine]").click(); page.locator("#offline").click(); page.wait_for_timeout(1500)
+    page.reload(); page.wait_for_selector("body[data-ready='1']"); page.locator("#tabs button[data-v=mine]").click(); page.locator("#offline").click(); page.wait_for_function("document.querySelector('#offline-st').innerText.includes('已保存')", timeout=20000)
     check("offline thumbnail download", "已保存" in page.locator("#offline-st").inner_text(), page.locator("#offline-st").inner_text())
     check("about line shows photos / custom / sequences, no 示意图", "示意图" not in page.locator("#about").inner_text() and f"照片 {photos}" in page.locator("#about").inner_text(), page.locator("#about").inner_text()[:60])
     sw_keys = page.evaluate("caches.keys()")
-    check("service worker cache is v3.4.0 and old v2 shell cache is gone", "ps-shell-v3.4.0" in sw_keys and not [k for k in sw_keys if k.startswith("ps-shell-") and k != "ps-shell-v3.4.0"], str(sw_keys))
+    check("service worker cache is v3.5.0 and old v2 shell cache is gone", "ps-shell-v3.5.0" in sw_keys and not [k for k in sw_keys if k.startswith("ps-shell-") and k != "ps-shell-v3.5.0"], str(sw_keys))
     errs = [e for e in errors]
     check("zero console errors / page errors / failed requests", not errs, "; ".join(errs[:5]))
     b.close()
