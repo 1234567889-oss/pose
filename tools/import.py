@@ -54,12 +54,16 @@ class Taxonomy:
         d = self.dims[dim]
         if word in d["tags"]: return word
         al = d.get("aliases", {})
-        if word in al: return al[word]
+        if word in al: return self._canon(d, al[word])
         for k, v in al.items():
-            if k.lower() == word.lower(): return v
+            if k.lower() == word.lower(): return self._canon(d, v)
         for t in d["tags"]:
             if t.lower() == word.lower(): return t
         return None
+    def _canon(self, d, tag):
+        # taxonomy is pruned to tags that have photos; an alias may point at a pruned tag -> bring it back
+        if tag not in d["tags"]: d["tags"].append(tag); self.dirty = True
+        return tag
     def classify(self, word):
         """Find the dimension of a free-form word; returns (dim, canonical) or None."""
         for k in self.dims:

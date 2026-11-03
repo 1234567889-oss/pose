@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Headless-Chromium end-to-end test at 390x844. Usage: python tests/e2e.py <app_dir> <tag> [screenshot_dir]
+"""Headless-Chromium end-to-end test at 390x844. Usage: python tests/e2e.py <app_dir> <tag> [screenshot_dir]  (photo-only app, v3)
 Serves <app_dir> on a local port, runs every feature, prints PASS/FAIL lines and exits non-zero on failure."""
 import sys, os, json, threading, http.server, socketserver, functools, itertools, time
 from playwright.sync_api import sync_playwright
@@ -18,7 +18,7 @@ threading.Thread(target=srv.serve_forever, daemon=True).start()
 URL = f"http://127.0.0.1:{port}/"
 
 data = lambda n: json.load(open(os.path.join(app, "data", n), encoding="utf-8"))
-poses_b, poses_i, tax = data("poses.json"), data("imported.json"), data("taxonomy.json")
+poses_i, tax = data("imported.json"), data("taxonomy.json")
 res = []
 OFF = [False]  # failures while the emulated network is off are expected (uncached full images)
 
@@ -41,48 +41,65 @@ with sync_playwright() as pw:
     errors = []
     page.on("console", lambda m: errors.append(f"console.{m.type}: {m.text}") if m.type == "error" and not OFF[0] else None)
     page.on("pageerror", lambda e: errors.append("pageerror: " + str(e)))
+    requested = []; page.on("request", lambda r: requested.append(r.url))
     page.on("response", lambda r: errors.append("404: "+r.url) if r.status==404 else None)
     page.on("requestfailed", lambda r: errors.append(f"requestfailed@{len(res)}: " + r.url) if ("favicon" not in r.url and not OFF[0]) else None)
     page.on("dialog", lambda d: d.accept("测试连拍") if d.type == "prompt" else d.accept())
+    # v2 -> v3 migration: stale favourites / checklist / own sequences / collection switch pointing at the removed diagram ids
     page.goto(URL); page.wait_for_selector("body[data-ready='1']")
+    page.evaluate("""() => { localStorage.setItem('ps_fav', JSON.stringify(['b001', 'b050'])); localStorage.setItem('ps_list', JSON.stringify([{id: 'b003', done: false}]));
+        localStorage.setItem('ps_coll', '"svg"'); localStorage.setItem('ps_useq', JSON.stringify([{id: 'u1', title: '旧连拍', poses: ['b001', 'b002'], user: true}])); }""")
+    page.reload(); page.wait_for_selector("body[data-ready='1']"); page.wait_for_selector(".pc")
+    check("stale v2 localStorage (favs/list/own sequences/ps_coll) is silently dropped, no crash",
+          page.evaluate("JSON.parse(localStorage.getItem('ps_fav')).length") == 0 and page.evaluate("JSON.parse(localStorage.getItem('ps_list')).length") == 0
+          and page.evaluate("JSON.parse(localStorage.getItem('ps_useq')).length") == 0 and page.evaluate("localStorage.getItem('ps_coll')") is None
+          and page.locator("#listbadge").inner_text() == "" and page.locator("#seqlist .sc").count() == 0)
+    page.goto(URL + "#pose=b001"); page.wait_for_selector("body[data-ready='1']"); page.wait_for_timeout(300)
+    check("deep link to a removed diagram id (#pose=b001) is ignored", page.locator("#card").is_hidden() and page.locator(".pc").count() > 0)
+    page.goto(URL); page.wait_for_selector("body[data-ready='1']"); page.wait_for_selector(".pc")
     photos = len(poses_i)
-    # --- boot / collections
-    check("app boots, taxonomy loaded", page.locator("#coll button").count() == 3)
+    # --- boot / photo-only UI
+    check("no 示意图/照片 source switch, no 示意 badge, no builtin images", page.locator("#coll").count() == 0 and page.locator(".badge").count() == 0
+          and page.locator('img[src*="builtin"], img[src$=".svg"]').count() == 0)
+    check("no built-in diagram data/assets are requested", not [u for u in requested if "poses.json" in u or "assets/builtin" in u or "sequences.json" in u], str([u for u in requested if "poses.json" in u or "builtin" in u][:3]))
     ndim = len(tax["dimensions"]); ntag = sum(len(d["tags"]) for d in tax["dimensions"])
-    check(f"taxonomy: {ndim} dimensions / {ntag} tags", ndim >= 8 and ntag >= 100)
-    if photos:
-        check("default collection = 照片 when photos exist", page.locator("#coll button.on").get_attribute("data-c") == "photo")
-        page.wait_for_selector(".pc")
-        check("nophotos banner hidden", page.locator("#nophotos").is_hidden())
-        check("photo cards use thumbnails", page.locator(".pc img").first.get_attribute("src").startswith("imported/thumbs/"))
-    else:
-        check("empty-state banner shown when no photos + falls back to 示意图", page.locator("#nophotos").is_visible() and page.locator("#coll button.on").get_attribute("data-c") == "svg")
+    check(f"taxonomy: {ndim} dimensions / {ntag} tags", ndim >= 8 and ntag >= 50)
+    used = {(d, v) for p in poses_i for d, a in p["tags"].items() for v in a}
+    check("every taxonomy tag is used by at least one photo", all((d["key"], t) in used for d in tax["dimensions"] for t in d["tags"]))
+    check("all poses are real photos (type image, with thumb)", photos > 0 and all(p["type"] == "image" and p["thumb"] for p in poses_i))
+    check("home shows all photos in the count line", page.locator("#count").inner_text() == f"{photos} 个动作", page.locator("#count").inner_text())
+    check("nophotos banner hidden", page.locator("#nophotos").is_hidden())
+    check("photo cards use thumbnails", page.locator(".pc img").first.get_attribute("src").startswith("imported/thumbs/"))
     if shots: page.screenshot(path=f"{shots}/{tag}-1-home.png")
     # --- batch render + lazy load
-    page.locator("#coll button[data-c=svg]").click(); page.wait_for_timeout(200)
     n0 = page.locator(".pc").count()
     page.mouse.wheel(0, 20000); page.wait_for_timeout(600); page.mouse.wheel(0, 20000); page.wait_for_timeout(600)
     n1 = page.locator(".pc").count()
-    check("示意图 grid renders in chunks and loads more on scroll", n0 == 30 and n1 > n0, f"{n0}->{n1} of {len(poses_b)}")
+    check("grid renders in chunks and loads more on scroll", n0 == 30 and n1 > n0, f"{n0}->{n1} of {photos}")
     page.evaluate("window.scrollTo(0,0)")
     # --- search
-    page.fill("#search", "咖啡"); page.wait_for_timeout(400)
-    exp = [p for p in poses_b if "咖啡" in json.dumps(p, ensure_ascii=False)]
+    def hay(p): return " ".join([p.get("title") or "", p.get("kouling") or "", p.get("note") or "", *(p.get("extra") or []), *[v for a in p["tags"].values() for v in a],
+                                   *["".join(t) if isinstance(t, list) else t for t in (p.get("tips") or [])]]).lower()
+    page.fill("#search", "珠江"); page.wait_for_timeout(400)
+    exp = [p for p in poses_i if "珠江" in hay(p)]
     got = page.locator("#count").inner_text()
-    check("search filters results", f"{len(exp)} /" in got or True and str(len(exp)) in got, got)
-    page.fill("#search", ""); page.wait_for_timeout(300)
+    check("search filters results (title/口令/标签/要点)", got == f"{len(exp)} / {photos} 个动作" and len(exp) > 0, f"{got} expected {len(exp)}")
+    page.fill("#search", "zzzz不存在"); page.wait_for_timeout(400)
+    check("search with no match shows the empty state", page.locator("#noresult").is_visible() and page.locator(".pc").count() == 0)
+    page.locator("#clearall").click(); page.wait_for_timeout(300)
+    check("clear-filter button on the empty state restores the grid", page.locator("#noresult").is_hidden() and page.locator(".pc").count() > 0 and page.locator("#search").input_value() == "")
     # --- multi-select filters (OR within dim, AND across)
-    pool = poses_b
+    pool = poses_i
     page.locator("#filterbtn").click(); page.wait_for_selector("#fsheet:not([hidden])")
     dims_shown = page.locator("#fbody .dim").count()
     check("filter sheet shows multiple dimensions", dims_shown >= 5, f"{dims_shown} dims")
-    for d, t in [("scene", "街道"), ("scene", "海边"), ("posture", "站")]:
+    for d, t in [("scene", "街道"), ("scene", "公园"), ("posture", "站")]:
         page.locator(f'#fbody .chip[data-d="{d}"][data-t="{t}"]').click()
-    exp = expected(pool, {"scene": ["街道", "海边"], "posture": ["站"]})
+    exp = expected(pool, {"scene": ["街道", "公园"], "posture": ["站"]})
     btn = page.locator("#f-done").inner_text()
-    check("multi-select: scene(街道 OR 海边) AND posture(站) count correct", btn == f"查看 {len(exp)} 个", f"{btn} expected {len(exp)}")
-    cnt = page.locator('#fbody .chip[data-d="scene"][data-t="咖啡馆"] small').inner_text()
-    exp2 = len([p for p in expected(pool, {"posture": ["站"]}) if "咖啡馆" in p["tags"].get("scene", [])])
+    check("multi-select: scene(街道 OR 公园) AND posture(站) count correct", btn == f"查看 {len(exp)} 个", f"{btn} expected {len(exp)}")
+    cnt = page.locator('#fbody .chip[data-d="scene"][data-t="栏杆"] small').inner_text()
+    exp2 = len([p for p in expected(pool, {"posture": ["站"]}) if "栏杆" in p["tags"].get("scene", [])])
     check("facet counts recomputed against other dimensions", cnt == str(exp2), f"{cnt} vs {exp2}")
     if shots: page.screenshot(path=f"{shots}/{tag}-2-filter-sheet.png")
     page.locator("#f-done").click(); page.wait_for_timeout(300)
@@ -124,19 +141,20 @@ with sync_playwright() as pw:
     page.locator("#favf").click(); page.wait_for_timeout(200)
     check("favorites-only filter", page.locator(".pc").count() == 1)
     page.locator("#favf").click(); page.wait_for_timeout(200)
+    check("favourite persisted in localStorage (photo id)", page.evaluate("JSON.parse(localStorage.getItem('ps_fav')).length") == 1)
     # random respects filters
-    page.locator("#filterbtn").click(); page.locator('#fbody .chip[data-d="posture"][data-t="躺"]').click(); page.locator("#f-done").click(); page.wait_for_timeout(300)
-    lie = {p["title"] for p in poses_b if "躺" in p["tags"].get("posture", [])}
+    page.locator("#filterbtn").click(); page.locator('#fbody .chip[data-d="posture"][data-t="坐"]').click(); page.locator("#f-done").click(); page.wait_for_timeout(300)
+    lie = {p["title"] for p in poses_i if "坐" in p["tags"].get("posture", [])}
     ok = True
     for _ in range(6):
         page.locator("#rand").click(); page.wait_for_selector("#card:not([hidden])")
         ok &= page.locator("#c-title").inner_text() in lie; page.go_back(); page.wait_for_timeout(120)
-    check("random button respects active filters (6/6 within 躺)", ok)
+    check("random button respects active filters (6/6 within 坐)", ok)
     page.locator("#a-clear").click()
     # deep link
-    pid = (poses_i or poses_b)[0]["id"]
+    pid = poses_i[0]["id"]
     page.goto(URL + "#pose=" + pid); page.wait_for_selector("body[data-ready='1']"); page.wait_for_selector("#card:not([hidden])", timeout=3000)
-    check("deep link #pose=<id> opens the card", (poses_i or poses_b)[0]["title"] == page.locator("#c-title").inner_text())
+    check("deep link #pose=<id> opens the card", poses_i[0]["title"] == page.locator("#c-title").inner_text())
     page.go_back() if False else page.keyboard.press("Escape"); page.wait_for_timeout(200)
     # --- checklist tab
     page.locator("#tabs button[data-v=list]").click(); page.wait_for_timeout(200)
@@ -156,9 +174,8 @@ with sync_playwright() as pw:
     page.locator("#l-saveseq").click(); page.wait_for_timeout(200)
     page.locator("#tabs button[data-v=seq]").click(); page.wait_for_timeout(200)
     check("checklist saved as own 连拍", page.locator("#seqlist .sc .mine").count() == 1)
-    # --- sequences
-    seqs = data("sequences.json")
-    check(f"{len(seqs)} built-in sequences listed", page.locator("#seqlist .sc").count() == len(seqs) + 1)
+    # --- sequences (no built-in ones any more; own sequences only)
+    check("only the user's own 连拍 is listed (no built-in sequences)", page.locator("#seqlist .sc").count() == 1)
     page.locator("#seqlist .sc").first.click(); page.wait_for_selector("#seqd:not([hidden])")
     n = page.locator("#sd-steps .li").count(); check("sequence detail lists 5-8 steps", 5 <= n <= 8, str(n))
     page.locator("#seq-start").click(); page.wait_for_selector("#step:not([hidden])")
@@ -178,14 +195,14 @@ with sync_playwright() as pw:
     Image.new("RGB", (1600, 2000), (200, 120, 140)).save("/tmp/up_test.jpg")
     page.locator("#tabs button[data-v=mine]").click(); page.locator("#c-new").click(); page.wait_for_selector("#cform:not([hidden])")
     page.set_input_files("#f-file", "/tmp/up_test.jpg"); page.fill("#f-name", "我的窗边回眸"); page.fill("#f-kou", "慢慢回头看我"); page.fill("#f-tags", "海风,氛围")
-    page.locator('#f-picker .chip[data-d="light"][data-t="逆光"]').click(); page.locator('#f-picker .chip[data-d="scene"][data-t="室内窗边"]').click()
+    page.locator('#f-picker .chip[data-d="light"][data-t="逆光"]').click(); page.locator('#f-picker .chip[data-d="scene"][data-t="公园"]').click()
     page.locator("#f-save").click(); page.wait_for_selector("#cform", state="hidden"); page.wait_for_timeout(300)
     check("custom pose saved & listed", page.locator("#customlist .li").count() == 1)
     page.reload(); page.wait_for_selector("body[data-ready='1']"); page.locator("#tabs button[data-v=mine]").click(); page.wait_for_timeout(200)
     check("custom pose persisted in IndexedDB across reload", page.locator("#customlist .li").count() == 1)
     stored = page.evaluate("""() => new Promise(r => { const q = indexedDB.open('pose-app'); q.onsuccess = () => { const g = q.result.transaction('custom').objectStore('custom').getAll(); g.onsuccess = () => r(g.result.map(x => [x.blob.type, x.blob.size, x.w, x.h, x.thumb.size])); }; })""")
     check("IndexedDB holds the photo blob downscaled to 1200px + thumb", stored and stored[0][0] == "image/jpeg" and max(stored[0][2:4]) == 1200, str(stored))
-    page.locator("#tabs button[data-v=lib]").click(); page.locator("#coll button[data-c=photo]").click(); page.wait_for_timeout(300)
+    page.locator("#tabs button[data-v=lib]").click(); page.wait_for_timeout(300)
     page.locator("#filterbtn").click(); page.locator('#fbody .chip[data-d="light"][data-t="逆光"]').click(); page.locator("#f-done").click(); page.wait_for_timeout(300)
     check("custom pose is filterable by its tags (光线:逆光)", page.locator(".pc", has_text="我的窗边回眸").count() == 1)
     page.locator("#a-clear").click()
@@ -211,7 +228,7 @@ with sync_playwright() as pw:
     ie = cdp.send("Page.getInstallabilityErrors")["installabilityErrors"]
     check("installable (CDP Page.getInstallabilityErrors empty)", ie == [], str(ie))
     # offline
-    page.locator("#coll button[data-c=all]").click(); page.wait_for_timeout(300); page.mouse.wheel(0, 500); page.wait_for_timeout(500); page.evaluate("window.scrollTo(0,0)"); page.wait_for_timeout(300)
+    page.locator("#tabs button[data-v=lib]").click(); page.wait_for_timeout(300); page.mouse.wheel(0, 500); page.wait_for_timeout(500); page.evaluate("window.scrollTo(0,0)"); page.wait_for_timeout(300)
     page.wait_for_load_state("networkidle"); page.wait_for_timeout(800)
     OFF[0] = True; ctx.set_offline(True)
     page.goto(URL); page.wait_for_selector("body[data-ready='1']", timeout=8000)
@@ -225,9 +242,11 @@ with sync_playwright() as pw:
     check("OFFLINE sequence step mode works", page.locator("#step").is_visible())
     ctx.set_offline(False); page.wait_for_timeout(500); OFF[0] = False
     # offline download button
-    if photos:
-        page.reload(); page.wait_for_selector("body[data-ready='1']"); page.locator("#tabs button[data-v=mine]").click(); page.locator("#offline").click(); page.wait_for_timeout(1500)
-        check("offline thumbnail download", "已保存" in page.locator("#offline-st").inner_text(), page.locator("#offline-st").inner_text())
+    page.reload(); page.wait_for_selector("body[data-ready='1']"); page.locator("#tabs button[data-v=mine]").click(); page.locator("#offline").click(); page.wait_for_timeout(1500)
+    check("offline thumbnail download", "已保存" in page.locator("#offline-st").inner_text(), page.locator("#offline-st").inner_text())
+    check("about line shows photos / custom / sequences, no 示意图", "示意图" not in page.locator("#about").inner_text() and f"照片 {photos}" in page.locator("#about").inner_text(), page.locator("#about").inner_text()[:60])
+    sw_keys = page.evaluate("caches.keys()")
+    check("service worker cache is v3.0.0 and old v2 shell cache is gone", "ps-shell-v3.0.0" in sw_keys and not [k for k in sw_keys if k.startswith("ps-shell-") and k != "ps-shell-v3.0.0"], str(sw_keys))
     errs = [e for e in errors]
     check("zero console errors / page errors / failed requests", not errs, "; ".join(errs[:5]))
     b.close()

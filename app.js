@@ -10,9 +10,9 @@ const BATCH = 30;
 // ---------- state ----------
 const S = { tax: null, dims: [], tagDim: {}, poses: [], byId: {}, seqs: [], useqs: LS.get('ps_useq', []),
   fav: new Set(LS.get('ps_fav', [])), list: LS.get('ps_list', []),
-  coll: LS.get('ps_coll', null), speak: LS.get('ps_speak', false), q: '', f: {}, favOnly: false, filtered: [], shown: 0, view: 'lib',
+  speak: LS.get('ps_speak', false), q: '', f: {}, favOnly: false, filtered: [], shown: 0, view: 'lib',
   ctx: [], ctxI: 0, seq: null, stepI: 0, auto: null };
-const isPhoto = p => p.type !== 'builtin';
+try { localStorage.removeItem('ps_coll'); } catch {}  // v2 leftover: 示意图/照片 switch no longer exists
 
 // ---------- data ----------
 async function getJSON(u, d) { try { const r = await fetch(u); if (!r.ok) throw 0; return await r.json(); } catch { return d; } }
@@ -33,19 +33,24 @@ function index(p) {
   p._ts = new Set(Object.entries(p.tags).flatMap(([d, a]) => a.map(v => d + ':' + v)));
 }
 async function loadAll() {
-  const [tax, bi, im, sq, usq] = await Promise.all([getJSON('data/taxonomy.json', { dimensions: [] }), getJSON('data/poses.json', []), getJSON('data/imported.json', []),
-    getJSON('data/sequences.json', []), getJSON('data/sequences_user.json', [])]);
+  const [tax, im, usq] = await Promise.all([getJSON('data/taxonomy.json', { dimensions: [] }), getJSON('data/imported.json', []), getJSON('data/sequences_user.json', [])]);
   S.tax = tax; S.dims = tax.dimensions;
   S.dims.forEach(d => d.tags.forEach(t => { if (!S.tagDim[t]) S.tagDim[t] = d.key; }));
   const custom = await idbAll().catch(() => []);
   const cp = custom.map(c => ({ id: c.id, type: 'custom', title: c.title, kouling: c.kouling || '', tags: c.tags || {}, extra: c.extra || [], tips: [], note: '', added_at: c.added_at,
     image: URL.createObjectURL(c.blob), thumb: URL.createObjectURL(c.thumb || c.blob), w: c.w, h: c.h }));
   const imp = im.slice().reverse(); // newest imports first
-  S.poses = [...cp.reverse(), ...imp, ...bi];
+  S.poses = [...cp.reverse(), ...imp];
   S.poses.forEach(p => { index(p); S.byId[p.id] = p; });
-  S.seqs = [...sq, ...usq].map(s => ({ ...s, poses: (s.poses || []).filter(id => S.byId[id]) })).filter(s => s.poses.length);
+  // Anything that points at a pose that no longer exists (e.g. the v2 built-in diagrams b001..b126) is dropped silently.
+  const live = s => ({ ...s, poses: (s.poses || []).filter(id => S.byId[id]) });
+  S.seqs = usq.map(live).filter(s => s.poses.length);
+  const nu = S.useqs.length; S.useqs = S.useqs.map(live).filter(s => s.poses.length);
   S.useqs.forEach(s => { if (!S.seqs.find(x => x.id === s.id)) S.seqs.push({ ...s, user: true }); });
-  S.list = S.list.filter(x => S.byId[x.id]); S.fav = new Set([...S.fav].filter(id => S.byId[id]));
+  if (S.useqs.length !== nu) LS.set('ps_useq', S.useqs);
+  const nl = S.list.length, nf = S.fav.size;
+  S.list = S.list.filter(x => x && S.byId[x.id]); S.fav = new Set([...S.fav].filter(id => S.byId[id]));
+  if (S.list.length !== nl) LS.set('ps_list', S.list); if (S.fav.size !== nf) LS.set('ps_fav', [...S.fav]);
 }
 
 // ---------- IndexedDB (custom poses) ----------
@@ -56,9 +61,8 @@ async function idbPut(o) { const d = await db(); return new Promise((res, rej) =
 async function idbDel(id) { const d = await db(); return new Promise((res, rej) => { const t = d.transaction('custom', 'readwrite'); t.objectStore('custom').delete(id); t.oncomplete = res; t.onerror = () => rej(t.error); }); }
 
 // ---------- helpers ----------
-const thumbOf = p => p.type === 'builtin' ? p.svg : (p.thumb || p.image);
-const fullOf = p => p.type === 'builtin' ? p.svg : p.image;
-const ratio = p => p.type === 'builtin' ? 1.25 : (p.w && p.h ? p.h / p.w : 1.25);
+const thumbOf = p => p.thumb || p.image;
+const ratio = p => p.w && p.h ? p.h / p.w : 1.25;
 const dimLabel = k => (S.dims.find(d => d.key === k) || {}).label || k;
 function toast(m) { const t = $('#toast'); t.textContent = m; t.classList.add('show'); clearTimeout(toast._t); toast._t = setTimeout(() => t.classList.remove('show'), 1800); }
 const saveFav = () => LS.set('ps_fav', [...S.fav]);
@@ -100,7 +104,7 @@ function swipe(el, onL, onR) {
 }
 
 // ---------- filtering ----------
-const collItems = () => S.poses.filter(p => S.coll === 'all' || (S.coll === 'photo' ? isPhoto(p) : !isPhoto(p)));
+const collItems = () => S.poses;
 function matches(p, skipDim) {
   if (S.favOnly && !S.fav.has(p.id)) return false;
   for (const [d, set] of Object.entries(S.f)) { if (d === skipDim || !set.size) continue; if (![...set].some(v => p._ts.has(d + ':' + v))) return false; }
@@ -117,12 +121,6 @@ function toggleTag(d, v, on) {
 }
 
 // ---------- library ----------
-function renderColl() {
-  const np = S.poses.filter(isPhoto).length, nb = S.poses.length - np;
-  const opts = [['photo', '照片', np], ['svg', '示意图', nb], ['all', '全部', S.poses.length]];
-  $('#coll').innerHTML = opts.map(([k, l, n]) => `<button role="tab" data-c="${k}" class="${S.coll === k ? 'on' : ''}" aria-selected="${S.coll === k}">${l}<b>${n}</b></button>`).join('');
-  $$('#coll button').forEach(b => b.onclick = () => { S.coll = b.dataset.c; LS.set('ps_coll', S.coll); renderColl(); applyFilters(); });
-}
 function renderActive() {
   const chips = Object.entries(S.f).flatMap(([d, s]) => [...s].map(v => `<button class="chip" data-d="${d}" data-v="${esc(v)}">${esc(v)}<i>✕</i></button>`));
   if (S.q) chips.unshift(`<button class="chip" data-q="1">“${esc(S.q)}”<i>✕</i></button>`);
@@ -138,8 +136,7 @@ function renderGrid(reset) {
   const g = $('#grid');
   if (reset) {
     S.shown = 0; heights = [0, 0]; g.innerHTML = '<div class="col"></div><div class="col"></div>'; cols = [...g.children];
-    const np = S.poses.some(isPhoto);
-    $('#nophotos').hidden = np;
+    $('#nophotos').hidden = S.poses.length > 0;
     $('#noresult').hidden = S.filtered.length > 0;
     const n = S.filtered.length, tot = collItems().length;
     $('#count').textContent = (activeCount() || S.q || S.favOnly ? `${n} / ${tot} 个动作` : `${tot} 个动作`);
@@ -154,9 +151,9 @@ function renderGrid(reset) {
 function cardHTML(p) {
   const tg = flatTags(p).filter(([d]) => ['scene', 'light', 'style', 'posture'].includes(d)).slice(0, 3).map(x => x[1]).join(' · ');
   const r = ratio(p);
-  return `<div class="pc ${p.type === 'builtin' ? 'svg' : ''}" data-id="${p.id}" tabindex="0" role="button" aria-label="${esc(p.title)}">
+  return `<div class="pc" data-id="${p.id}" tabindex="0" role="button" aria-label="${esc(p.title)}">
     <div class="art" style="aspect-ratio:${(1 / r).toFixed(3)}"><img src="${esc(thumbOf(p))}" alt="${esc(p.title)}" loading="lazy" decoding="async"></div>
-    ${p.type === 'builtin' ? '<span class="badge">示意</span>' : ''}${inList(p.id) ? '<span class="in">清单</span>' : ''}
+    ${inList(p.id) ? '<span class="in">清单</span>' : ''}
     <div class="qa"><button data-fav="${p.id}" class="${S.fav.has(p.id) ? 'on' : ''}" aria-label="收藏">${S.fav.has(p.id) ? '♥' : '♡'}</button></div>
     <div class="t">${esc(p.title)}<div class="s">${esc(tg)}</div></div></div>`;
 }
@@ -227,8 +224,8 @@ function renderCard() {
   const p = S.byId[S.ctx[S.ctxI]]; if (!p) return;
   const art = $('#c-art'); art.querySelectorAll('img').forEach(i => i.remove());
   const img = new Image(); img.alt = p.title; img.src = thumbOf(p); art.prepend(img);
-  if (navigator.onLine && p.type !== 'builtin' && p.image !== thumbOf(p)) { const full = new Image(); full.onload = () => { if (S.byId[S.ctx[S.ctxI]] === p) img.src = full.src; }; full.src = p.image; }
-  const preload = i => { const q = S.byId[S.ctx[(S.ctxI + i + S.ctx.length) % S.ctx.length]]; if (navigator.onLine && q && q.type !== 'builtin') new Image().src = q.image; };
+  if (navigator.onLine && p.image !== thumbOf(p)) { const full = new Image(); full.onload = () => { if (S.byId[S.ctx[S.ctxI]] === p) img.src = full.src; }; full.src = p.image; }
+  const preload = i => { const q = S.byId[S.ctx[(S.ctxI + i + S.ctx.length) % S.ctx.length]]; if (navigator.onLine && q) new Image().src = q.image; };
   if (S.ctx.length > 1) { preload(1); preload(-1); }
   $('#c-pos').textContent = `${S.ctxI + 1} / ${S.ctx.length}`; $('#c-pos').hidden = S.ctx.length < 2;
   $('#c-aprev').hidden = $('#c-anext').hidden = S.ctx.length < 2;
@@ -255,7 +252,6 @@ $('#c-tags').onclick = e => {
   const b = e.target.closest('button'); if (!b) return;
   closeAll();
   if (b.dataset.q) { S.q = b.dataset.q; $('#search').value = S.q; } else { S.q = ''; $('#search').value = ''; S.f = {}; toggleTag(b.dataset.d, b.dataset.t, true); }
-  const p = S.byId[S.ctx[S.ctxI]]; if (p && S.coll !== 'all' && (S.coll === 'photo') !== isPhoto(p)) { S.coll = p.type === 'builtin' ? 'svg' : 'photo'; renderColl(); }
   setView('lib'); applyFilters(); window.scrollTo(0, 0);
 };
 $('#c-prev').onclick = $('#c-aprev').onclick = () => cardNav(-1);
@@ -312,7 +308,7 @@ function renderStep() {
   $('#st-dots').innerHTML = S.stepIds.map((_, i) => `<i class="${i === S.stepI ? 'on' : i < S.stepI ? 'past' : ''}"></i>`).join('');
   $('#st-count').textContent = `${S.stepTitle || ''} · 第 ${S.stepI + 1} / ${n} 个`;
   $('#st-art').innerHTML = `<img src="${esc(thumbOf(p))}" alt="${esc(p.title)}">`;
-  if (navigator.onLine && p.type !== 'builtin' && p.image !== thumbOf(p)) { const f = new Image(); f.onload = () => { if (S.byId[S.stepIds[S.stepI]] === p) $('#st-art img').src = f.src; }; f.src = p.image; }
+  if (navigator.onLine && p.image !== thumbOf(p)) { const f = new Image(); f.onload = () => { if (S.byId[S.stepIds[S.stepI]] === p) $('#st-art img').src = f.src; }; f.src = p.image; }
   $('#st-title').textContent = p.title; $('#st-kou').textContent = p.kouling || '（没有口令，按照片摆姿）';
   const t0 = (p.tips || [])[0]; $('#st-hint').textContent = t0 ? (Array.isArray(t0) ? t0.join('：') : t0) : '';
   $('#st-next').textContent = S.stepI === n - 1 ? '完成 ✓' : '下一步 ›'; $('#st-prev').disabled = S.stepI === 0;
@@ -426,17 +422,16 @@ $('#offline').onclick = async () => {
   $('#offline-st').textContent = `已保存 ${urls.length} 张缩略图`;
 };
 function renderAbout() {
-  const np = S.poses.filter(p => p.type === 'image').length, nb = S.poses.filter(p => p.type === 'builtin').length, nc = S.poses.filter(p => p.type === 'custom').length;
+  const np = S.poses.filter(p => p.type === 'image').length, nc = S.poses.filter(p => p.type === 'custom').length;
   const ntag = S.dims.reduce((n, d) => n + d.tags.length, 0);
-  $('#about').innerHTML = `照片 ${np} · 自建 ${nc} · 示意图 ${nb} · 连拍 ${S.seqs.length} · ${S.dims.length} 个维度 / ${ntag} 个标签<br>收藏、清单、自建动作只保存在本机浏览器。<br>界面思路参考开源项目 RuiC-PoseAtlas（MIT，仅借鉴交互思路，未使用其代码与图片）。`;
+  $('#about').innerHTML = `照片 ${np} · 自建 ${nc} · 连拍 ${S.seqs.length} · ${S.dims.length} 个维度 / ${ntag} 个标签<br>收藏、清单、自建动作只保存在本机浏览器。<br>界面思路参考开源项目 RuiC-PoseAtlas（MIT，仅借鉴交互思路，未使用其代码与图片）。`;
 }
-function renderAll() { renderColl(); applyFilters(); renderSeqs(); renderChecklist(); renderCustom(); renderAbout(); }
+function renderAll() { applyFilters(); renderSeqs(); renderChecklist(); renderCustom(); renderAbout(); }
 
 function openFromHash() {
   const m = location.hash.match(/^#pose=(.+)$/); if (!m || !S.byId[decodeURIComponent(m[1])]) return;
   const p = S.byId[decodeURIComponent(m[1])];
   if (stack.length) { stack.splice(0).forEach(hideOv); document.body.style.overflow = ''; }
-  if (S.coll !== 'all' && (S.coll === 'photo') !== isPhoto(p)) { S.coll = isPhoto(p) ? 'photo' : 'svg'; renderColl(); applyFilters(); }
   history.replaceState(null, '', location.pathname + location.search);
   openCard(p.id, S.filtered.map(x => x.id));
 }
@@ -444,9 +439,6 @@ function openFromHash() {
 (async function boot() {
   setTheme(LS.get('ps_theme', 'auto'));
   await loadAll();
-  if (!S.coll || !['photo', 'svg', 'all'].includes(S.coll)) S.coll = null;
-  if (!S.coll) S.coll = S.poses.some(isPhoto) ? 'photo' : 'svg';
-  if (S.coll === 'photo' && !S.poses.some(isPhoto)) S.coll = 'svg';
   renderAll();
   openFromHash(); window.addEventListener('hashchange', openFromHash);
   document.body.dataset.ready = '1';

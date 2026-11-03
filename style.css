@@ -27,7 +27,6 @@ button{border:0;cursor:pointer}
 .pc .art{aspect-ratio:4/5;width:100%}.pc .t{padding:7px 9px 9px;font-size:14px;font-weight:600}.pc .s{font-size:11px;color:var(--mut);font-weight:400;margin-top:2px}
 .art{display:flex;justify-content:center;align-items:center;background:#fbf1f4;overflow:hidden}.art img{width:100%;height:100%;object-fit:contain;display:block}
 .art.big{height:58vh;max-height:560px;border-radius:14px;position:relative;background:#0000000d}.art.mid{height:34vh;max-height:320px;border-radius:14px;margin:6px 14px}
-.pc .badge{position:absolute;top:6px;left:6px;background:#000a;color:#fff;font-size:11px;padding:2px 7px;border-radius:8px}
 .pc .qa{position:absolute;right:6px;top:6px;display:flex;flex-direction:column;gap:6px}
 .qa button{width:34px;height:34px;border-radius:50%;background:#fffd;color:var(--pri2);font-size:16px;box-shadow:var(--shadow)}
 .qa button.on{background:var(--pri);color:#fff}
@@ -66,13 +65,13 @@ form label{display:block;margin:10px 0;font-size:14px;color:var(--mut)}form inpu
 .empty{padding:30px 20px;text-align:center;color:var(--mut)}
 .del{background:none;color:var(--warn);font-size:13px}
 
-.pc .art img{height:100%;object-fit:cover}.pc.svg .art img{object-fit:contain}
+.pc .art img{height:100%;object-fit:cover}
 .pc .art{background:linear-gradient(135deg,var(--chip),var(--card))}
 .pc .ct{position:absolute;left:6px;bottom:auto;top:6px;display:flex;gap:4px}
 .pc .qa{position:absolute;right:6px;top:6px}
 .pc .mt{padding:0 9px 8px;font-size:11px;color:var(--mut);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .pc .in{position:absolute;left:6px;top:6px;background:var(--pri);color:#fff;font-size:11px;padding:2px 7px;border-radius:8px}
-.seg.wide{display:flex;margin:8px 12px 0}.seg.wide button{flex:1;padding:8px 4px;font-size:14px}.seg button.on{background:var(--pri);color:#fff}
+.seg button.on{background:var(--pri);color:#fff}
 .seg button b{font-weight:400;opacity:.75;margin-left:3px;font-size:12px}
 .pill b{background:var(--pri);color:#fff;border-radius:9px;font-size:11px;padding:0 6px;margin-left:5px;font-weight:600}.pill b:empty{display:none}
 #favf[aria-pressed=true]{background:var(--pri);color:#fff}
