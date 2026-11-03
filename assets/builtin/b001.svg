@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 300" role="img" aria-label="重心后移自然站"><rect width="240" height="300" rx="14" fill="#fbf1f4"/><g transform="translate(123.1 152.2) scale(0.973)"><line x1="-83.2" y1="132.2" x2="76.8" y2="132.2" stroke="#a89aa0" stroke-width="2" opacity=".7"/>
+<line x1="-12.0" y1="0.0" x2="-22.8" y2="61.1" stroke="#f2c4a8" stroke-width="12" stroke-linecap="round"/>
+<line x1="-22.8" y1="61.1" x2="-27.0" y2="120.9" stroke="#f2c4a8" stroke-width="9" stroke-linecap="round"/>
+<line x1="-27.0" y1="120.9" x2="-38.2" y2="114.4" stroke="#6b5a60" stroke-width="6" stroke-linecap="round"/>
+<line x1="12.0" y1="0.0" x2="14.2" y2="62.0" stroke="#f2c4a8" stroke-width="12" stroke-linecap="round"/>
+<line x1="14.2" y1="62.0" x2="15.2" y2="122.0" stroke="#f2c4a8" stroke-width="9" stroke-linecap="round"/>
+<line x1="15.2" y1="122.0" x2="27.5" y2="126.2" stroke="#6b5a60" stroke-width="6" stroke-linecap="round"/>
+<line x1="2.8" y1="-104.9" x2="-0.1" y2="-77.0" stroke="#3a2a2a" stroke-width="40" stroke-linecap="round"/>
+<line x1="0.0" y1="-78.0" x2="1.8" y2="-94.9" stroke="#f2c4a8" stroke-width="8" stroke-linecap="round"/>
+<line x1="20.0" y1="-78.0" x2="-20.0" y2="-78.0" stroke="#ec7fa0" stroke-width="10" stroke-linecap="round"/>
+<polygon points="20.0,-78.0 -20.0,-78.0 -12.0,0.0 12.0,0.0" fill="#ec7fa0" stroke="#ec7fa0" stroke-width="10" stroke-linejoin="round"/>
+<line x1="-20.0" y1="-78.0" x2="-27.6" y2="-34.7" stroke="#f2c4a8" stroke-width="8" stroke-linecap="round"/>
+<line x1="-27.6" y1="-34.7" x2="-31.8" y2="5.1" stroke="#f2c4a8" stroke-width="6.5" stroke-linecap="round"/>
+<line x1="20.0" y1="-78.0" x2="27.6" y2="-34.7" stroke="#f2c4a8" stroke-width="8" stroke-linecap="round"/>
+<line x1="27.6" y1="-34.7" x2="31.8" y2="5.1" stroke="#f2c4a8" stroke-width="6.5" stroke-linecap="round"/>
+<circle cx="-31.8" cy="5.1" r="4.6" fill="#f2c4a8"/>
+<circle cx="31.8" cy="5.1" r="4.6" fill="#f2c4a8"/>
+<circle cx="3.0" cy="-106.8" r="19" fill="#f2c4a8"/>
+<path d="M-15.7 -110.8 Q7.3 -147.5 22.1 -106.8 Q3.7 -113.5 -15.7 -110.8Z" fill="#3a2a2a"/>
+<circle cx="-3.6" cy="-105.5" r="1.8" fill="#3a2a2a"/>
+<circle cx="9.3" cy="-104.2" r="1.8" fill="#3a2a2a"/>
+<circle cx="2.0" cy="-96.9" r="1.5" fill="#d9707f"/></g></svg>

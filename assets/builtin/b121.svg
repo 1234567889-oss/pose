@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 300" role="img" aria-label="林荫背影行走"><rect width="240" height="300" rx="14" fill="#fbf1f4"/><g transform="translate(120.1 153.9) scale(0.983)"><line x1="-90.9" y1="129.0" x2="90.6" y2="129.0" stroke="#a89aa0" stroke-width="2" opacity=".7"/>
+<line x1="-12.0" y1="0.0" x2="-27.0" y2="60.2" stroke="#f2c4a8" stroke-width="12" stroke-linecap="round"/>
+<line x1="-27.0" y1="60.2" x2="-33.3" y2="119.8" stroke="#f2c4a8" stroke-width="9" stroke-linecap="round"/>
+<line x1="-33.3" y1="119.8" x2="-45.9" y2="123.0" stroke="#6b5a60" stroke-width="6" stroke-linecap="round"/>
+<line x1="12.0" y1="0.0" x2="31.2" y2="59.0" stroke="#f2c4a8" stroke-width="12" stroke-linecap="round"/>
+<line x1="31.2" y1="59.0" x2="33.3" y2="118.9" stroke="#f2c4a8" stroke-width="9" stroke-linecap="round"/>
+<line x1="33.3" y1="118.9" x2="45.6" y2="122.9" stroke="#6b5a60" stroke-width="6" stroke-linecap="round"/>
+<line x1="0.0" y1="-105.0" x2="0.0" y2="-77.0" stroke="#3a2a2a" stroke-width="40" stroke-linecap="round"/>
+<line x1="0.0" y1="-78.0" x2="0.0" y2="-95.0" stroke="#f2c4a8" stroke-width="8" stroke-linecap="round"/>
+<line x1="20.0" y1="-78.0" x2="-20.0" y2="-78.0" stroke="#8aa57a" stroke-width="10" stroke-linecap="round"/>
+<polygon points="20.0,-78.0 -20.0,-78.0 -12.0,0.0 12.0,0.0" fill="#8aa57a" stroke="#8aa57a" stroke-width="10" stroke-linejoin="round"/>
+<line x1="-20.0" y1="-78.0" x2="-27.6" y2="-34.7" stroke="#f2c4a8" stroke-width="8" stroke-linecap="round"/>
+<line x1="-27.6" y1="-34.7" x2="-31.8" y2="5.1" stroke="#f2c4a8" stroke-width="6.5" stroke-linecap="round"/>
+<line x1="20.0" y1="-78.0" x2="27.6" y2="-34.7" stroke="#f2c4a8" stroke-width="8" stroke-linecap="round"/>
+<line x1="27.6" y1="-34.7" x2="31.8" y2="5.1" stroke="#f2c4a8" stroke-width="6.5" stroke-linecap="round"/>
+<circle cx="-31.8" cy="5.1" r="4.6" fill="#f2c4a8"/>
+<circle cx="31.8" cy="5.1" r="4.6" fill="#f2c4a8"/>
+<circle cx="0.0" cy="-107.0" r="19" fill="#f2c4a8"/>
+<circle cx="0.0" cy="-107.0" r="20.5" fill="#3a2a2a"/></g></svg>

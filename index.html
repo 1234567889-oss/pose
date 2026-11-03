@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="zh-CN"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#e8788f">
+<meta name="color-scheme" content="light dark">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="拍照摆姿">
+<meta name="description" content="拍照摆姿图鉴：真人照片参考 + 口令，多维标签筛选，连拍组合与拍摄清单，可离线使用">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/icon-192.png">
+<link rel="stylesheet" href="style.css">
+<title>拍照摆姿 · 姿势图鉴</title></head>
+<body>
+<header>
+  <h1>📸 拍照摆姿</h1>
+  <button id="rand" class="pill" aria-label="随机一个动作">🎲 随机</button>
+</header>
+
+<main>
+  <section id="v-lib">
+    <div class="stick">
+      <div id="coll" class="seg wide" role="tablist" aria-label="内容类型"></div>
+      <div class="searchbar">
+        <input id="search" type="search" placeholder="搜索 标题 / 口令 / 标签" aria-label="搜索" enterkeyhint="search">
+        <button id="filterbtn" class="pill ghost" aria-label="打开筛选">⚙ 筛选<b id="fcount"></b></button>
+        <button id="favf" class="pill ghost" aria-pressed="false" aria-label="只看收藏">♡</button>
+      </div>
+      <div id="active" class="active" hidden></div>
+    </div>
+    <div id="count" class="muted"></div>
+    <div id="nophotos" class="notice" hidden>
+      <b>📷 还没有导入照片</b>
+      <p>这里是真人照片参考的位置。把你在小红书收藏的参考图放进文件夹，运行 <code>python3 tools/import.py --images 文件夹 --meta meta.csv</code> 即可批量导入（见 README）。在此之前先显示内置的示意图。</p>
+      <p>也可以在「我的」里直接上传照片，保存在本机。</p>
+    </div>
+    <div id="grid" class="masonry"></div>
+    <div id="sentinel" aria-hidden="true"></div>
+    <div id="noresult" class="empty" hidden>没有匹配的动作<br><button id="clearall" class="pill ghost">清除筛选</button></div>
+  </section>
+  <section id="v-seq" hidden><h2 class="sec">连拍组合</h2><p class="muted pad">一组连贯动作，点开始后逐个念口令。可在「清单」里把自己的清单存成连拍。</p><div id="seqlist"></div></section>
+  <section id="v-list" hidden>
+    <h2 class="sec">今日拍摄清单</h2>
+    <div id="progress" class="pad"></div>
+    <div class="row pad"><button id="l-start" class="pill">▶ 按清单拍摄</button><button id="l-add" class="pill ghost">＋ 去挑选</button><button id="l-rand" class="pill ghost">随机加5个</button></div>
+    <div class="row pad"><button id="l-reset" class="pill ghost">重置勾选</button><button id="l-saveseq" class="pill ghost">存为连拍</button><button id="l-clear" class="pill ghost">清空</button></div>
+    <div id="checklist"></div>
+  </section>
+  <section id="v-mine" hidden>
+    <h2 class="sec">自建动作</h2>
+    <p class="muted pad">上传自己的参考照片，选好标签、写上口令，保存在这台设备的浏览器里。</p>
+    <div class="pad"><button id="c-new" class="pill">＋ 新建动作（上传照片）</button></div>
+    <div id="customlist"></div>
+    <h2 class="sec">设置</h2>
+    <div class="pad settings">
+      <div>外观：<span id="theme-seg" class="seg"><button data-t="auto">自动</button><button data-t="light">浅色</button><button data-t="dark">深色</button></span></div>
+      <div><button id="offline" class="pill ghost">⬇ 离线保存全部缩略图</button> <span id="offline-st" class="muted"></span></div>
+      <div><button id="install" class="pill" hidden>📲 安装到桌面</button></div>
+      <div id="about" class="muted"></div>
+    </div>
+  </section>
+</main>
+
+<nav id="tabs" role="tablist">
+  <button data-v="lib" class="on">🖼<span>图鉴</span></button>
+  <button data-v="seq">🎞<span>连拍</span></button>
+  <button data-v="list">✅<span>清单<b id="listbadge"></b></span></button>
+  <button data-v="mine">👤<span>我的</span></button>
+</nav>
+
+<!-- filter sheet -->
+<div id="fsheet" class="overlay sheet" hidden role="dialog" aria-label="筛选">
+  <div class="sheetbox">
+    <div class="sheethead"><b>筛选</b><span class="muted" id="f-hint">同一维度多选=或，不同维度=且</span>
+      <button id="f-clear" class="pill ghost">清除</button><button id="f-done" class="pill">完成</button></div>
+    <div id="fbody" class="sheetbody"></div>
+  </div>
+</div>
+
+<!-- pose card -->
+<div id="card" class="overlay" hidden role="dialog" aria-label="动作详情">
+  <button class="x" data-close aria-label="关闭">✕</button>
+  <div class="overbody">
+    <div id="c-art" class="art big"><button id="c-aprev" class="side l" aria-label="上一张">‹</button><button id="c-anext" class="side r" aria-label="下一张">›</button><span id="c-pos" class="posn"></span></div>
+    <h2 id="c-title"></h2>
+    <div id="c-kou" class="kou" role="button" tabindex="0" aria-label="口令，点击放大"><div class="kl">口令</div><div id="c-kouText"></div></div>
+    <div class="row"><button id="c-speak" class="pill ghost">🔊 朗读</button><button id="c-copy" class="pill ghost">复制口令</button><button id="c-share" class="pill ghost">🔗 链接</button></div>
+    <div id="c-tags" class="taggroups"></div>
+    <div id="c-details" class="panel" hidden></div>
+    <div id="c-shot" class="panel" hidden></div>
+    <div id="c-extra" class="panel" hidden></div>
+  </div>
+  <div class="bar">
+    <button id="c-prev" aria-label="上一个">‹</button>
+    <button id="btn-fav">♡ 收藏</button>
+    <button id="btn-list">＋清单</button>
+    <button id="btn-done" hidden>✓ 已拍</button>
+    <button id="c-rand" aria-label="随机">🎲</button>
+    <button id="c-next" aria-label="下一个">›</button>
+  </div>
+</div>
+
+<!-- sequence detail -->
+<div id="seqd" class="overlay" hidden role="dialog" aria-label="连拍组合">
+  <button class="x" data-close aria-label="关闭">✕</button>
+  <div class="overbody">
+    <h2 id="sd-title"></h2><div id="sd-tags" class="tags"></div><p id="sd-desc" class="muted"></p><p id="sd-tip" class="tip"></p>
+    <div id="sd-steps"></div>
+    <button id="sd-del" class="del" hidden>删除这个连拍</button>
+  </div>
+  <div class="bar"><button id="sd-addall">全部加入清单</button><button id="seq-start" class="primary">▶ 开始连拍</button></div>
+</div>
+
+<!-- step-through mode -->
+<div id="step" class="overlay stepmode" hidden role="dialog" aria-label="连拍进行中">
+  <button class="x" data-close aria-label="退出">✕</button>
+  <div id="st-dots" class="dots"></div>
+  <div id="st-count" class="muted center"></div>
+  <div id="st-art" class="art mid"></div>
+  <h2 id="st-title" class="center"></h2>
+  <div id="st-kou" class="kou huge"></div>
+  <div id="st-hint" class="muted center"></div>
+  <div class="center"><button id="st-speak" class="pill ghost">🔊 自动朗读：关</button></div>
+  <div class="bar">
+    <button id="st-prev">‹ 上一步</button>
+    <button id="st-auto">⏱ 自动：关</button>
+    <button id="st-done" hidden>✓ 已拍</button>
+    <button id="st-next" class="primary">下一步 ›</button>
+  </div>
+</div>
+
+<!-- custom form -->
+<div id="cform" class="overlay" hidden role="dialog" aria-label="新建动作">
+  <button class="x" data-close aria-label="关闭">✕</button>
+  <form id="c-form" class="overbody" autocomplete="off">
+    <h2>新建动作</h2>
+    <label>照片<input id="f-file" type="file" accept="image/*" required></label>
+    <img id="f-preview" alt="预览" hidden>
+    <label>名称<input id="f-name" required maxlength="30" placeholder="例如：窗边回眸"></label>
+    <label>口令<input id="f-kou" maxlength="80" placeholder="拍摄时要念的话"></label>
+    <label>标签（点选，可多选）</label>
+    <div id="f-picker" class="picker"></div>
+    <label>其他标签（逗号分隔）<input id="f-tags" placeholder="例如：海风，氛围"></label>
+    <button id="f-save" class="pill" type="submit">保存</button>
+  </form>
+</div>
+
+<div id="toast" role="status" aria-live="polite"></div>
+<script src="app.js"></script>
+</body></html>

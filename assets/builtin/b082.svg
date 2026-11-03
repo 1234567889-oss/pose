@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 300" role="img" aria-label="侧坐回望扶椅背"><rect width="240" height="300" rx="14" fill="#fbf1f4"/><g transform="translate(114.5 181.9) scale(1.000)"><line x1="-26.0" y1="9.0" x2="26.0" y2="9.0" stroke="#a89aa0" stroke-width="5" stroke-linecap="round"/>
+<line x1="26.0" y1="9.0" x2="26.0" y2="-61.0" stroke="#a89aa0" stroke-width="4" stroke-linecap="round"/>
+<line x1="-22.0" y1="9.0" x2="-22.0" y2="72.7" stroke="#a89aa0" stroke-width="3"/>
+<line x1="22.0" y1="9.0" x2="22.0" y2="72.7" stroke="#a89aa0" stroke-width="3"/>
+<line x1="-102.0" y1="72.7" x2="113.0" y2="72.7" stroke="#a89aa0" stroke-width="2" opacity=".7"/>
+<line x1="-4.0" y1="0.3" x2="57.7" y2="6.8" stroke="#f2c4a8" stroke-width="12" stroke-linecap="round"/>
+<line x1="57.7" y1="6.8" x2="54.5" y2="66.7" stroke="#f2c4a8" stroke-width="9" stroke-linecap="round"/>
+<line x1="54.5" y1="66.7" x2="41.5" y2="66.0" stroke="#6b5a60" stroke-width="6" stroke-linecap="round"/>
+<line x1="4.0" y1="-0.3" x2="66.0" y2="1.9" stroke="#f2c4a8" stroke-width="12" stroke-linecap="round"/>
+<line x1="66.0" y1="1.9" x2="68.0" y2="61.8" stroke="#f2c4a8" stroke-width="9" stroke-linecap="round"/>
+<line x1="68.0" y1="61.8" x2="55.1" y2="62.3" stroke="#6b5a60" stroke-width="6" stroke-linecap="round"/>
+<line x1="-2.6" y1="-104.7" x2="-5.5" y2="-76.8" stroke="#3a2a2a" stroke-width="40" stroke-linecap="round"/>
+<line x1="-5.4" y1="-77.8" x2="-3.7" y2="-94.7" stroke="#f2c4a8" stroke-width="8" stroke-linecap="round"/>
+<line x1="2.5" y1="-78.4" x2="-13.4" y2="-77.3" stroke="#8aa57a" stroke-width="10" stroke-linecap="round"/>
+<polygon points="2.5,-78.4 -13.4,-77.3 -4.0,0.3 4.0,-0.3" fill="#8aa57a" stroke="#8aa57a" stroke-width="10" stroke-linejoin="round"/>
+<line x1="-13.4" y1="-77.3" x2="1.6" y2="-35.9" stroke="#f2c4a8" stroke-width="8" stroke-linecap="round"/>
+<line x1="1.6" y1="-35.9" x2="39.2" y2="-22.2" stroke="#f2c4a8" stroke-width="6.5" stroke-linecap="round"/>
+<line x1="2.5" y1="-78.4" x2="-19.5" y2="-40.3" stroke="#f2c4a8" stroke-width="8" stroke-linecap="round"/>
+<line x1="-19.5" y1="-40.3" x2="-57.0" y2="-26.6" stroke="#f2c4a8" stroke-width="6.5" stroke-linecap="round"/>
+<circle cx="39.2" cy="-22.2" r="4.6" fill="#f2c4a8"/>
+<circle cx="-57.0" cy="-26.6" r="4.6" fill="#f2c4a8"/>
+<circle cx="-2.4" cy="-106.7" r="19" fill="#f2c4a8"/>
+<path d="M-21.1 -110.6 Q1.9 -147.3 16.7 -106.7 Q-7.7 -113.9 -21.1 -110.6Z" fill="#3a2a2a"/>
+<circle cx="-9.6" cy="-105.4" r="1.8" fill="#3a2a2a"/><path d="M-21.8 -103.7 L-26.1 -101.1" stroke="#f2c4a8" stroke-width="3" stroke-linecap="round"/></g></svg>
