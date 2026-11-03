@@ -1,5 +1,5 @@
 // Offline PWA. Bump VERSION when shipping app changes.
-const VERSION = "v2.0.0", SHELL = "ps-shell-" + VERSION, IMG = "ps-img-v1", MAX_IMG = 800;
+const VERSION = "v2.1.0", SHELL = "ps-shell-" + VERSION, IMG = "ps-img-v1", MAX_IMG = 800;
 const CORE = ["./", "index.html", "style.css", "app.js", "manifest.webmanifest", "assets/icon.svg", "assets/icon-192.png", "assets/icon-512.png",
   "data/taxonomy.json", "data/poses.json", "data/imported.json", "data/sequences.json"];
 self.addEventListener("install", e => e.waitUntil((async () => {

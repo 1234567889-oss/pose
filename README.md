@@ -36,7 +36,7 @@
     python3 -m venv /tmp/v && /tmp/v/bin/pip install playwright pillow cairosvg && /tmp/v/bin/playwright install chromium
     /tmp/v/bin/python tests/e2e.py . shipped screenshots     # 约 57 项检查 @390x844：渲染、筛选、详情、滑动、收藏、清单、连拍、自建动作(IndexedDB)、深色、SW、可安装性、离线、零控制台错误
     /tmp/v/bin/python tests/shots.py <含照片的副本> <输出目录> <标签>   # 额外的照片版截图
-`screenshots/` 中 `shipped-*` 是出厂状态（0 张照片，使用示意图）；`demo-*` 使用 24 张**合成占位图**（图上标有 "DEMO PLACEHOLDER"）仅用于验证照片界面，这些图片没有随项目发布。
+`screenshots/` 中 `shipped-*` 是出厂状态（0 张照片，使用示意图）；`xhs-*` 是导入 8 篇小红书收藏后（135 张单人姿势照片）的截图。
 
 ## 灵感与许可
 界面思路参考 [RuiC-PoseAtlas](https://hruiccc.github.io/RuiC-PoseAtlas/)（作者 hruiccc / RuiC，代码许可 MIT）：照片卡片 + 多维标签筛选 + 详情页 + 随机/收藏等。
