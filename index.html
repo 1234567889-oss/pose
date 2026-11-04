@@ -39,6 +39,12 @@
     <div id="sentinel" aria-hidden="true"></div>
     <div id="noresult" class="empty" hidden>没有匹配的动作<br><button id="clearall" class="pill ghost">清除筛选</button></div>
   </section>
+  <section id="v-fav" hidden>
+    <h2 class="sec">♥ 我的收藏 <span id="fav-n" class="muted"></span></h2>
+    <div class="row pad"><button id="fav-play" class="pill">▶ 全屏浏览</button><button id="fav-export" class="pill ghost">⬇ 导出收藏</button></div>
+    <div id="favgrid" class="fgrid"></div>
+    <div id="fav-empty" class="empty" hidden>还没有收藏<br>在图鉴里点照片上的 ♡ 就会出现在这里<br><button id="fav-go" class="pill ghost">去图鉴看看</button></div>
+  </section>
   <section id="v-seq" hidden><h2 class="sec">连拍组合</h2><p class="muted pad">一组连贯动作，点开始后逐个念口令。可在「清单」里把自己的清单存成连拍。</p><div id="seqlist"></div></section>
   <section id="v-list" hidden>
     <h2 class="sec">今日拍摄清单</h2>
@@ -64,6 +70,7 @@
 
 <nav id="tabs" role="tablist">
   <button data-v="lib" class="on">🖼<span>图鉴</span></button>
+  <button data-v="fav">♥<span>收藏<b id="favbadge"></b></span></button>
   <button data-v="seq">🎞<span>连拍</span></button>
   <button data-v="list">✅<span>清单<b id="listbadge"></b></span></button>
   <button data-v="mine">👤<span>我的</span></button>
@@ -82,7 +89,7 @@
 <div id="card" class="overlay" hidden role="dialog" aria-label="动作详情">
   <button class="x" data-close aria-label="关闭">✕</button>
   <div class="overbody">
-    <div id="c-art" class="art big"><button id="c-aprev" class="side l" aria-label="上一张">‹</button><button id="c-anext" class="side r" aria-label="下一张">›</button><span id="c-pos" class="posn"></span></div>
+    <div id="c-art" class="art big"><button id="c-aprev" class="side l" aria-label="上一张">‹</button><button id="c-anext" class="side r" aria-label="下一张">›</button><span id="c-pos" class="posn"></span><button id="c-full" class="fsbtn" aria-label="全屏查看">⛶ 全屏</button></div>
     <h2 id="c-title"></h2>
     <div id="c-kou" class="kou" role="button" tabindex="0" aria-label="口令，点击放大"><div class="kl">口令</div><div id="c-kouText"></div></div>
     <div class="row"><button id="c-speak" class="pill ghost">🔊 朗读</button><button id="c-copy" class="pill ghost">复制口令</button><button id="c-share" class="pill ghost">🔗 链接</button></div>
@@ -144,6 +151,17 @@
     <label>其他标签（逗号分隔）<input id="f-tags" placeholder="例如：海风，氛围"></label>
     <button id="f-save" class="pill" type="submit">保存</button>
   </form>
+</div>
+
+<!-- fullscreen album viewer: black, image only; the toolbar appears on tap and hides itself -->
+<div id="viewer" class="viewer" hidden role="dialog" aria-label="全屏查看" aria-modal="true">
+  <div id="vw-stage" class="vstage"><div id="vw-track" class="vtrack"></div></div>
+  <div id="vw-bar" class="vbar">
+    <button id="vw-close" aria-label="关闭">✕</button>
+    <span id="vw-count" class="vcount"></span>
+    <button id="vw-fav" aria-label="收藏">♡</button>
+    <button id="vw-info" aria-label="详情">ℹ</button>
+  </div>
 </div>
 
 <div id="toast" role="status" aria-live="polite"></div>

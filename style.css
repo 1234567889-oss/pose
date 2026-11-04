@@ -101,3 +101,32 @@ form label{display:block;margin:10px 0;font-size:14px;color:var(--mut)}form inpu
 
 .art.big{height:46vh;max-height:430px}.bar button{white-space:nowrap;font-size:13px}.bar button#c-prev,.bar button#c-next,.bar button#c-rand{flex:0 0 46px}
 #st-speak{margin-top:10px}#st-hint{margin-bottom:4px}
+
+/* ---- v3.9 ---- */
+#favbadge{background:var(--pri);color:#fff;border-radius:9px;font-size:10px;padding:0 5px;margin-left:3px}#favbadge:empty,#listbadge:empty{display:none}
+/* bottom bar: buttons size to their label, so 取消已拍 / 已收藏 never get cut off on narrow phones */
+.bar{gap:4px;padding-left:max(8px,env(safe-area-inset-left));padding-right:max(8px,env(safe-area-inset-right))}
+.bar button{flex:1 0 auto;max-width:170px;padding:10px 8px;font-size:13px;white-space:nowrap;overflow:visible}
+.bar button#c-prev,.bar button#c-next,.bar button#c-rand{flex:0 0 40px;padding:10px 0}
+@media(max-width:359px){.bar button{font-size:12px;padding:10px 5px}#c-rand{display:none}}
+.pc .t{position:relative;padding-right:30px}.pc .t .ib{position:absolute;right:7px;top:7px;width:18px;height:18px;line-height:18px;text-align:center;border-radius:50%;background:var(--chip);color:var(--chipfg);font-size:11px;font-weight:400}
+.fsbtn{position:absolute;right:8px;bottom:8px;background:#000a;color:#fff;border-radius:16px;padding:6px 13px;font-size:13px;z-index:2}
+#c-art{cursor:zoom-in}
+.fgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;padding:6px 12px}
+.fi{position:relative;aspect-ratio:3/4;border-radius:8px;overflow:hidden;background:var(--chip);cursor:pointer;border:1px solid var(--line)}
+.fi img{width:100%;height:100%;object-fit:cover;display:block}
+.fi .un{position:absolute;right:4px;top:4px;width:34px;height:34px;border-radius:50%;background:#fffd;color:var(--pri2);font-size:17px;box-shadow:var(--shadow)}
+#fav-n{font-size:14px;font-weight:400}
+/* fullscreen album viewer */
+.viewer{position:fixed;inset:0;z-index:80;background:#000;color:#fff;touch-action:none;overscroll-behavior:contain;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
+.vstage{position:absolute;inset:0;overflow:hidden;touch-action:none}
+.vtrack{position:absolute;inset:0;will-change:transform}
+.vpane{position:absolute;inset:0;overflow:hidden}
+.vimg{width:100%;height:100%;object-fit:contain;display:block;transform-origin:50% 50%;will-change:transform;pointer-events:none;-webkit-user-drag:none}
+.vbar{position:absolute;left:0;right:0;top:0;display:flex;align-items:center;gap:8px;pointer-events:none;
+  padding:calc(8px + env(safe-area-inset-top)) calc(10px + env(safe-area-inset-right)) 22px calc(10px + env(safe-area-inset-left));
+  background:linear-gradient(#000c,#0000);opacity:0;visibility:hidden;transition:opacity .2s,visibility 0s .2s;z-index:2}
+.viewer.ui .vbar{opacity:1;visibility:visible;transition:opacity .2s}
+.vbar button{pointer-events:auto;width:44px;height:44px;border-radius:50%;background:#0006;color:#fff;font-size:20px;line-height:1}
+.vbar .vcount{flex:1;text-align:center;font-size:15px;font-variant-numeric:tabular-nums;text-shadow:0 1px 3px #000}
+#vw-fav.on{color:#ff6b8b}

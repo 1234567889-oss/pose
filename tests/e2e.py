@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Headless-Chromium end-to-end test at 390x844. Usage: python tests/e2e.py <app_dir> <tag> [screenshot_dir]  (photo-only app, v3)
+"""Headless-Chromium end-to-end test at 390x844. Needs: pip install playwright pillow && playwright install chromium.  Usage: python tests/e2e.py <app_dir> <tag> [screenshot_dir]  (photo-only app, v3)
 Serves <app_dir> on a local port, runs every feature, prints PASS/FAIL lines and exits non-zero on failure."""
 import sys, os, json, threading, http.server, socketserver, functools, itertools, time
 from playwright.sync_api import sync_playwright
@@ -110,7 +110,7 @@ with sync_playwright() as pw:
     page.locator("#a-clear").click(); page.wait_for_timeout(200)
     check("clear all", page.locator("#active").is_hidden())
     # --- card
-    page.locator(".pc").first.click(); page.wait_for_selector("#card:not([hidden])")
+    page.locator(".pc .t").first.click(); page.wait_for_selector("#card:not([hidden])")
     t0 = page.locator("#c-title").inner_text()
     check("card opens with title, 口令, tips, shot advice", bool(t0) and page.locator("#c-kouText").inner_text() != "" and page.locator("#c-details").is_visible() and page.locator("#c-shot").is_visible())
     page.locator("#c-next").click(); t1 = page.locator("#c-title").inner_text()
@@ -135,7 +135,7 @@ with sync_playwright() as pw:
     check("tapping a tag in the card applies that filter", page.locator("#card").is_hidden() and page.locator("#active .chip").count() == 1, f"{d_}:{t_}")
     page.locator("#a-clear").click()
     # back button closes overlay
-    page.locator(".pc").first.click(); page.wait_for_selector("#card:not([hidden])"); page.go_back(); page.wait_for_timeout(200)
+    page.locator(".pc .t").first.click(); page.wait_for_selector("#card:not([hidden])"); page.go_back(); page.wait_for_timeout(200)
     check("browser back closes the card (history overlays)", page.locator("#card").is_hidden())
     # favourites filter
     page.locator("#favf").click(); page.wait_for_timeout(200)
@@ -156,6 +156,152 @@ with sync_playwright() as pw:
     page.goto(URL + "#pose=" + pid); page.wait_for_selector("body[data-ready='1']"); page.wait_for_selector("#card:not([hidden])", timeout=3000)
     check("deep link #pose=<id> opens the card", poses_i[0]["title"] == page.locator("#c-title").inner_text())
     page.go_back() if False else page.keyboard.press("Escape"); page.wait_for_timeout(200)
+
+    # ================= v3.9: fullscreen album viewer + favorites =================
+    ui_ids = [p["id"] for p in reversed(poses_i)]          # grid order = newest import first
+    by_id = {p["id"]: p for p in poses_i}
+    cdp = ctx.new_cdp_session(page)
+    def _tp(fr): return [{"x": x, "y": y, "id": k} for k, (x, y) in enumerate(fr)]
+    def cdp_touch(frames, wait=550, end=True, start=True, gap=0.02):
+        """frames: list of touch-point lists. First frame = touchStart (if start), rest = touchMove, then touchEnd (if end)."""
+        for k, fr in enumerate(frames):
+            cdp.send("Input.dispatchTouchEvent", {"type": "touchStart" if (k == 0 and start) else "touchMove", "touchPoints": _tp(fr)}); time.sleep(gap)
+        if end: cdp.send("Input.dispatchTouchEvent", {"type": "touchEnd", "touchPoints": []})
+        page.wait_for_timeout(wait)
+    def vswipe(dx, dy=0, x0=195, y0=420, steps=8, wait=550):
+        cdp_touch([[(x0 + dx * i / steps, y0 + dy * i / steps)] for i in range(0, steps + 1)], wait)
+    vid = lambda: page.evaluate("document.querySelector('#viewer').dataset.id")
+    vopen = lambda: page.evaluate("!document.querySelector('#viewer').hidden")
+    page.locator("#tabs button[data-v=lib]").click(); page.evaluate("window.scrollTo(0,0)"); page.wait_for_timeout(200)
+    page.locator(".pc .art").first.click(); page.wait_for_selector("#viewer:not([hidden])"); page.wait_for_timeout(500)
+    box = page.locator("#viewer").bounding_box()
+    check("viewer: tapping a grid photo opens a fullscreen (390x844) black viewer", box["x"] == 0 and box["y"] == 0 and box["width"] == 390 and box["height"] == 844
+          and page.evaluate("getComputedStyle(document.querySelector('#viewer')).backgroundColor") == "rgb(0, 0, 0)" and page.locator("#card").is_hidden(), str(box))
+    check("viewer: shows only the image, no caption/text by default", page.locator("#viewer").inner_text().strip() == "" and page.locator("#vw-bar").is_hidden() and page.locator("#viewer .vimg:visible").count() >= 1,
+          repr(page.locator("#viewer").inner_text()))
+    check("viewer: starts at the tapped photo (1/533) and swaps thumb -> full image", vid() == ui_ids[0] and page.evaluate("document.querySelector('#viewer').dataset.index") == "0"
+          and page.wait_for_function("document.querySelectorAll('#viewer .vpane')[1].querySelector('img').getAttribute('src').indexOf('thumbs')<0", timeout=8000) is not None)
+    page.keyboard.press("ArrowRight"); page.wait_for_timeout(600)
+    check("viewer: arrow key -> next photo in the same (grid) order", vid() == ui_ids[1], vid())
+    vswipe(-220)
+    check("viewer: touch swipe left -> next photo", vid() == ui_ids[2], vid())
+    vswipe(220)
+    check("viewer: touch swipe right -> previous photo", vid() == ui_ids[1], vid())
+    cdp_touch([[(300, 420)], [(285, 420)], [(270, 421)], [(255, 421)], [(240, 421)]], 150, end=False, gap=0.1)
+    mid = page.evaluate("getComputedStyle(document.querySelector('#vw-track')).transform")
+    cdp.send("Input.dispatchTouchEvent", {"type": "touchEnd", "touchPoints": []}); page.wait_for_timeout(500)
+    check("viewer: track follows the finger while dragging and snaps back on a short drag", mid not in ("none", "matrix(1, 0, 0, 1, 0, 0)") and "-" in mid and vid() == ui_ids[1]
+          and page.evaluate("getComputedStyle(document.querySelector('#vw-track')).transform") in ("none", "matrix(1, 0, 0, 1, 0, 0)"), mid)
+    check("viewer: neighbours are preloaded (prev/next panes hold the adjacent photos)", page.evaluate("[...document.querySelectorAll('#viewer .vpane')].map(p => p.querySelector('img').getAttribute('src') || '').filter(Boolean).length") == 3)
+    page.touchscreen.tap(195, 420); page.wait_for_timeout(600)
+    check("viewer: single tap shows the minimal toolbar (✕, index, ♡, ℹ)", page.locator("#vw-bar").is_visible() and page.locator("#vw-count").inner_text() == f"2/{photos}"
+          and page.locator("#vw-close").is_visible() and page.locator("#vw-fav").is_visible() and page.locator("#vw-info").is_visible(), page.locator("#vw-count").inner_text())
+    if shots: page.screenshot(path=f"{shots}/{tag}-viewer-toolbar.png")
+    page.touchscreen.tap(195, 420); page.wait_for_timeout(600)
+    check("viewer: tapping again hides the toolbar", page.locator("#vw-bar").is_hidden())
+    page.touchscreen.tap(195, 420); page.wait_for_timeout(500)
+    check("viewer: toolbar auto-hides after a few seconds", page.locator("#vw-bar").is_visible() and page.wait_for_function("getComputedStyle(document.querySelector('#vw-bar')).visibility==='hidden'", timeout=6000) is not None)
+    if shots: page.screenshot(path=f"{shots}/{tag}-viewer-fullscreen.png")
+    # zoom (double tap) disables swipe, double tap again resets
+    page.touchscreen.tap(195, 420); page.wait_for_timeout(120); page.touchscreen.tap(195, 420); page.wait_for_timeout(500)
+    z = float(page.evaluate("document.querySelector('#viewer').dataset.zoom"))
+    vswipe(-200); same = vid() == ui_ids[1]
+    check("viewer: double-tap zooms in; swiping while zoomed pans instead of changing photo", z > 2 and same, f"zoom={z}")
+    page.touchscreen.tap(195, 420); page.wait_for_timeout(120); page.touchscreen.tap(195, 420); page.wait_for_timeout(500)
+    check("viewer: double-tap again resets zoom", float(page.evaluate("document.querySelector('#viewer').dataset.zoom")) == 1.0)
+    cdp_touch([[(150 - 8 * i, 420), (240 + 8 * i, 420)] for i in range(0, 8)], 500)
+    check("viewer: pinch gesture zooms in", float(page.evaluate("document.querySelector('#viewer').dataset.zoom")) > 1.5, page.evaluate("document.querySelector('#viewer').dataset.zoom"))
+    page.touchscreen.tap(195, 420); page.wait_for_timeout(120); page.touchscreen.tap(195, 420); page.wait_for_timeout(500)
+    # favourite toggle in the viewer
+    favs0 = page.evaluate("JSON.parse(localStorage.getItem('ps_fav')).length")
+    page.touchscreen.tap(195, 420); page.wait_for_timeout(500)
+    page.locator("#vw-fav").click(); page.wait_for_timeout(200)
+    check("viewer: ♡ toggles favourite (persisted, icon turns ♥)", page.evaluate("JSON.parse(localStorage.getItem('ps_fav')).length") == favs0 + 1 and page.locator("#vw-fav").inner_text() == "♥", page.locator("#vw-fav").inner_text())
+    # ℹ -> detail card of the shown photo
+    page.locator("#vw-info").click(); page.wait_for_selector("#card:not([hidden])"); page.wait_for_timeout(300)
+    check("viewer: ℹ opens the detail card of the current photo", not vopen() and page.locator("#c-title").inner_text() == by_id[ui_ids[1]]["title"], page.locator("#c-title").inner_text())
+    # detail page -> 全屏 button -> viewer; back returns to the card
+    page.locator("#c-full").click(); page.wait_for_selector("#viewer:not([hidden])"); page.wait_for_timeout(300)
+    check("detail: 全屏 button opens the viewer on the same photo", vid() == ui_ids[1] and page.locator("#viewer").inner_text().strip() == "")
+    page.keyboard.press("ArrowRight"); page.wait_for_timeout(600); page.go_back(); page.wait_for_timeout(300)
+    check("viewer: browser back button (Android) closes only the viewer; card follows the photo", not vopen() and page.locator("#card").is_visible() and page.locator("#c-title").inner_text() == by_id[ui_ids[2]]["title"])
+    page.go_back(); page.wait_for_timeout(300)
+    check("viewer/card: second back closes the card too", page.locator("#card").is_hidden() and not vopen())
+    page.locator(".pc .art").first.click(); page.wait_for_selector("#viewer:not([hidden])"); page.wait_for_timeout(300)
+    page.keyboard.press("Escape"); page.wait_for_timeout(300)
+    check("viewer: Esc closes", not vopen())
+    page.locator(".pc .art").first.click(); page.wait_for_selector("#viewer:not([hidden])"); page.wait_for_timeout(300)
+    vswipe(0, 300); page.wait_for_timeout(200)
+    check("viewer: swipe down closes", not vopen())
+    page.locator(".pc .art").first.click(); page.wait_for_selector("#viewer:not([hidden])"); page.wait_for_timeout(300)
+    page.touchscreen.tap(195, 420); page.wait_for_timeout(500); page.locator("#vw-close").click(); page.wait_for_timeout(300)
+    check("viewer: ✕ closes", not vopen())
+    # viewer walks the CURRENT (searched / filtered) list, not the whole library
+    page.fill("#search", "珠江"); page.wait_for_timeout(400)
+    ids_s = [p["id"] for p in reversed(poses_i) if "珠江" in hay(p)]
+    page.locator(".pc .art").first.click(); page.wait_for_selector("#viewer:not([hidden])"); page.wait_for_timeout(300)
+    seen = [vid()]
+    for _ in range(len(ids_s)): page.keyboard.press("ArrowRight"); page.wait_for_timeout(420); seen.append(vid())
+    check("viewer from a search result walks only that result list, in order, and stops at the end", seen == ids_s + [ids_s[-1]] and page.evaluate("document.querySelector('#viewer').dataset.index") == str(len(ids_s) - 1), f"{len(ids_s)} results")
+    page.keyboard.press("Escape"); page.wait_for_timeout(300); page.fill("#search", ""); page.wait_for_timeout(300)
+    # ---- favourites view
+    favs_now = page.evaluate("JSON.parse(localStorage.getItem('ps_fav'))")
+    for pid_ in ui_ids[5:8]:     # make sure there are several
+        if pid_ not in favs_now: page.evaluate("id => document.querySelector(`[data-fav=\"${id}\"]`)?.click()", pid_)
+    page.locator("#grid").evaluate("g => g.scrollIntoView()"); page.wait_for_timeout(100)
+    favs_now = page.evaluate("JSON.parse(localStorage.getItem('ps_fav'))")
+    page.locator("#tabs button[data-v=fav]").click(); page.wait_for_timeout(400)
+    shown = page.evaluate("[...document.querySelectorAll('#favgrid .fi')].map(e => e.dataset.id)")
+    check("favorites tab: lists exactly the favorited photos (newest first) with a count", sorted(shown) == sorted(favs_now) and shown == list(reversed(favs_now)) and len(shown) >= 3
+          and page.locator("#fav-n").inner_text() == f"{len(shown)} 张" and page.locator("#favbadge").inner_text() == str(len(shown)) and page.locator("#fav-empty").is_hidden(), f"{len(shown)} favs; {page.locator('#fav-n').inner_text()}")
+    page.wait_for_timeout(2600)
+    if shots: page.screenshot(path=f"{shots}/{tag}-favorites.png")
+    page.locator("#favgrid .fi img").nth(1).click(); page.wait_for_selector("#viewer:not([hidden])"); page.wait_for_timeout(400)
+    seen = [vid()]
+    for _ in range(len(shown) + 2): page.keyboard.press("ArrowRight"); page.wait_for_timeout(420); seen.append(vid())
+    check("viewer from favorites starts at the tapped photo and only ever shows favorites (stops at the last)", seen[0] == shown[1] and set(seen) <= set(favs_now) and seen[-1] == shown[-1] and seen[1:len(shown) - 1] == shown[2:], str(seen[:3]))
+    for _ in range(len(shown) + 2): page.keyboard.press("ArrowLeft"); page.wait_for_timeout(420)
+    check("viewer from favorites: going back stops at the first favorite", vid() == shown[0] and page.evaluate("document.querySelector('#viewer').dataset.index") == "0")
+    vswipe(-220); check("viewer from favorites: touch swipe stays within favorites", vid() == shown[1])
+    page.touchscreen.tap(195, 420); page.wait_for_timeout(500)
+    check("viewer from favorites: index counts favorites only", page.locator("#vw-count").inner_text() == f"2/{len(shown)}", page.locator("#vw-count").inner_text())
+    page.keyboard.press("Escape"); page.wait_for_timeout(300)
+    check("closing the viewer returns to the favorites tab", page.locator("#v-fav").is_visible() and not vopen())
+    page.locator("#fav-play").click(); page.wait_for_selector("#viewer:not([hidden])"); page.wait_for_timeout(300)
+    check("favorites ▶ 全屏浏览 starts at the first favorite", vid() == shown[0]); page.keyboard.press("Escape"); page.wait_for_timeout(300)
+    with page.expect_download() as dl: page.locator("#fav-export").click()
+    dlp = dl.value.path(); exp_json = json.load(open(dlp, encoding="utf-8"))
+    check("导出收藏 downloads a JSON file with the favorite ids", dl.value.suggested_filename.startswith("pose-favorites-") and dl.value.suggested_filename.endswith(".json")
+          and sorted(exp_json["favorites"]) == sorted(favs_now) and exp_json["count"] == len(favs_now), dl.value.suggested_filename)
+    # unfavourite from the grid
+    page.locator("#favgrid .fi .un").first.click(); page.wait_for_timeout(300)
+    left = page.evaluate("JSON.parse(localStorage.getItem('ps_fav'))")
+    check("favorites tab: ♥ removes a photo (grid, count and storage update)", len(left) == len(favs_now) - 1 and page.locator("#favgrid .fi").count() == len(left) and page.locator("#fav-n").inner_text() == f"{len(left)} 张")
+    # unfavouriting inside the viewer keeps the photo in the swipe list until closing
+    page.locator("#favgrid .fi img").first.click(); page.wait_for_selector("#viewer:not([hidden])"); page.wait_for_timeout(300)
+    page.touchscreen.tap(195, 420); page.wait_for_timeout(500); page.locator("#vw-fav").click(); page.wait_for_timeout(200)
+    check("viewer in favorites: ♥ un-favorites but the photo stays swipeable (like an album)", page.locator("#vw-fav").inner_text() == "♡" and page.locator("#vw-count").inner_text().endswith(f"/{len(left)}"))
+    page.keyboard.press("Escape"); page.wait_for_timeout(300)
+    check("closing the viewer refreshes the favorites grid", page.locator("#favgrid .fi").count() == len(left) - 1)
+    while page.locator("#favgrid .fi .un").count(): page.locator("#favgrid .fi .un").first.click(); page.wait_for_timeout(120)
+    check("favorites tab: empty state when nothing is favorited", page.locator("#fav-empty").is_visible() and page.locator("#favgrid .fi").count() == 0 and page.locator("#fav-n").inner_text() == "" and page.locator("#favbadge").inner_text() == "")
+    if shots: page.screenshot(path=f"{shots}/{tag}-favorites-empty.png")
+    page.locator("#fav-go").click(); page.wait_for_timeout(200)
+    check("favorites empty state links back to the library", page.locator("#v-lib").is_visible())
+    # bottom bar labels are not truncated (390 and a narrower 360px phone)
+    page.locator(".pc .t").first.click(); page.wait_for_selector("#card:not([hidden])")
+    st0 = (page.locator("#btn-done").is_visible(), page.locator("#btn-done").inner_text())   # remember the card's list/done state, restored below
+    if page.locator("#btn-done").is_hidden(): page.locator("#btn-list").click()
+    if "取消" not in page.locator("#btn-done").inner_text(): page.locator("#btn-done").click()
+    def trunc(): return page.evaluate("[...document.querySelectorAll('#card .bar button:not([hidden])')].filter(b => b.scrollWidth > b.clientWidth + 0.5 || b.getBoundingClientRect().right > innerWidth || b.getBoundingClientRect().left < 0).map(b => b.id)")
+    t390 = trunc(); page.set_viewport_size({"width": 360, "height": 740}); page.wait_for_timeout(200); t360 = trunc(); page.set_viewport_size({"width": 390, "height": 844}); page.wait_for_timeout(200)
+    check("card bottom bar: 取消已拍 and all labels fully visible at 390px and 360px", "取消已拍" in page.locator("#btn-done").inner_text() and not t390 and not t360, f"390:{t390} 360:{t360}")
+    if not st0[0] or "取消" not in st0[1]: page.locator("#btn-done").click()      # back to not-done
+    if not st0[0]: page.locator("#btn-list").click()                               # back to not-in-list
+    page.keyboard.press("Escape"); page.wait_for_timeout(200)
+    page.evaluate("window.scrollTo(0,0)")
+    page.wait_for_timeout(2600)   # let toasts fade
+    if shots: page.screenshot(path=f"{shots}/{tag}-home.png")
     # --- checklist tab
     page.locator("#tabs button[data-v=list]").click(); page.wait_for_timeout(200)
     check("checklist shows saved item (persisted across reload) with progress", page.locator("#checklist .li").count() == 1 and "1" in page.locator("#progress").inner_text())
@@ -236,7 +382,7 @@ with sync_playwright() as pw:
     check("OFFLINE reload works and renders the library", cards > 0, f"{cards} cards")
     bad = page.evaluate("[...document.images].filter(i => i.getAttribute('src') && i.complete && i.naturalWidth === 0).length")
     check("OFFLINE images render from cache", bad == 0, f"{bad} broken: " + str(page.evaluate("[...document.images].filter(i => i.getAttribute('src') && i.complete && i.naturalWidth === 0).map(i=>i.src)")))
-    page.locator(".pc").first.click(); page.wait_for_selector("#card:not([hidden])")
+    page.locator(".pc .t").first.click(); page.wait_for_selector("#card:not([hidden])")
     check("OFFLINE card detail works", page.locator("#c-title").inner_text() != "", "onLine=" + str(page.evaluate("navigator.onLine")))
     page.keyboard.press("Escape"); page.locator("#tabs button[data-v=seq]").click(); page.locator("#seqlist .sc").first.click(); page.locator("#seq-start").click()
     check("OFFLINE sequence step mode works", page.locator("#step").is_visible())
@@ -246,7 +392,24 @@ with sync_playwright() as pw:
     check("offline thumbnail download", "已保存" in page.locator("#offline-st").inner_text(), page.locator("#offline-st").inner_text())
     check("about line shows photos / custom / sequences, no 示意图", "示意图" not in page.locator("#about").inner_text() and f"照片 {photos}" in page.locator("#about").inner_text(), page.locator("#about").inner_text()[:60])
     sw_keys = page.evaluate("caches.keys()")
-    check("service worker cache is v3.8.0 and old v2 shell cache is gone", "ps-shell-v3.8.0" in sw_keys and not [k for k in sw_keys if k.startswith("ps-shell-") and k != "ps-shell-v3.8.0"], str(sw_keys))
+    check("service worker cache is v3.9.0 and old shell caches are gone", "ps-shell-v3.9.0" in sw_keys and not [k for k in sw_keys if k.startswith("ps-shell-") and k != "ps-shell-v3.9.0"], str(sw_keys))
+    # viewer again, online and SW-controlled, so full images flow through the service worker
+    page.locator("#tabs button[data-v=lib]").click(); page.evaluate("window.scrollTo(0,0)"); page.wait_for_timeout(300)
+    page.locator(".pc .art").first.click(); page.wait_for_selector("#viewer:not([hidden])")
+    for _ in range(3): page.wait_for_timeout(700); page.keyboard.press("ArrowRight")
+    page.wait_for_timeout(1200); page.keyboard.press("Escape"); page.wait_for_timeout(300)
+    cs = page.evaluate("""async () => { const o = {}; for (const k of await caches.keys()) { const c = await caches.open(k); o[k] = (await c.keys()).map(r => new URL(r.url).pathname); } return o; }""")
+    th, fu = cs.get("ps-thumbs-v1", []), cs.get("ps-full-v1", [])
+    check("thumbnails and full images use separate caches (ps-thumbs-v1 / ps-full-v1), legacy ps-img-v1 gone", "ps-thumbs-v1" in cs and "ps-full-v1" in cs and "ps-img-v1" not in cs, str(list(cs)))
+    check("thumbs cache holds only thumbs (all %d after 离线保存), full cache holds only full images" % photos, len(th) >= photos and all("/imported/thumbs/" in u for u in th) and len(fu) >= 1 and all("/imported/" in u and "/thumbs/" not in u for u in fu), f"thumbs={len(th)} full={len(fu)}")
+    swsrc = open(os.path.join(app, "sw.js"), encoding="utf-8").read()
+    import re as _re
+    core = _re.search(r"const CORE = \[(.*?)\]", swsrc, _re.S).group(1)
+    caps = {k: int(v) for k, v in _re.findall(r"const (MAX_\w+) = (\d+)", swsrc)}
+    check("sw.js: imported.json not precached; thumbs cap > photo count; full cap is an LRU limit; trim is awaited", "imported.json" not in core and caps.get("MAX_THUMBS", 0) >= photos * 2 and 0 < caps.get("MAX_FULL", 0) < photos
+          and "trim(c, max)" in swsrc and "e.waitUntil" in swsrc and "VERSION = \"v3.9.0\"" in swsrc, str(caps))
+    shell_keys = page.evaluate("caches.open('ps-shell-v3.9.0').then(c => c.keys()).then(ks => ks.map(r => new URL(r.url).pathname))")
+    check("data/imported.json is still cached (network-first fallback) for offline use", any(u.endswith("data/imported.json") for u in shell_keys), str(len(shell_keys)))
     errs = [e for e in errors]
     check("zero console errors / page errors / failed requests", not errs, "; ".join(errs[:5]))
     b.close()

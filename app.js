@@ -5,7 +5,7 @@
 const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const LS = { get(k, d) { try { const v = localStorage.getItem(k); return v == null ? d : JSON.parse(v); } catch { return d; } }, set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} } };
-const BATCH = 30;
+const BATCH = 30, VERSION = '3.9.0', THUMB_CACHE = 'ps-thumbs-v1';
 
 // ---------- state ----------
 const S = { tax: null, dims: [], tagDim: {}, poses: [], byId: {}, seqs: [], useqs: LS.get('ps_useq', []),
@@ -65,7 +65,7 @@ const thumbOf = p => p.thumb || p.image;
 const ratio = p => p.w && p.h ? p.h / p.w : 1.25;
 const dimLabel = k => (S.dims.find(d => d.key === k) || {}).label || k;
 function toast(m) { const t = $('#toast'); t.textContent = m; t.classList.add('show'); clearTimeout(toast._t); toast._t = setTimeout(() => t.classList.remove('show'), 1800); }
-const saveFav = () => LS.set('ps_fav', [...S.fav]);
+const saveFav = () => { LS.set('ps_fav', [...S.fav]); renderFavBadge(); };
 const saveList = () => { LS.set('ps_list', S.list); renderBadge(); };
 const inList = id => S.list.find(x => x.id === id);
 function flatTags(p) { return Object.entries(p.tags).flatMap(([d, a]) => a.map(v => [d, v])); }
@@ -77,7 +77,7 @@ function openOv(id, hash) {
   history.pushState({ ov: id }, '', hash || location.pathname + location.search); document.body.style.overflow = 'hidden';
 }
 function hideOv(id) {
-  $('#' + id).hidden = true; if (id === 'step') stopAuto(); if (id === 'card') speechSynthesis?.cancel?.();
+  $('#' + id).hidden = true; if (id === 'step') stopAuto(); if (id === 'card') speechSynthesis?.cancel?.(); if (id === 'viewer') viewerClosed();
 }
 function closeTop() { if (stack.length) history.back(); }
 function closeAll() { const n = stack.length; if (!n) return; skipPop = 1; stack.splice(0).forEach(hideOv); document.body.style.overflow = ''; history.go(-n); }
@@ -90,6 +90,7 @@ $$('[data-close]').forEach(b => b.onclick = closeTop);
 document.addEventListener('keydown', e => {
   const top = stack[stack.length - 1];
   if (e.key === 'Escape' && top) closeTop();
+  else if (top === 'viewer') { if (e.key === 'ArrowLeft') { e.preventDefault(); vGo(-1); } if (e.key === 'ArrowRight') { e.preventDefault(); vGo(1); } }
   else if (top === 'card') { if (e.key === 'ArrowLeft') cardNav(-1); if (e.key === 'ArrowRight') cardNav(1); }
   else if (top === 'step') { if (e.key === 'ArrowLeft') stepGo(-1); if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); stepGo(1); } }
 });
@@ -155,20 +156,24 @@ function cardHTML(p) {
     <div class="art" style="aspect-ratio:${(1 / r).toFixed(3)}"><img src="${esc(thumbOf(p))}" alt="${esc(p.title)}" loading="lazy" decoding="async"></div>
     ${inList(p.id) ? '<span class="in">清单</span>' : ''}
     <div class="qa"><button data-fav="${p.id}" class="${S.fav.has(p.id) ? 'on' : ''}" aria-label="收藏">${S.fav.has(p.id) ? '♥' : '♡'}</button></div>
-    <div class="t">${esc(p.title)}<div class="s">${esc(tg)}</div></div></div>`;
+    <div class="t">${esc(p.title)}<span class="ib" aria-hidden="true">ℹ</span><div class="s">${esc(tg)}</div></div></div>`;
 }
+// v3.9: tapping the photo opens the fullscreen album viewer over the CURRENT list; tapping the title row opens the detail card.
 $('#grid').addEventListener('click', e => {
   const f = e.target.closest('[data-fav]');
   if (f) { e.stopPropagation(); toggleFav(f.dataset.fav); return; }
-  const c = e.target.closest('.pc'); if (c) openCard(c.dataset.id, S.filtered.map(p => p.id));
+  const c = e.target.closest('.pc'); if (!c) return;
+  const ids = S.filtered.map(p => p.id);
+  if (e.target.closest('.t')) openCard(c.dataset.id, ids); else openViewer(ids, c.dataset.id, 'grid');
 });
-$('#grid').addEventListener('keydown', e => { if (e.key === 'Enter') { const c = e.target.closest('.pc'); if (c) openCard(c.dataset.id, S.filtered.map(p => p.id)); } });
+$('#grid').addEventListener('keydown', e => { if (e.key === 'Enter') { const c = e.target.closest('.pc'); if (c) openViewer(S.filtered.map(p => p.id), c.dataset.id, 'grid'); } });
 new IntersectionObserver(es => { if (es[0].isIntersecting && S.view === 'lib' && S.shown < S.filtered.length) renderGrid(false); }, { rootMargin: '600px' }).observe($('#sentinel'));
 function toggleFav(id) {
-  S.fav.has(id) ? S.fav.delete(id) : S.fav.add(id); saveFav(); toast(S.fav.has(id) ? '已收藏' : '已取消收藏');
+  S.fav.has(id) ? S.fav.delete(id) : S.fav.add(id); saveFav(); if ($('#viewer').hidden) toast(S.fav.has(id) ? '已收藏' : '已取消收藏');
   $$(`[data-fav="${id}"]`).forEach(b => { b.classList.toggle('on', S.fav.has(id)); b.textContent = S.fav.has(id) ? '♥' : '♡'; });
   if (S.favOnly) applyFilters();
   if (!$('#card').hidden && S.ctx[S.ctxI] === id) renderCardBtns();
+  if (!$('#viewer').hidden) vUpdateBar(); else if (S.view === 'fav') renderFav();
 }
 let st; $('#search').addEventListener('input', e => { clearTimeout(st); st = setTimeout(() => { S.q = e.target.value.trim(); applyFilters(); }, 150); });
 $('#favf').onclick = () => { S.favOnly = !S.favOnly; $('#favf').setAttribute('aria-pressed', S.favOnly); $('#favf').textContent = S.favOnly ? '♥' : '♡'; applyFilters(); };
@@ -218,7 +223,7 @@ function renderCardBtns() {
   const id = S.ctx[S.ctxI];
   $('#btn-fav').textContent = S.fav.has(id) ? '♥ 已收藏' : '♡ 收藏'; $('#btn-fav').classList.toggle('on', S.fav.has(id));
   const li = inList(id); $('#btn-list').textContent = li ? '移出清单' : '＋清单'; $('#btn-list').classList.toggle('on', !!li);
-  const bd = $('#btn-done'); bd.hidden = !li; if (li) { bd.textContent = li.done ? '↺ 取消已拍' : '✓ 已拍'; bd.classList.toggle('on', !!li.done); }
+  const bd = $('#btn-done'); bd.hidden = !li; if (li) { bd.textContent = li.done ? '取消已拍' : '✓ 已拍'; bd.classList.toggle('on', !!li.done); }
 }
 function renderCard() {
   const p = S.byId[S.ctx[S.ctxI]]; if (!p) return;
@@ -258,6 +263,8 @@ $('#c-prev').onclick = $('#c-aprev').onclick = () => cardNav(-1);
 $('#c-next').onclick = $('#c-anext').onclick = () => cardNav(1);
 $('#c-rand').onclick = () => { if (S.ctx.length > 1) { S.ctxI = (S.ctxI + 1 + Math.floor(Math.random() * (S.ctx.length - 1))) % S.ctx.length; history.replaceState({ ov: 'card' }, '', '#pose=' + S.ctx[S.ctxI]); renderCard(); } };
 $('#btn-fav').onclick = () => toggleFav(S.ctx[S.ctxI]);
+$('#c-full').onclick = e => { e.stopPropagation(); openViewer(S.ctx, S.ctx[S.ctxI], 'card'); };
+$('#c-art').addEventListener('click', e => { if (!e.target.closest('button')) openViewer(S.ctx, S.ctx[S.ctxI], 'card'); });
 $('#btn-list').onclick = () => { const id = S.ctx[S.ctxI]; toggleList(id); renderCardBtns(); };
 $('#btn-done').onclick = () => { const li = inList(S.ctx[S.ctxI]); if (li) { li.done = !li.done; saveList(); renderCardBtns(); renderChecklist(); } };
 function toggleList(id) {
@@ -278,6 +285,200 @@ function randomPose() {
   const pl = $('#card').hidden ? null : 1; if (pl) { S.ctxI = S.ctx.indexOf(p.id); renderCard(); } else openCard(p.id, pool.map(x => x.id));
 }
 $('#rand').onclick = () => { if (S.view !== 'lib') setView('lib'); randomPose(); };
+
+// ---------- favorites view (v3.9) ----------
+const favIds = () => [...S.fav].reverse().filter(id => S.byId[id]);   // most recently favorited first
+function renderFav() {
+  const ids = favIds();
+  $('#fav-n').textContent = ids.length ? `${ids.length} 张` : '';
+  $('#fav-empty').hidden = ids.length > 0; $('#fav-play').hidden = $('#fav-export').hidden = !ids.length;
+  $('#favgrid').innerHTML = ids.map(id => { const p = S.byId[id];
+    return `<div class="fi" data-id="${id}" tabindex="0" role="button" aria-label="${esc(p.title)}"><img src="${esc(thumbOf(p))}" alt="" loading="lazy" decoding="async"><button class="un" data-unfav="${id}" aria-label="取消收藏">♥</button></div>`; }).join('');
+}
+$('#favgrid').addEventListener('click', e => {
+  const u = e.target.closest('[data-unfav]'); if (u) { e.stopPropagation(); toggleFav(u.dataset.unfav); return; }
+  const c = e.target.closest('.fi'); if (c) openViewer(favIds(), c.dataset.id, 'fav');
+});
+$('#favgrid').addEventListener('keydown', e => { if (e.key === 'Enter') { const c = e.target.closest('.fi'); if (c) openViewer(favIds(), c.dataset.id, 'fav'); } });
+$('#fav-play').onclick = () => { const ids = favIds(); if (ids.length) openViewer(ids, ids[0], 'fav'); };
+$('#fav-go').onclick = () => setView('lib');
+$('#fav-export').onclick = () => {   // backup only (import is not built yet)
+  const ids = [...S.fav].filter(id => S.byId[id]); if (!ids.length) return toast('还没有收藏');
+  const d = new Date(), pad = n => String(n).padStart(2, '0'), day = `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+  const blob = new Blob([JSON.stringify({ app: 'pose', version: VERSION, exported_at: d.toISOString(), count: ids.length, favorites: ids }, null, 1)], { type: 'application/json' });
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `pose-favorites-${day}.json`; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 4000); toast(`已导出 ${ids.length} 个收藏`);
+};
+
+// ---------- fullscreen album viewer (v3.9) ----------
+// Three panes (prev / current / next) live in a track that follows the finger. After a swipe commits, the panes are rotated
+// (no re-render of the visible photo, so no flicker). Pointer Events drive everything: swipe, pinch, double-tap, pan, drag-down-to-close.
+const V = { ids: [], i: 0, from: '', panes: [], s: 1, tx: 0, ty: 0, busy: false, wl: null, after: null, uiT: 0, tapT: 0, lastTap: null, ptrs: new Map(), g: null, loaded: new Set(), pend: new Map(), theme: null };
+const vEl = $('#viewer'), vStage = $('#vw-stage'), vTrack = $('#vw-track');
+const vW = () => vEl.clientWidth || innerWidth, vH = () => vEl.clientHeight || innerHeight;
+const clamp = (x, a, b) => Math.min(b, Math.max(a, x));
+for (let k = 0; k < 3; k++) {
+  const el = document.createElement('div'); el.className = 'vpane'; const img = document.createElement('img'); img.className = 'vimg'; img.alt = ''; img.draggable = false; el.appendChild(img);
+  vTrack.appendChild(el); V.panes.push({ el, img, idx: -1, id: null });
+}
+const vLayout = () => V.panes.forEach((p, k) => { p.el.style.transform = `translate3d(${(k - 1) * 100}%,0,0)`; });
+const vCur = () => V.panes[1];
+function vFull(p) {   // load + decode the full image once; resolves true when it can be shown
+  let pr = V.pend.get(p.image); if (pr) return pr;
+  pr = new Promise(res => {
+    const im = new Image();
+    im.onload = () => { (im.decode ? im.decode() : Promise.resolve()).catch(() => {}).then(() => { V.loaded.add(p.image); res(true); }); };
+    im.onerror = () => { V.pend.delete(p.image); res(false); };
+    im.src = p.image;
+  });
+  V.pend.set(p.image, pr); return pr;
+}
+function vSetPane(pane, idx) {
+  const id = V.ids[idx], p = id && S.byId[id]; pane.idx = idx; pane.id = id || null; pane.img.style.transform = ''; pane.img.style.transition = 'none';
+  if (!p) { pane.img.removeAttribute('src'); pane.img.style.visibility = 'hidden'; return; }
+  pane.img.style.visibility = '';
+  const want = V.loaded.has(p.image) ? p.image : thumbOf(p);       // thumbnail first, full image swaps in when ready
+  if (pane.img.getAttribute('src') !== want) pane.img.src = want;
+  if (!V.loaded.has(p.image) && p.image !== thumbOf(p)) vFull(p).then(ok => { if (ok && pane.id === id) pane.img.src = p.image; });
+}
+function vPreload(idx) { const p = S.byId[V.ids[idx]]; if (p && p.image !== thumbOf(p)) vFull(p); }
+function vUpdateBar() {
+  $('#vw-count').textContent = `${V.i + 1}/${V.ids.length}`;
+  const id = V.ids[V.i], on = S.fav.has(id), b = $('#vw-fav'); b.textContent = on ? '♥' : '♡'; b.classList.toggle('on', on); b.setAttribute('aria-pressed', on);
+  vEl.dataset.id = id; vEl.dataset.index = V.i;
+}
+function vShow(i) {
+  V.i = i; V.s = 1; V.tx = V.ty = 0; vEl.dataset.zoom = '1';
+  vSetPane(V.panes[0], i - 1); vSetPane(V.panes[1], i); vSetPane(V.panes[2], i + 1); vLayout();
+  vPreload(i + 2); vPreload(i - 2); vUpdateBar();
+}
+const vTrackTo = (x, y, ms) => { vTrack.style.transition = ms ? `transform ${ms}ms cubic-bezier(.22,.8,.3,1)` : 'none'; vTrack.style.transform = `translate3d(${x}px,${y || 0}px,0)`; };
+function vApplyZoom(anim) {
+  const im = vCur().img; im.style.transition = anim ? 'transform .22s ease-out' : 'none';
+  im.style.transform = V.s === 1 && !V.tx && !V.ty ? '' : `translate3d(${V.tx}px,${V.ty}px,0) scale(${V.s})`; vEl.dataset.zoom = V.s.toFixed(2);
+}
+function vClampPan(s, tx, ty, slack = 0) {
+  const im = vCur().img, nw = im.naturalWidth || 1, nh = im.naturalHeight || 1, W = vW(), H = vH(), fit = Math.min(W / nw, H / nh);
+  const mx = Math.max(0, (nw * fit * s - W) / 2) + slack, my = Math.max(0, (nh * fit * s - H) / 2) + slack;
+  return [clamp(tx, -mx, mx), clamp(ty, -my, my)];
+}
+function vZoomAt(x, y, s2, anim) {   // zoom keeping the point (x,y) (client px) fixed
+  const px = x - vW() / 2, py = y - vH() / 2, r = s2 / V.s;
+  [V.tx, V.ty] = vClampPan(s2, px - (px - V.tx) * r, py - (py - V.ty) * r); V.s = s2; if (s2 <= 1.001) { V.s = 1; V.tx = V.ty = 0; } vApplyZoom(anim);
+}
+function vResetZoom() { V.s = 1; V.tx = V.ty = 0; vApplyZoom(false); }
+function vGo(d) {
+  if (V.busy) return false;
+  const n = V.i + d; if (n < 0 || n >= V.ids.length) { vTrackTo(0, 0, 220); return false; }
+  V.busy = true; if (V.s > 1.01) vResetZoom();
+  vTrackTo(-d * vW(), 0, 280);
+  setTimeout(() => {
+    vTrackTo(0, 0, 0);
+    if (d > 0) { const p = V.panes.shift(); V.panes.push(p); } else { const p = V.panes.pop(); V.panes.unshift(p); }
+    V.i = n; vLayout(); vSetPane(V.panes[d > 0 ? 2 : 0], n + d); vResetZoom(); vUpdateBar(); vPreload(n + 2 * d); V.busy = false;
+  }, 290);
+  return true;
+}
+function vShowUI(on) {
+  clearTimeout(V.uiT); vEl.classList.toggle('ui', on);
+  if (on) V.uiT = setTimeout(() => vEl.classList.remove('ui'), 3500);
+}
+function vRequestClose() { if (!vEl.hidden && stack[stack.length - 1] === 'viewer') closeTop(); }
+function vResetDrag() { vTrackTo(0, 0, 0); vEl.style.background = ''; vTrack.style.opacity = ''; }
+vStage.addEventListener('pointerdown', e => {
+  if (V.busy || (e.pointerType === 'mouse' && e.button !== 0)) return;
+  try { vStage.setPointerCapture(e.pointerId); } catch {}
+  V.ptrs.set(e.pointerId, { x: e.clientX, y: e.clientY });
+  if (V.ptrs.size === 1) V.g = { x0: e.clientX, y0: e.clientY, mode: '', moved: false, dx: 0, dy: 0, tx0: V.tx, ty0: V.ty, hist: [[performance.now(), e.clientX, e.clientY]] };
+  else if (V.ptrs.size === 2) {
+    if (V.g && (V.g.mode === 'swipe' || V.g.mode === 'close')) vResetDrag();
+    const [a, b] = [...V.ptrs.values()];
+    V.g = { mode: 'pinch', moved: true, d0: Math.hypot(a.x - b.x, a.y - b.y) || 1, s0: V.s, tx0: V.tx, ty0: V.ty, cx0: (a.x + b.x) / 2 - vW() / 2, cy0: (a.y + b.y) / 2 - vH() / 2 };
+    clearTimeout(V.tapT); V.lastTap = null;
+  }
+});
+vStage.addEventListener('pointermove', e => {
+  if (!V.ptrs.has(e.pointerId)) return; V.ptrs.set(e.pointerId, { x: e.clientX, y: e.clientY }); const g = V.g; if (!g) return;
+  if (g.mode === 'pinch') {
+    if (V.ptrs.size < 2) return;
+    const [a, b] = [...V.ptrs.values()], d = Math.hypot(a.x - b.x, a.y - b.y), cx = (a.x + b.x) / 2 - vW() / 2, cy = (a.y + b.y) / 2 - vH() / 2;
+    const s = clamp(g.s0 * d / g.d0, 0.6, 6), ix = (g.cx0 - g.tx0) / g.s0, iy = (g.cy0 - g.ty0) / g.s0;
+    V.s = s; [V.tx, V.ty] = vClampPan(s, cx - ix * s, cy - iy * s, 60); vApplyZoom(false); return;
+  }
+  g.dx = e.clientX - g.x0; g.dy = e.clientY - g.y0; const now = performance.now(); g.hist.push([now, e.clientX, e.clientY]); while (g.hist.length > 2 && now - g.hist[0][0] > 120) g.hist.shift();
+  if (!g.mode) {
+    if (Math.hypot(g.dx, g.dy) < 8) return; g.moved = true; clearTimeout(V.tapT); V.lastTap = null;
+    g.mode = V.s > 1.02 ? 'pan' : (Math.abs(g.dx) > Math.abs(g.dy) ? 'swipe' : 'close');
+  }
+  if (g.mode === 'swipe') {
+    let x = g.dx; if ((x > 0 && V.i === 0) || (x < 0 && V.i === V.ids.length - 1)) x *= 0.3;   // rubber band at the ends
+    vTrackTo(x, 0, 0);
+  } else if (g.mode === 'close') {
+    const y = Math.max(0, g.dy); vTrackTo(g.dx * 0.25, y, 0); vEl.style.background = `rgba(0,0,0,${clamp(1 - y / (vH() * 0.7), 0.15, 1)})`;
+  } else if (g.mode === 'pan') {
+    [V.tx, V.ty] = vClampPan(V.s, g.tx0 + g.dx, g.ty0 + g.dy, 40); vApplyZoom(false);
+  }
+});
+function vPtrUp(e) {
+  if (!V.ptrs.has(e.pointerId)) return; V.ptrs.delete(e.pointerId); const g = V.g;
+  if (g && g.mode === 'pinch') {
+    if (V.ptrs.size >= 2) return;
+    if (V.s < 1.05) { V.s = 1; V.tx = V.ty = 0; } else { [V.tx, V.ty] = vClampPan(V.s, V.tx, V.ty); V.s = Math.min(V.s, 5); }
+    vApplyZoom(true);
+    if (V.ptrs.size === 1) { const pt = [...V.ptrs.values()][0]; V.g = { x0: pt.x, y0: pt.y, mode: 'pan', moved: true, dx: 0, dy: 0, tx0: V.tx, ty0: V.ty, hist: [] }; } else V.g = null;
+    return;
+  }
+  if (V.ptrs.size) return; V.g = null; if (!g) return;
+  const h = g.hist, last = h[h.length - 1], first = h[0], dt = last && first ? Math.max(1, last[0] - first[0]) : 1;
+  const vx = last && first ? (last[1] - first[1]) / dt : 0, vy = last && first ? (last[2] - first[2]) / dt : 0;   // px/ms over the last ~120ms
+  if (g.mode === 'swipe') {
+    const w = vW(), dir = g.dx < 0 ? 1 : -1, fast = Math.abs(vx) > 0.45 && Math.sign(vx) === Math.sign(g.dx);
+    if ((Math.abs(g.dx) > w * 0.2 || (fast && Math.abs(g.dx) > 24)) && e.type === 'pointerup') { if (!vGo(dir)) vTrackTo(0, 0, 220); } else vTrackTo(0, 0, 220);
+  } else if (g.mode === 'close') {
+    if (e.type === 'pointerup' && (g.dy > vH() * 0.16 || (vy > 0.6 && g.dy > 30))) {
+      vTrackTo(g.dx * 0.25, vH(), 200); vEl.style.background = 'rgba(0,0,0,0)'; setTimeout(vRequestClose, 190);
+    } else { vTrackTo(0, 0, 220); vEl.style.background = ''; }
+  } else if (g.mode === 'pan') {
+    [V.tx, V.ty] = vClampPan(V.s, V.tx, V.ty); vApplyZoom(true);
+  } else if (e.type === 'pointerup' && !g.moved) {
+    const now = performance.now(), lt = V.lastTap;
+    if (lt && now - lt.t < 320 && Math.hypot(e.clientX - lt.x, e.clientY - lt.y) < 40) {      // double tap: zoom in / back out
+      clearTimeout(V.tapT); V.lastTap = null; if (V.s > 1.05) { V.s = 1; V.tx = V.ty = 0; vApplyZoom(true); } else vZoomAt(e.clientX, e.clientY, 2.5, true);
+    } else { V.lastTap = { t: now, x: e.clientX, y: e.clientY }; clearTimeout(V.tapT); V.tapT = setTimeout(() => { V.lastTap = null; vShowUI(!vEl.classList.contains('ui')); }, 300); }
+  }
+}
+vStage.addEventListener('pointerup', vPtrUp); vStage.addEventListener('pointercancel', vPtrUp);
+vStage.addEventListener('wheel', e => { e.preventDefault(); if (V.busy) return; const s2 = clamp(V.s * Math.exp(-e.deltaY * 0.0015), 1, 5); vZoomAt(e.clientX, e.clientY, s2 < 1.03 ? 1 : s2, false); }, { passive: false });
+vStage.addEventListener('contextmenu', e => { if (e.pointerType === 'touch') e.preventDefault(); });
+$('#vw-close').onclick = () => closeTop();
+$('#vw-fav').onclick = () => { toggleFav(V.ids[V.i]); vShowUI(true); };
+$('#vw-info').onclick = () => {      // back to the detail card of the photo currently shown
+  const id = V.ids[V.i], ids = V.ids.slice();
+  V.after = () => { if (stack.includes('card')) { S.ctx = ids; S.ctxI = ids.indexOf(id); history.replaceState({ ov: 'card' }, '', '#pose=' + id); renderCard(); } else openCard(id, ids); };
+  closeTop();
+};
+async function wlOn() {      // keep the screen awake while admiring photos (if the browser supports it)
+  try { if ('wakeLock' in navigator && !V.wl) { const l = await navigator.wakeLock.request('screen'); if (vEl.hidden) { l.release(); return; } V.wl = l; l.addEventListener('release', () => { if (V.wl === l) V.wl = null; }); } } catch {}
+}
+function wlOff() { try { V.wl && V.wl.release(); } catch {} V.wl = null; }
+document.addEventListener('visibilitychange', () => { if (!document.hidden && !vEl.hidden) wlOn(); });
+function openViewer(ids, id, from) {
+  ids = (ids || []).filter(x => S.byId[x]); if (!ids.length || !S.byId[id]) return;
+  V.ids = ids; V.from = from || ''; V.after = null; V.busy = false; V.ptrs.clear(); V.g = null; V.lastTap = null; clearTimeout(V.tapT);
+  openOv('viewer', location.pathname + location.search + location.hash);
+  vResetDrag(); vEl.classList.remove('ui'); vShow(Math.max(0, ids.indexOf(id)));
+  const m = document.querySelector('meta[name=theme-color]'); V.theme = m.content; m.content = '#000000';
+  wlOn();
+}
+function viewerClosed() {
+  wlOff(); clearTimeout(V.uiT); clearTimeout(V.tapT); V.ptrs.clear(); V.g = null; V.busy = false; vEl.classList.remove('ui'); vResetDrag();
+  if (V.theme) { document.querySelector('meta[name=theme-color]').content = V.theme; V.theme = null; }
+  V.panes.forEach(p => { p.img.removeAttribute('src'); p.id = null; });
+  const after = V.after; V.after = null;
+  if (V.from === 'card' && !after && stack.includes('card')) { S.ctxI = Math.max(0, S.ctx.indexOf(V.ids[V.i])); history.replaceState({ ov: 'card' }, '', '#pose=' + S.ctx[S.ctxI]); renderCard(); }   // detail card follows the photo you swiped to
+  if (S.view === 'fav') renderFav();
+  if (after) setTimeout(after, 0);
+}
 
 // ---------- sequences ----------
 const seqPoses = s => s.poses.map(id => S.byId[id]).filter(Boolean);
@@ -312,7 +513,7 @@ function renderStep() {
   $('#st-title').textContent = p.title; $('#st-kou').textContent = p.kouling || '（没有口令，按照片摆姿）';
   const t0 = (p.tips || [])[0]; $('#st-hint').textContent = t0 ? (Array.isArray(t0) ? t0.join('：') : t0) : '';
   $('#st-next').textContent = S.stepI === n - 1 ? '完成 ✓' : '下一步 ›'; $('#st-prev').disabled = S.stepI === 0;
-  const li = inList(p.id); $('#st-done').hidden = !li; if (li) { $('#st-done').textContent = li.done ? '↺ 取消已拍' : '✓ 已拍'; }
+  const li = inList(p.id); $('#st-done').hidden = !li; if (li) { $('#st-done').textContent = li.done ? '取消已拍' : '✓ 已拍'; }
   if (S.speak) speak(p.kouling);
 }
 function stepGo(d) {
@@ -329,6 +530,7 @@ $('#st-speak').onclick = () => { S.speak = !S.speak; LS.set('ps_speak', S.speak)
 swipe($('#step'), () => stepGo(1), () => stepGo(-1));
 
 // ---------- checklist ----------
+function renderFavBadge() { $('#favbadge').textContent = S.fav.size || ''; }
 function renderBadge() { const n = S.list.filter(x => !x.done).length; $('#listbadge').textContent = n || ''; }
 function renderChecklist() {
   const done = S.list.filter(x => x.done).length, n = S.list.length;
@@ -404,7 +606,7 @@ $('#c-form').onsubmit = async e => {
 function setView(v) {
   S.view = v; $$('main > section').forEach(s => s.hidden = s.id !== 'v-' + v);
   $$('#tabs button').forEach(b => b.classList.toggle('on', b.dataset.v === v));
-  if (v === 'list') renderChecklist(); if (v === 'seq') renderSeqs(); if (v === 'mine') renderCustom();
+  if (v === 'fav') renderFav(); if (v === 'list') renderChecklist(); if (v === 'seq') renderSeqs(); if (v === 'mine') renderCustom();
   if (v === 'lib' && S.shown < Math.min(BATCH, S.filtered.length)) renderGrid(false);
 }
 $$('#tabs button').forEach(b => b.onclick = () => { if (stack.length) closeAll(); setView(b.dataset.v); window.scrollTo(0, 0); });
@@ -416,17 +618,29 @@ $('#install').onclick = async () => { if (!deferred) return; deferred.prompt(); 
 window.addEventListener('appinstalled', () => { $('#install').hidden = true; toast('已安装'); });
 $('#offline').onclick = async () => {
   if (!('caches' in window)) return toast('此浏览器不支持离线缓存');
-  const urls = S.poses.filter(p => p.type === 'image').map(p => p.thumb), c = await caches.open('ps-img-v1'); let n = 0;
-  if (!urls.length) { $('#offline-st').textContent = '还没有导入的照片'; return; }
-  for (const u of urls) { try { if (!(await c.match(u))) await c.add(u); } catch {} n++; $('#offline-st').textContent = `${n} / ${urls.length}`; }
-  $('#offline-st').textContent = `已保存 ${urls.length} 张缩略图`;
+  const st = $('#offline-st'), urls = S.poses.filter(p => p.type === 'image').map(p => p.thumb);
+  if (!urls.length) { st.textContent = '还没有导入的照片'; return; }
+  const btn = $('#offline'); if (btn.disabled) return; btn.disabled = true;
+  const c = await caches.open(THUMB_CACHE), total = urls.length, q = urls.slice(); let done = 0, fail = 0;
+  st.textContent = `0 / ${total}`;
+  // limited concurrency (6 at a time) so a phone on mobile data is not flooded with 500+ simultaneous requests
+  const worker = async () => {
+    while (q.length) {
+      const u = q.shift();
+      try { if (!(await c.match(u))) await c.add(u); } catch { fail++; }
+      done++; if (done % 4 === 0 || done === total) st.textContent = `${done} / ${total}`;
+    }
+  };
+  await Promise.all(Array.from({ length: 6 }, worker));
+  btn.disabled = false;
+  st.textContent = fail ? `已保存 ${total - fail} 张缩略图（${fail} 张失败，可再点一次重试）` : `已保存 ${total} 张缩略图`;
 };
 function renderAbout() {
   const np = S.poses.filter(p => p.type === 'image').length, nc = S.poses.filter(p => p.type === 'custom').length;
   const ntag = S.dims.reduce((n, d) => n + d.tags.length, 0);
   $('#about').innerHTML = `照片 ${np} · 自建 ${nc} · 连拍 ${S.seqs.length} · ${S.dims.length} 个维度 / ${ntag} 个标签<br>收藏、清单、自建动作只保存在本机浏览器。<br>界面思路参考开源项目 RuiC-PoseAtlas（MIT，仅借鉴交互思路，未使用其代码与图片）。`;
 }
-function renderAll() { applyFilters(); renderSeqs(); renderChecklist(); renderCustom(); renderAbout(); }
+function renderAll() { renderFavBadge(); applyFilters(); renderSeqs(); renderChecklist(); renderCustom(); renderAbout(); }
 
 function openFromHash() {
   const m = location.hash.match(/^#pose=(.+)$/); if (!m || !S.byId[decodeURIComponent(m[1])]) return;
