@@ -5,7 +5,7 @@
 const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const LS = { get(k, d) { try { const v = localStorage.getItem(k); return v == null ? d : JSON.parse(v); } catch { return d; } }, set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} } };
-const BATCH = 30, VERSION = '4.1.0', THUMB_CACHE = 'ps-thumbs-v1';
+const BATCH = 30, VERSION = '4.2.0', THUMB_CACHE = 'ps-thumbs-v1';
 
 // ---------- state ----------
 const S = { tax: null, dims: [], tagDim: {}, poses: [], byId: {}, seqs: [], useqs: LS.get('ps_useq', []),

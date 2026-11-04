@@ -1,8 +1,8 @@
 // Offline PWA. Bump VERSION when shipping app changes.
 // v3.9: thumbnails and full images live in SEPARATE caches so browsing full-size photos can never evict thumbnails.
-const VERSION = "v4.1.0", SHELL = "ps-shell-" + VERSION;
+const VERSION = "v4.2.0", SHELL = "ps-shell-" + VERSION;
 const THUMBS = "ps-thumbs-v1", FULL = "ps-full-v1", LEGACY_IMG = "ps-img-v1";
-const MAX_THUMBS = 3000;   // far above the photo count (682): thumbnails are small and must never be evicted in practice
+const MAX_THUMBS = 3000;   // far above the photo count (743): thumbnails are small and must never be evicted in practice
 const MAX_FULL = 400;      // full images are big: keep the 400 most recently viewed (LRU)
 // data/imported.json is intentionally NOT precached: it is network-first (new imports show up at once) with cache fallback.
 const CORE = ["./", "index.html", "style.css", "app.js", "manifest.webmanifest", "assets/icon.svg", "assets/icon-192.png", "assets/icon-512.png", "data/taxonomy.json"];

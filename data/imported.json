@@ -37817,6 +37817,9 @@
    ],
    "outfit": [
     "外套"
+   ],
+   "scene": [
+    "雪景"
    ]
   },
   "extra": [],
@@ -37867,6 +37870,9 @@
    ],
    "outfit": [
     "长裙"
+   ],
+   "scene": [
+    "雪景"
    ]
   },
   "extra": [],
@@ -37916,6 +37922,9 @@
    ],
    "outfit": [
     "外套"
+   ],
+   "scene": [
+    "雪景"
    ]
   },
   "extra": [],
@@ -37965,6 +37974,9 @@
    ],
    "outfit": [
     "外套"
+   ],
+   "scene": [
+    "雪景"
    ]
   },
   "extra": [],
@@ -38017,6 +38029,9 @@
    ],
    "outfit": [
     "外套"
+   ],
+   "scene": [
+    "雪景"
    ]
   },
   "extra": [],
@@ -38066,6 +38081,9 @@
    ],
    "outfit": [
     "外套"
+   ],
+   "scene": [
+    "雪景"
    ]
   },
   "extra": [],
@@ -38115,6 +38133,9 @@
    ],
    "outfit": [
     "长裙"
+   ],
+   "scene": [
+    "雪景"
    ]
   },
   "extra": [],
@@ -38168,6 +38189,9 @@
    ],
    "outfit": [
     "外套"
+   ],
+   "scene": [
+    "雪景"
    ]
   },
   "extra": [],
@@ -38220,6 +38244,9 @@
    ],
    "outfit": [
     "外套"
+   ],
+   "scene": [
+    "雪景"
    ]
   },
   "extra": [],
@@ -38250,6 +38277,7 @@
     "夜景人造光"
    ],
    "scene": [
+    "雪景",
     "城市夜景"
    ],
    "style": [
@@ -38307,6 +38335,7 @@
     "夜景人造光"
    ],
    "scene": [
+    "雪景",
     "城市夜景"
    ],
    "style": [
@@ -38363,6 +38392,7 @@
     "夜景人造光"
    ],
    "scene": [
+    "雪景",
     "城市夜景"
    ],
    "style": [
@@ -38418,6 +38448,7 @@
     "夜景人造光"
    ],
    "scene": [
+    "雪景",
     "城市夜景"
    ],
    "style": [
@@ -38473,6 +38504,7 @@
     "夜景人造光"
    ],
    "scene": [
+    "雪景",
     "城市夜景"
    ],
    "style": [
@@ -38528,6 +38560,7 @@
     "逆光"
    ],
    "scene": [
+    "雪景",
     "城市夜景"
    ],
    "style": [
@@ -38583,6 +38616,7 @@
     "夜景人造光"
    ],
    "scene": [
+    "雪景",
     "城市夜景"
    ],
    "style": [
@@ -41316,6 +41350,3255 @@
   "added_at": "2026-11-05T02:50:36+08:00",
   "shot": {
    "焦段": "24mm"
+  }
+ },
+ {
+  "id": "x2971b7087e79",
+  "type": "image",
+  "title": "天台蓝调坐姿近景",
+  "image": "imported/x2971b7087e79.jpg",
+  "thumb": "imported/thumbs/x2971b7087e79.jpg",
+  "w": 1067,
+  "h": 1600,
+  "source_url": "https://www.douyin.com/note/7678577291606115301",
+  "kouling": "坐天台边，身体微侧看镜头",
+  "note": "抖音图文客片 batchI",
+  "tags": {
+   "light": [
+    "蓝调时刻"
+   ],
+   "scene": [
+    "天台"
+   ],
+   "style": [
+    "氛围感"
+   ],
+   "mood": [
+    "安静"
+   ],
+   "posture": [
+    "坐"
+   ],
+   "shot": [
+    "七分身"
+   ],
+   "angle": [
+    "平视"
+   ],
+   "comp": [
+    "竖构图"
+   ]
+  },
+  "extra": [],
+  "tips": [
+   "蓝调时刻城市灯做背景"
+  ],
+  "difficulty": 1,
+  "subject": "单人女生",
+  "original_name": "i01_wuyu_rooftop_blue_01.jpg",
+  "added_at": "2026-11-05T02:56:04+08:00",
+  "shot": {
+   "焦段": "35mm"
+  }
+ },
+ {
+  "id": "x4209cf08522b",
+  "type": "image",
+  "title": "天台栏杆倚靠",
+  "image": "imported/x4209cf08522b.jpg",
+  "thumb": "imported/thumbs/x4209cf08522b.jpg",
+  "w": 1067,
+  "h": 1600,
+  "source_url": "https://www.douyin.com/note/7678577291606115301",
+  "kouling": "倚栏杆站，手搭栏杆看远处",
+  "note": "抖音图文客片 batchI",
+  "tags": {
+   "light": [
+    "蓝调时刻"
+   ],
+   "scene": [
+    "天台",
+    "栏杆"
+   ],
+   "style": [
+    "氛围感"
+   ],
+   "mood": [
+    "安静"
+   ],
+   "posture": [
+    "靠"
+   ],
+   "shot": [
+    "全身"
+   ],
+   "angle": [
+    "平视"
+   ],
+   "comp": [
+    "竖构图"
+   ]
+  },
+  "extra": [],
+  "tips": [
+   "天空蓝调留白"
+  ],
+  "difficulty": 1,
+  "subject": "单人女生",
+  "original_name": "i01_wuyu_rooftop_blue_02.jpg",
+  "added_at": "2026-11-05T02:56:04+08:00",
+  "shot": {
+   "焦段": "35mm"
+  }
+ },
+ {
+  "id": "x48934bdee08a",
+  "type": "image",
+  "title": "托腮半身",
+  "image": "imported/x48934bdee08a.jpg",
+  "thumb": "imported/thumbs/x48934bdee08a.jpg",
+  "w": 1067,
+  "h": 1600,
+  "source_url": "https://www.douyin.com/note/7678577291606115301",
+  "kouling": "手托下巴，侧头看镜头",
+  "note": "抖音图文客片 batchI",
+  "tags": {
+   "light": [
+    "蓝调时刻"
+   ],
+   "scene": [
+    "天台"
+   ],
+   "style": [
+    "氛围感"
+   ],
+   "mood": [
+    "温柔"
+   ],
+   "posture": [
+    "站"
+   ],
+   "shot": [
+    "半身"
+   ],
+   "angle": [
+    "平视"
+   ],
+   "comp": [
+    "竖构图"
+   ]
+  },
+  "extra": [],
+  "tips": [
+   "补光打脸，背景楼宇虚化"
+  ],
+  "difficulty": 1,
+  "subject": "单人女生",
+  "original_name": "i01_wuyu_rooftop_blue_03.jpg",
+  "added_at": "2026-11-05T02:56:04+08:00",
+  "shot": {
+   "焦段": "50mm"
+  }
+ },
+ {
+  "id": "xd925909f2694",
+  "type": "image",
+  "title": "天台侧身回望",
+  "image": "imported/xd925909f2694.jpg",
+  "thumb": "imported/thumbs/xd925909f2694.jpg",
+  "w": 1067,
+  "h": 1600,
+  "source_url": "https://www.douyin.com/note/7678577291606115301",
+  "kouling": "侧身站立回头看镜头",
+  "note": "抖音图文客片 batchI",
+  "tags": {
+   "light": [
+    "蓝调时刻"
+   ],
+   "scene": [
+    "天台"
+   ],
+   "style": [
+    "氛围感"
+   ],
+   "mood": [
+    "安静"
+   ],
+   "posture": [
+    "回头"
+   ],
+   "shot": [
+    "七分身"
+   ],
+   "angle": [
+    "平视"
+   ],
+   "comp": [
+    "竖构图"
+   ]
+  },
+  "extra": [],
+  "tips": [
+   "城市灯光做光斑"
+  ],
+  "difficulty": 1,
+  "subject": "单人女生",
+  "original_name": "i01_wuyu_rooftop_blue_04.jpg",
+  "added_at": "2026-11-05T02:56:04+08:00",
+  "shot": {
+   "焦段": "35mm"
+  }
+ },
+ {
+  "id": "x3350f8802c07",
+  "type": "image",
+  "title": "天台坐姿抬头",
+  "image": "imported/x3350f8802c07.jpg",
+  "thumb": "imported/thumbs/x3350f8802c07.jpg",
+  "w": 1067,
+  "h": 1600,
+  "source_url": "https://www.douyin.com/note/7678577291606115301",
+  "kouling": "坐着仰头望天",
+  "note": "抖音图文客片 batchI",
+  "tags": {
+   "light": [
+    "蓝调时刻"
+   ],
+   "scene": [
+    "天台"
+   ],
+   "style": [
+    "氛围感"
+   ],
+   "mood": [
+    "松弛感"
+   ],
+   "posture": [
+    "坐"
+   ],
+   "shot": [
+    "全身"
+   ],
+   "angle": [
+    "平视"
+   ],
+   "comp": [
+    "留白"
+   ]
+  },
+  "extra": [],
+  "tips": [
+   "蓝调天空占大半"
+  ],
+  "difficulty": 1,
+  "subject": "单人女生",
+  "original_name": "i01_wuyu_rooftop_blue_05.jpg",
+  "added_at": "2026-11-05T02:56:04+08:00",
+  "shot": {
+   "焦段": "35mm"
+  }
+ },
+ {
+  "id": "xddc301f92215",
+  "type": "image",
+  "title": "天台站立整发",
+  "image": "imported/xddc301f92215.jpg",
+  "thumb": "imported/thumbs/xddc301f92215.jpg",
+  "w": 1067,
+  "h": 1600,
+  "source_url": "https://www.douyin.com/note/7678577291606115301",
+  "kouling": "站立抬手整理头发",
+  "note": "抖音图文客片 batchI",
+  "tags": {
+   "light": [
+    "蓝调时刻"
+   ],
+   "scene": [
+    "天台"
+   ],
+   "style": [
+    "氛围感"
+   ],
+   "mood": [
+    "温柔"
+   ],
+   "posture": [
+    "站"
+   ],
+   "shot": [
+    "七分身"
+   ],
+   "angle": [
+    "平视"
+   ],
+   "comp": [
+    "竖构图"
+   ]
+  },
+  "extra": [],
+  "tips": [
+   "背景城市夜景"
+  ],
+  "difficulty": 1,
+  "subject": "单人女生",
+  "original_name": "i01_wuyu_rooftop_blue_06.jpg",
+  "added_at": "2026-11-05T02:56:04+08:00",
+  "shot": {
+   "焦段": "35mm"
+  }
+ },
+ {
+  "id": "x000664eeeeff",
+  "type": "image",
+  "title": "靠灯杆坐地握水瓶",
+  "image": "imported/x000664eeeeff.jpg",
+  "thumb": "imported/thumbs/x000664eeeeff.jpg",
+  "w": 1067,
+  "h": 1600,
+  "source_url": "https://www.douyin.com/note/7704191514361122745",
+  "kouling": "坐路边靠灯杆，手握水瓶看镜头",
+  "note": "抖音图文客片 batchI",
+  "tags": {
+   "light": [
+    "蓝调时刻"
+   ],
+   "scene": [
+    "街道"
+   ],
+   "style": [
+    "氛围感"
+   ],
+   "mood": [
+    "松弛感"
+   ],
+   "posture": [
+    "坐"
+   ],
+   "shot": [
+    "全身"
+   ],
+   "angle": [
+    "平视"
+   ],
+   "comp": [
+    "竖构图"
+   ],
+   "prop": [
+    "饮料"
+   ],
+   "outfit": [
+    "外套"
+   ]
+  },
+  "extra": [],
+  "tips": [
+   "蓝调街灯做背景"
+  ],
+  "difficulty": 1,
+  "subject": "单人女生",
+  "original_name": "i02_wuyu_street_blue_01.jpg",
+  "added_at": "2026-11-05T02:56:04+08:00",
+  "shot": {
+   "焦段": "35mm"
+  }
+ },
+ {
+  "id": "x75a32fa6e250",
+  "type": "image",
+  "title": "街头仰望",
+  "image": "imported/x75a32fa6e250.jpg",
+  "thumb": "imported/thumbs/x75a32fa6e250.jpg",
+  "w": 1067,
+  "h": 1600,
+  "source_url": "https://www.douyin.com/note/7704191514361122745",
+  "kouling": "站路边抬头望天",
+  "note": "抖音图文客片 batchI",
+  "tags": {
+   "light": [
+    "蓝调时刻"
+   ],
+   "scene": [
+    "街道"
+   ],
+   "style": [
+    "氛围感"
+   ],
+   "mood": [
+    "安静"
+   ],
+   "posture": [
+    "站"
+   ],
+   "shot": [
+    "七分身"
+   ],
+   "angle": [
+    "平视"
+   ],
+   "comp": [
+    "竖构图"
+   ],
+   "outfit": [
+    "外套"
+   ]
+  },
+  "extra": [],
+  "tips": [
+   "低一点拍延伸身形"
+  ],
+  "difficulty": 1,
+  "subject": "单人女生",
+  "original_name": "i02_wuyu_street_blue_02.jpg",
+  "added_at": "2026-11-05T02:56:05+08:00",
+  "shot": {
+   "焦段": "35mm"
+  }
+ },
+ {
+  "id": "x3a1b714f2c2f",
+  "type": "image",
+  "title": "街头仰头喝水",
+  "image": "imported/x3a1b714f2c2f.jpg",
+  "thumb": "imported/thumbs/x3a1b714f2c2f.jpg",
+  "w": 1067,
+  "h": 1600,
+  "source_url": "https://www.douyin.com/note/7704191514361122745",
+  "kouling": "站立仰头喝水",
+  "note": "抖音图文客片 batchI",
+  "tags": {
+   "light": [
+    "蓝调时刻"
+   ],
+   "scene": [
+    "街道"
+   ],
+   "style": [
+    "氛围感"
+   ],
+   "mood": [
+    "松弛感"
+   ],
+   "posture": [
+    "站"
+   ],
+   "shot": [
+    "半身"
+   ],
+   "angle": [
+    "平视"
+   ],
+   "comp": [
+    "竖构图"
+   ],
+   "prop": [
+    "饮料"
+   ],
+   "outfit": [
+    "外套"
+   ]
+  },
+  "extra": [],
+  "tips": [
+   "抓拍自然动作"
+  ],
+  "difficulty": 1,
+  "subject": "单人女生",
+  "original_name": "i02_wuyu_street_blue_03.jpg",
+  "added_at": "2026-11-05T02:56:05+08:00",
+  "shot": {
+   "焦段": "35mm"
+  }
+ },
+ {
+  "id": "x7a20815bdcad",
+  "type": "image",
+  "title": "倚灯杆站",
+  "image": "imported/x7a20815bdcad.jpg",
+  "thumb": "imported/thumbs/x7a20815bdcad.jpg",
+  "w": 1067,
+  "h": 1600,
+  "source_url": "https://www.douyin.com/note/7704191514361122745",
+  "kouling": "侧身倚灯杆看镜头",
+  "note": "抖音图文客片 batchI",
+  "tags": {
+   "light": [
+    "蓝调时刻"
+   ],
+   "scene": [
+    "街道"
+   ],
+   "style": [
+    "氛围感"
+   ],
+   "mood": [
+    "酷"
+   ],
+   "posture": [
+    "靠"
+   ],
+   "shot": [
+    "全身"
+   ],
+   "angle": [
+    "平视"
+   ],
+   "comp": [
+    "引导线"
+   ],
+   "outfit": [
+    "外套"
+   ]
+  },
+  "extra": [],
+  "tips": [
+   "灯杆做竖线条"
+  ],
+  "difficulty": 1,
+  "subject": "单人女生",
+  "original_name": "i02_wuyu_street_blue_04.jpg",
+  "added_at": "2026-11-05T02:56:05+08:00",
+  "shot": {
+   "焦段": "35mm"
+  }
+ },
+ {
+  "id": "x01349b5d402c",
+  "type": "image",
+  "title": "斑马线行走",
+  "image": "imported/x01349b5d402c.jpg",
+  "thumb": "imported/thumbs/x01349b5d402c.jpg",
+  "w": 1067,
+  "h": 1600,
+  "source_url": "https://www.douyin.com/note/7704191514361122745",
+  "kouling": "走过斑马线，侧头看镜头",
+  "note": "抖音图文客片 batchI",
+  "tags": {
+   "light": [
+    "蓝调时刻"
+   ],
+   "scene": [
+    "街道"
+   ],
+   "style": [
+    "街头"
+   ],
+   "mood": [
+    "松弛感"
+   ],
+   "posture": [
+    "走"
+   ],
+   "shot": [
+    "全身"
+   ],
+   "angle": [
+    "平视"
+   ],
+   "comp": [
+    "引导线"
+   ],
+   "outfit": [
+    "外套"
+   ]
+  },
+  "extra": [],
+  "tips": [
+   "斑马线做引导线"
+  ],
+  "difficulty": 2,
+  "subject": "单人女生",
+  "original_name": "i02_wuyu_street_blue_05.jpg",
+  "added_at": "2026-11-05T02:56:05+08:00",
+  "shot": {
+   "焦段": "35mm"
+  }
+ },
+ {
+  "id": "xe78da4c1fdf6",
+  "type": "image",
+  "title": "街头回眸",
+  "image": "imported/xe78da4c1fdf6.jpg",
+  "thumb": "imported/thumbs/xe78da4c1fdf6.jpg",
+  "w": 1067,
+  "h": 1600,
+  "source_url": "https://www.douyin.com/note/7704191514361122745",
+  "kouling": "背身走路回头看镜头",
+  "note": "抖音图文客片 batchI",
+  "tags": {
+   "light": [
+    "蓝调时刻"
+   ],
+   "scene": [
+    "街道"
+   ],
+   "style": [
+    "氛围感"
+   ],
+   "mood": [
+    "温柔"
+   ],
+   "posture": [
+    "回头"
+   ],
+   "shot": [
+    "七分身"
+   ],
+   "angle": [
+    "背影"
+   ],
+   "comp": [
+    "竖构图"
+   ],
+   "outfit": [
+    "外套"
+   ]
+  },
+  "extra": [],
+  "tips": [
+   "路灯光斑入画"
+  ],
+  "difficulty": 1,
+  "subject": "单人女生",
+  "original_name": "i02_wuyu_street_blue_06.jpg",
+  "added_at": "2026-11-05T02:56:05+08:00",
+  "shot": {
+   "焦段": "50mm"
+  }
+ },
+ {
+  "id": "x83a591b0d665",
+  "type": "image",
+  "title": "超广角比手势",
+  "image": "imported/x83a591b0d665.jpg",
+  "thumb": "imported/thumbs/x83a591b0d665.jpg",
+  "w": 1067,
+  "h": 1600,
+  "source_url": "https://www.douyin.com/note/7663054900762529649",
+  "kouling": "站立单手比手势戴墨镜",
+  "note": "抖音图文客片 batchI",
+  "tags": {
+   "light": [
+    "顺光"
+   ],
+   "scene": [
+    "城市夜景",
+    "街道"
+   ],
+   "style": [
+    "街头"
+   ],
+   "mood": [
+    "酷"
+   ],
+   "posture": [
+    "站"
+   ],
+   "shot": [
+    "七分身"
+   ],
+   "angle": [
+    "低机位"
+   ],
+   "comp": [
+    "竖构图"
+   ],
+   "prop": [
+    "眼镜",
+    "包"
+   ],
+   "outfit": [
+    "长裤"
+   ]
+  },
+  "extra": [],
+  "tips": [
+   "超广角贴近低机位拍，高楼做背景"
+  ],
+  "difficulty": 2,
+  "subject": "单人女生",
+  "original_name": "i03_xiaopeng_fisheye_01.jpg",
+  "added_at": "2026-11-05T02:56:05+08:00",
+  "shot": {
+   "焦段": "14mm"
+  }
+ },
+ {
+  "id": "x44f2dc809427",
+  "type": "image",
+  "title": "超广角侧坐台阶",
+  "image": "imported/x44f2dc809427.jpg",
+  "thumb": "imported/thumbs/x44f2dc809427.jpg",
+  "w": 1067,
+  "h": 1600,
+  "source_url": "https://www.douyin.com/note/7663054900762529649",
+  "kouling": "侧坐台阶，腿伸向镜头",
+  "note": "抖音图文客片 batchI",
+  "tags": {
+   "light": [
+    "顺光"
+   ],
+   "scene": [
+    "楼梯",
+    "街道"
+   ],
+   "style": [
+    "街头"
+   ],
+   "mood": [
+    "酷"
+   ],
+   "posture": [
+    "坐"
+   ],
+   "shot": [
+    "全身"
+   ],
+   "angle": [
+    "低机位"
+   ],
+   "comp": [
+    "对角线"
+   ],
+   "prop": [
+    "眼镜"
+   ],
+   "outfit": [
+    "长裤"
+   ]
+  },
+  "extra": [],
+  "tips": [
+   "低机位让腿与高楼形成透视"
+  ],
+  "difficulty": 2,
+  "subject": "单人女生",
+  "original_name": "i03_xiaopeng_fisheye_02.jpg",
+  "added_at": "2026-11-05T02:56:05+08:00",
+  "shot": {
+   "焦段": "14mm"
+  }
+ },
+ {
+  "id": "xfa34009acc1c",
+  "type": "image",
+  "title": "伸手抓镜头",
+  "image": "imported/xfa34009acc1c.jpg",
+  "thumb": "imported/thumbs/xfa34009acc1c.jpg",
+  "w": 840,
+  "h": 1600,
+  "source_url": "https://www.douyin.com/note/7663054900762529649",
+  "kouling": "俯身伸手向镜头，戴墨镜",
+  "note": "抖音图文客片 batchI",
+  "tags": {
+   "light": [
+    "顺光"
+   ],
+   "scene": [
+    "街道"
+   ],
+   "style": [
+    "街头"
+   ],
+   "mood": [
+    "俏皮"
+   ],
+   "posture": [
+    "站"
+   ],
+   "shot": [
+    "全身"
+   ],
+   "angle": [
+    "低机位"
+   ],
+   "comp": [
+    "中心构图"
+   ],
+   "prop": [
+    "眼镜"
+   ],
+   "outfit": [
+    "长裤"
+   ]
+  },
+  "extra": [],
+  "tips": [
+   "手靠近镜头形成透视夸张"
+  ],
+  "difficulty": 2,
+  "subject": "单人女生",
+  "original_name": "i03_xiaopeng_fisheye_03.jpg",
+  "added_at": "2026-11-05T02:56:05+08:00",
+  "shot": {
+   "焦段": "14mm"
+  }
+ },
+ {
+  "id": "x0f31d5c9fa64",
+  "type": "image",
+  "title": "坐姿手拿墨镜",
+  "image": "imported/x0f31d5c9fa64.jpg",
+  "thumb": "imported/thumbs/x0f31d5c9fa64.jpg",
+  "w": 941,
+  "h": 1600,
+  "source_url": "https://www.douyin.com/note/7663054900762529649",
+  "kouling": "坐地伸腿，一手拿墨镜",
+  "note": "抖音图文客片 batchI",
+  "tags": {
+   "light": [
+    "阴天漫射"
+   ],
+   "scene": [
+    "街道"
+   ],
+   "style": [
+    "街头"
+   ],
+   "mood": [
+    "酷"
+   ],
+   "posture": [
+    "坐"
+   ],
+   "shot": [
+    "全身"
+   ],
+   "angle": [
+    "低机位"
+   ],
+   "comp": [
+    "中心构图"
+   ],
+   "prop": [
+    "眼镜"
+   ],
+   "outfit": [
+    "长裤"
+   ]
+  },
+  "extra": [],
+  "tips": [
+   "贴地仰拍，高楼汇聚"
+  ],
+  "difficulty": 2,
+  "subject": "单人女生",
+  "original_name": "i03_xiaopeng_fisheye_04.jpg",
+  "added_at": "2026-11-05T02:56:05+08:00",
+  "shot": {
+   "焦段": "14mm"
+  }
+ },
+ {
+  "id": "x5796727dd3b4",
+  "type": "image",
+  "title": "腿间仰拍比手势",
+  "image": "imported/x5796727dd3b4.jpg",
+  "thumb": "imported/thumbs/x5796727dd3b4.jpg",
+  "w": 926,
+  "h": 1600,
+  "source_url": "https://www.douyin.com/note/7663054900762529649",
+  "kouling": "站立比手势，镜头从下往上",
+  "note": "抖音图文客片 batchI",
+  "tags": {
+   "light": [
+    "顺光"
+   ],
+   "scene": [
+    "街道"
+   ],
+   "style": [
+    "街头"
+   ],
+   "mood": [
+    "俏皮"
+   ],
+   "posture": [
+    "站"
+   ],
+   "shot": [
+    "全身"
+   ],
+   "angle": [
+    "低机位"
+   ],
+   "comp": [
+    "前景虚化"
+   ],
+   "outfit": [
+    "长裤"
+   ]
+  },
+  "extra": [],
+  "tips": [
+   "极低机位，腿做前景"
+  ],
+  "difficulty": 3,
+  "subject": "单人女生",
+  "original_name": "i03_xiaopeng_fisheye_05.jpg",
+  "added_at": "2026-11-05T02:56:05+08:00",
+  "shot": {
+   "焦段": "14mm"
+  }
+ },
+ {
+  "id": "xe608f1bcf1fb",
+  "type": "image",
+  "title": "举墨镜伸向镜头",
+  "image": "imported/xe608f1bcf1fb.jpg",
+  "thumb": "imported/thumbs/xe608f1bcf1fb.jpg",
+  "w": 978,
+  "h": 1600,
+  "source_url": "https://www.douyin.com/note/7663054900762529649",
+  "kouling": "坐地，墨镜举向镜头",
+  "note": "抖音图文客片 batchI",
+  "tags": {
+   "light": [
+    "阴天漫射"
+   ],
+   "scene": [
+    "街道"
+   ],
+   "style": [
+    "街头"
+   ],
+   "mood": [
+    "酷"
+   ],
+   "posture": [
+    "坐"
+   ],
+   "shot": [
+    "全身"
+   ],
+   "angle": [
+    "低机位"
+   ],
+   "comp": [
+    "前景虚化"
+   ],
+   "prop": [
+    "眼镜"
+   ],
+   "outfit": [
+    "长裤"
+   ]
+  },
+  "extra": [],
+  "tips": [
+   "墨镜做前景透视"
+  ],
+  "difficulty": 2,
+  "subject": "单人女生",
+  "original_name": "i03_xiaopeng_fisheye_06.jpg",
+  "added_at": "2026-11-05T02:56:05+08:00",
+  "shot": {
+   "焦段": "14mm"
+  }
+ },
+ {
+  "id": "x6f52060429a1",
+  "type": "image",
+  "title": "鞋底前景坐姿",
+  "image": "imported/x6f52060429a1.jpg",
+  "thumb": "imported/thumbs/x6f52060429a1.jpg",
+  "w": 910,
+  "h": 1600,
+  "source_url": "https://www.douyin.com/note/7663054900762529649",
+  "kouling": "坐着把鞋底伸向镜头",
+  "note": "抖音图文客片 batchI",
+  "tags": {
+   "light": [
+    "顺光"
+   ],
+   "scene": [
+    "街道"
+   ],
+   "style": [
+    "街头"
+   ],
+   "mood": [
+    "酷"
+   ],
+   "posture": [
+    "坐"
+   ],
+   "shot": [
+    "全身"
+   ],
+   "angle": [
+    "低机位"
+   ],
+   "comp": [
+    "前景虚化"
+   ],
+   "prop": [
+    "包"
+   ],
+   "outfit": [
+    "长裤"
+   ]
+  },
+  "extra": [],
+  "tips": [
+   "鞋底占前景，夸张透视"
+  ],
+  "difficulty": 3,
+  "subject": "单人女生",
+  "original_name": "i03_xiaopeng_fisheye_07.jpg",
+  "added_at": "2026-11-05T02:56:05+08:00",
+  "shot": {
+   "焦段": "14mm"
+  }
+ },
+ {
+  "id": "x817fb4ee7bd6",
+  "type": "image",
+  "title": "双手高举墨镜",
+  "image": "imported/x817fb4ee7bd6.jpg",
+  "thumb": "imported/thumbs/x817fb4ee7bd6.jpg",
+  "w": 841,
+  "h": 1600,
+  "source_url": "https://www.douyin.com/note/7663054900762529649",
+  "kouling": "站立双手高举墨镜",
+  "note": "抖音图文客片 batchI",
+  "tags": {
+   "light": [
+    "顺光"
+   ],
+   "scene": [
+    "城市夜景",
+    "街道"
+   ],
+   "style": [
+    "街头"
+   ],
+   "mood": [
+    "活泼"
+   ],
+   "posture": [
+    "站"
+   ],
+   "shot": [
+    "全身"
+   ],
+   "angle": [
+    "低机位"
+   ],
+   "comp": [
+    "中心构图"
+   ],
+   "prop": [
+    "眼镜"
+   ],
+   "outfit": [
+    "长裤"
+   ]
+  },
+  "extra": [],
+  "tips": [
+   "仰拍天空与高楼汇聚"
+  ],
+  "difficulty": 2,
+  "subject": "单人女生",
+  "original_name": "i03_xiaopeng_fisheye_08.jpg",
+  "added_at": "2026-11-05T02:56:05+08:00",
+  "shot": {
+   "焦段": "14mm"
+  }
+ },
+ {
+  "id": "xdd96e194eb48",
+  "type": "image",
+  "title": "浴室镜前侧影",
+  "image": "imported/xdd96e194eb48.jpg",
+  "thumb": "imported/thumbs/xdd96e194eb48.jpg",
+  "w": 1067,
+  "h": 1600,
+  "source_url": "https://www.douyin.com/note/7660448993009260651",
+  "kouling": "站镜前侧身，镜中映出侧脸",
+  "note": "抖音图文客片 batchI",
+  "tags": {
+   "light": [
+    "柔光"
+   ],
+   "scene": [
+    "酒店"
+   ],
+   "style": [
+    "氛围感"
+   ],
+   "mood": [
+    "安静"
+   ],
+   "posture": [
+    "站"
+   ],
+   "shot": [
+    "半身"
+   ],
+   "angle": [
+    "侧拍"
+   ],
+   "comp": [
+    "框中框"
+   ],
+   "prop": [
+    "镜子"
+   ],
+   "outfit": [
+    "吊带"
+   ]
+  },
+  "extra": [],
+  "tips": [
+   "利用镜面做双重画面"
+  ],
+  "difficulty": 2,
+  "subject": "单人女生",
+  "original_name": "i04_hotel_mirror_muyun_01.jpg",
+  "added_at": "2026-11-05T02:56:05+08:00",
+  "shot": {
+   "焦段": "35mm"
+  }
+ },
+ {
+  "id": "xfe35de246a5c",
+  "type": "image",
+  "title": "镜前持口红",
+  "image": "imported/xfe35de246a5c.jpg",
+  "thumb": "imported/thumbs/xfe35de246a5c.jpg",
+  "w": 1067,
+  "h": 1600,
+  "source_url": "https://www.douyin.com/note/7660448993009260651",
+  "kouling": "对镜举口红，看镜中自己",
+  "note": "抖音图文客片 batchI",
+  "tags": {
+   "light": [
+    "柔光"
+   ],
+   "scene": [
+    "酒店"
+   ],
+   "style": [
+    "氛围感"
+   ],
+   "mood": [
+    "温柔"
+   ],
+   "posture": [
+    "站"
+   ],
+   "shot": [
+    "半身"
+   ],
+   "angle": [
+    "平视"
+   ],
+   "comp": [
+    "框中框"
+   ],
+   "prop": [
+    "镜子"
+   ],
+   "outfit": [
+    "吊带"
+   ]
+  },
+  "extra": [],
+  "tips": [
+   "镜子反射做构图"
+  ],
+  "difficulty": 2,
+  "subject": "单人女生",
+  "original_name": "i04_hotel_mirror_muyun_02.jpg",
+  "added_at": "2026-11-05T02:56:06+08:00",
+  "shot": {
+   "焦段": "35mm"
+  }
+ },
+ {
+  "id": "x1ed3f2cfbb59",
+  "type": "image",
+  "title": "侧脸涂口红",
+  "image": "imported/x1ed3f2cfbb59.jpg",
+  "thumb": "imported/thumbs/x1ed3f2cfbb59.jpg",
+  "w": 1067,
+  "h": 1600,
+  "source_url": "https://www.douyin.com/note/7660448993009260651",
+  "kouling": "侧脸低头涂口红",
+  "note": "抖音图文客片 batchI",
+  "tags": {
+   "light": [
+    "侧光"
+   ],
+   "scene": [
+    "酒店"
+   ],
+   "style": [
+    "氛围感"
+   ],
+   "mood": [
+    "安静"
+   ],
+   "posture": [
+    "站"
+   ],
+   "shot": [
+    "特写"
+   ],
+   "angle": [
+    "侧拍"
+   ],
+   "comp": [
+    "竖构图"
+   ],
+   "prop": [
+    "镜子"
+   ],
+   "outfit": [
+    "吊带"
+   ]
+  },
+  "extra": [],
+  "tips": [
+   "侧光勾轮廓"
+  ],
+  "difficulty": 1,
+  "subject": "单人女生",
+  "original_name": "i04_hotel_mirror_muyun_03.jpg",
+  "added_at": "2026-11-05T02:56:06+08:00",
+  "shot": {
+   "焦段": "50mm"
+  }
+ },
+ {
+  "id": "xd84f7e4c4790",
+  "type": "image",
+  "title": "沙发坐姿看镜头",
+  "image": "imported/xd84f7e4c4790.jpg",
+  "thumb": "imported/thumbs/xd84f7e4c4790.jpg",
+  "w": 1200,
+  "h": 1600,
+  "source_url": "https://www.douyin.com/note/7701588684664323136",
+  "kouling": "坐沙发上，手搭靠背看镜头",
+  "note": "抖音图文客片 batchI",
+  "tags": {
+   "light": [
+    "侧光"
+   ],
+   "scene": [
+    "室内窗边"
+   ],
+   "style": [
+    "松弛感"
+   ],
+   "mood": [
+    "慵懒"
+   ],
+   "posture": [
+    "坐"
+   ],
+   "shot": [
+    "全身"
+   ],
+   "angle": [
+    "平视"
+   ],
+   "comp": [
+    "竖构图"
+   ],
+   "prop": [
+    "枕头"
+   ]
+  },
+  "extra": [],
+  "tips": [
+   "窗光侧打"
+  ],
+  "difficulty": 1,
+  "subject": "单人女生",
+  "original_name": "i05_sofa_lying_indoor_01.jpg",
+  "added_at": "2026-11-05T02:56:06+08:00",
+  "shot": {
+   "焦段": "35mm"
+  }
+ },
+ {
+  "id": "x7dac62872299",
+  "type": "image",
+  "title": "趴抱枕近景",
+  "image": "imported/x7dac62872299.jpg",
+  "thumb": "imported/thumbs/x7dac62872299.jpg",
+  "w": 1200,
+  "h": 1600,
+  "source_url": "https://www.douyin.com/note/7701588684664323136",
+  "kouling": "趴在抱枕上，侧脸看镜头",
+  "note": "抖音图文客片 batchI",
+  "tags": {
+   "light": [
+    "侧光"
+   ],
+   "scene": [
+    "室内窗边"
+   ],
+   "style": [
+    "松弛感"
+   ],
+   "mood": [
+    "慵懒"
+   ],
+   "posture": [
+    "趴"
+   ],
+   "shot": [
+    "半身"
+   ],
+   "angle": [
+    "俯拍"
+   ],
+   "comp": [
+    "竖构图"
+   ],
+   "prop": [
+    "枕头"
+   ]
+  },
+  "extra": [],
+  "tips": [
+   "近距离俯拍"
+  ],
+  "difficulty": 1,
+  "subject": "单人女生",
+  "original_name": "i05_sofa_lying_indoor_02.jpg",
+  "added_at": "2026-11-05T02:56:06+08:00",
+  "shot": {
+   "焦段": "50mm"
+  }
+ },
+ {
+  "id": "xf4a0b21e5f88",
+  "type": "image",
+  "title": "沙发伸展仰躺",
+  "image": "imported/xf4a0b21e5f88.jpg",
+  "thumb": "imported/thumbs/xf4a0b21e5f88.jpg",
+  "w": 1200,
+  "h": 1600,
+  "source_url": "https://www.douyin.com/note/7701588684664323136",
+  "kouling": "仰躺沙发，身体舒展",
+  "note": "抖音图文客片 batchI",
+  "tags": {
+   "light": [
+    "侧光"
+   ],
+   "scene": [
+    "室内窗边"
+   ],
+   "style": [
+    "松弛感"
+   ],
+   "mood": [
+    "慵懒"
+   ],
+   "posture": [
+    "躺"
+   ],
+   "shot": [
+    "全身"
+   ],
+   "angle": [
+    "俯拍"
+   ],
+   "comp": [
+    "对角线"
+   ],
+   "prop": [
+    "枕头"
+   ]
+  },
+  "extra": [],
+  "tips": [
+   "站高俯拍全身"
+  ],
+  "difficulty": 2,
+  "subject": "单人女生",
+  "original_name": "i05_sofa_lying_indoor_03.jpg",
+  "added_at": "2026-11-05T02:56:06+08:00",
+  "shot": {
+   "焦段": "35mm"
+  }
+ },
+ {
+  "id": "xa7cf5ca2b56f",
+  "type": "image",
+  "title": "横趴沙发垂腿",
+  "image": "imported/xa7cf5ca2b56f.jpg",
+  "thumb": "imported/thumbs/xa7cf5ca2b56f.jpg",
+  "w": 1200,
+  "h": 1600,
+  "source_url": "https://www.douyin.com/note/7701588684664323136",
+  "kouling": "横趴沙发，双腿垂下",
+  "note": "抖音图文客片 batchI",
+  "tags": {
+   "light": [
+    "侧光"
+   ],
+   "scene": [
+    "室内窗边"
+   ],
+   "style": [
+    "松弛感"
+   ],
+   "mood": [
+    "慵懒"
+   ],
+   "posture": [
+    "趴"
+   ],
+   "shot": [
+    "全身"
+   ],
+   "angle": [
+    "俯拍"
+   ],
+   "comp": [
+    "对角线"
+   ]
+  },
+  "extra": [],
+  "tips": [
+   "俯拍带出沙发线条"
+  ],
+  "difficulty": 2,
+  "subject": "单人女生",
+  "original_name": "i05_sofa_lying_indoor_05.jpg",
+  "added_at": "2026-11-05T02:56:06+08:00",
+  "shot": {
+   "焦段": "35mm"
+  }
+ },
+ {
+  "id": "xcf99a5253089",
+  "type": "image",
+  "title": "趴沙发托腮近景",
+  "image": "imported/xcf99a5253089.jpg",
+  "thumb": "imported/thumbs/xcf99a5253089.jpg",
+  "w": 1200,
+  "h": 1600,
+  "source_url": "https://www.douyin.com/note/7701588684664323136",
+  "kouling": "趴沙发托腮看镜头",
+  "note": "抖音图文客片 batchI",
+  "tags": {
+   "light": [
+    "侧光"
+   ],
+   "scene": [
+    "室内窗边"
+   ],
+   "style": [
+    "松弛感"
+   ],
+   "mood": [
+    "温柔"
+   ],
+   "posture": [
+    "趴"
+   ],
+   "shot": [
+    "半身"
+   ],
+   "angle": [
+    "平视"
+   ],
+   "comp": [
+    "竖构图"
+   ]
+  },
+  "extra": [],
+  "tips": [
+   "近景窗光打脸"
+  ],
+  "difficulty": 1,
+  "subject": "单人女生",
+  "original_name": "i05_sofa_lying_indoor_06.jpg",
+  "added_at": "2026-11-05T02:56:06+08:00",
+  "shot": {
+   "焦段": "50mm"
+  }
+ },
+ {
+  "id": "x035e0a1f6c9a",
+  "type": "image",
+  "title": "趴沙发远景",
+  "image": "imported/x035e0a1f6c9a.jpg",
+  "thumb": "imported/thumbs/x035e0a1f6c9a.jpg",
+  "w": 1200,
+  "h": 1600,
+  "source_url": "https://www.douyin.com/note/7701588684664323136",
+  "kouling": "趴沙发上，侧脸看镜头",
+  "note": "抖音图文客片 batchI",
+  "tags": {
+   "light": [
+    "侧光"
+   ],
+   "scene": [
+    "室内窗边"
+   ],
+   "style": [
+    "松弛感"
+   ],
+   "mood": [
+    "慵懒"
+   ],
+   "posture": [
+    "趴"
+   ],
+   "shot": [
+    "全身"
+   ],
+   "angle": [
+    "俯拍"
+   ],
+   "comp": [
+    "留白"
+   ]
+  },
+  "extra": [],
+  "tips": [
+   "留出室内环境"
+  ],
+  "difficulty": 1,
+  "subject": "单人女生",
+  "original_name": "i05_sofa_lying_indoor_07.jpg",
+  "added_at": "2026-11-05T02:56:06+08:00",
+  "shot": {
+   "焦段": "35mm"
+  }
+ },
+ {
+  "id": "x9951b458ef82",
+  "type": "image",
+  "title": "超广角伸手抓镜头",
+  "image": "imported/x9951b458ef82.jpg",
+  "thumb": "imported/thumbs/x9951b458ef82.jpg",
+  "w": 1067,
+  "h": 1600,
+  "source_url": "https://www.douyin.com/note/7661942415808606949",
+  "kouling": "坐铁架上，手掌伸向镜头",
+  "note": "抖音图文客片 batchI",
+  "tags": {
+   "light": [
+    "顺光"
+   ],
+   "scene": [
+    "天台",
+    "街道"
+   ],
+   "style": [
+    "街头"
+   ],
+   "mood": [
+    "酷"
+   ],
+   "posture": [
+    "坐"
+   ],
+   "shot": [
+    "全身"
+   ],
+   "angle": [
+    "低机位"
+   ],
+   "comp": [
+    "前景虚化"
+   ],
+   "outfit": [
+    "长裤"
+   ]
+  },
+  "extra": [],
+  "tips": [
+   "超广角低机位，蓝天做背景"
+  ],
+  "difficulty": 2,
+  "subject": "单人女生",
+  "original_name": "i06_rooftop_fisheye_filmloveletter_01.jpg",
+  "added_at": "2026-11-05T02:56:06+08:00",
+  "shot": {
+   "焦段": "14mm"
+  }
+ },
+ {
+  "id": "xd2075a677793",
+  "type": "image",
+  "title": "持红包坐栏杆",
+  "image": "imported/xd2075a677793.jpg",
+  "thumb": "imported/thumbs/xd2075a677793.jpg",
+  "w": 806,
+  "h": 1600,
+  "source_url": "https://www.douyin.com/note/7661942415808606949",
+  "kouling": "坐栏杆旁，手提红包看镜头",
+  "note": "抖音图文客片 batchI",
+  "tags": {
+   "light": [
+    "顺光"
+   ],
+   "scene": [
+    "天台",
+    "栏杆",
+    "街道"
+   ],
+   "style": [
+    "街头"
+   ],
+   "mood": [
+    "酷"
+   ],
+   "posture": [
+    "坐"
+   ],
+   "shot": [
+    "七分身"
+   ],
+   "angle": [
+    "平视"
+   ],
+   "comp": [
+    "竖构图"
+   ],
+   "prop": [
+    "包"
+   ],
+   "outfit": [
+    "长裤"
+   ]
+  },
+  "extra": [],
+  "tips": [
+   "红包做色彩点缀"
+  ],
+  "difficulty": 1,
+  "subject": "单人女生",
+  "original_name": "i06_rooftop_fisheye_filmloveletter_02.jpg",
+  "added_at": "2026-11-05T02:56:06+08:00",
+  "shot": {
+   "焦段": "24mm"
+  }
+ },
+ {
+  "id": "xb4e2f06c0594",
+  "type": "image",
+  "title": "球鞋前景坐姿",
+  "image": "imported/xb4e2f06c0594.jpg",
+  "thumb": "imported/thumbs/xb4e2f06c0594.jpg",
+  "w": 968,
+  "h": 1600,
+  "source_url": "https://www.douyin.com/note/7661942415808606949",
+  "kouling": "坐着伸腿，球鞋靠近镜头",
+  "note": "抖音图文客片 batchI",
+  "tags": {
+   "light": [
+    "顺光"
+   ],
+   "scene": [
+    "天台",
+    "街道"
+   ],
+   "style": [
+    "街头"
+   ],
+   "mood": [
+    "松弛感"
+   ],
+   "posture": [
+    "坐"
+   ],
+   "shot": [
+    "全身"
+   ],
+   "angle": [
+    "低机位"
+   ],
+   "comp": [
+    "前景虚化"
+   ],
+   "outfit": [
+    "长裤"
+   ]
+  },
+  "extra": [],
+  "tips": [
+   "鞋子前景夸张透视"
+  ],
+  "difficulty": 2,
+  "subject": "单人女生",
+  "original_name": "i06_rooftop_fisheye_filmloveletter_03.jpg",
+  "added_at": "2026-11-05T02:56:06+08:00",
+  "shot": {
+   "焦段": "14mm"
+  }
+ },
+ {
+  "id": "x58bea55a4849",
+  "type": "image",
+  "title": "铁梯坐姿伸手",
+  "image": "imported/x58bea55a4849.jpg",
+  "thumb": "imported/thumbs/x58bea55a4849.jpg",
+  "w": 1067,
+  "h": 1600,
+  "source_url": "https://www.douyin.com/note/7661942415808606949",
+  "kouling": "坐铁梯上伸腿，一手伸出",
+  "note": "抖音图文客片 batchI",
+  "tags": {
+   "light": [
+    "顺光"
+   ],
+   "scene": [
+    "天台",
+    "楼梯",
+    "街道"
+   ],
+   "style": [
+    "街头"
+   ],
+   "mood": [
+    "俏皮"
+   ],
+   "posture": [
+    "坐"
+   ],
+   "shot": [
+    "全身"
+   ],
+   "angle": [
+    "低机位"
+   ],
+   "comp": [
+    "对角线"
+   ],
+   "outfit": [
+    "长裤"
+   ]
+  },
+  "extra": [],
+  "tips": [
+   "透视拉长腿部"
+  ],
+  "difficulty": 2,
+  "subject": "单人女生",
+  "original_name": "i06_rooftop_fisheye_filmloveletter_04.jpg",
+  "added_at": "2026-11-05T02:56:06+08:00",
+  "shot": {
+   "焦段": "14mm"
+  }
+ },
+ {
+  "id": "xe78405540524",
+  "type": "image",
+  "title": "铁梯坐姿抱包",
+  "image": "imported/xe78405540524.jpg",
+  "thumb": "imported/thumbs/xe78405540524.jpg",
+  "w": 1053,
+  "h": 1600,
+  "source_url": "https://www.douyin.com/note/7661942415808606949",
+  "kouling": "坐铁梯中间，双手抱红包",
+  "note": "抖音图文客片 batchI",
+  "tags": {
+   "light": [
+    "顺光"
+   ],
+   "scene": [
+    "天台",
+    "楼梯",
+    "街道"
+   ],
+   "style": [
+    "街头"
+   ],
+   "mood": [
+    "酷"
+   ],
+   "posture": [
+    "坐"
+   ],
+   "shot": [
+    "全身"
+   ],
+   "angle": [
+    "低机位"
+   ],
+   "comp": [
+    "中心构图"
+   ],
+   "prop": [
+    "包"
+   ],
+   "outfit": [
+    "长裤"
+   ]
+  },
+  "extra": [],
+  "tips": [
+   "楼梯做框架"
+  ],
+  "difficulty": 2,
+  "subject": "单人女生",
+  "original_name": "i06_rooftop_fisheye_filmloveletter_05.jpg",
+  "added_at": "2026-11-05T02:56:06+08:00",
+  "shot": {
+   "焦段": "14mm"
+  }
+ },
+ {
+  "id": "x2c1a88deaf63",
+  "type": "image",
+  "title": "涂鸦墙扶栏杆",
+  "image": "imported/x2c1a88deaf63.jpg",
+  "thumb": "imported/thumbs/x2c1a88deaf63.jpg",
+  "w": 1067,
+  "h": 1600,
+  "source_url": "https://www.douyin.com/note/7661942415808606949",
+  "kouling": "手扶锈栏杆站涂鸦墙边",
+  "note": "抖音图文客片 batchI",
+  "tags": {
+   "light": [
+    "顺光"
+   ],
+   "scene": [
+    "天台",
+    "墙面",
+    "街道"
+   ],
+   "style": [
+    "街头"
+   ],
+   "mood": [
+    "酷"
+   ],
+   "posture": [
+    "站"
+   ],
+   "shot": [
+    "七分身"
+   ],
+   "angle": [
+    "平视"
+   ],
+   "comp": [
+    "前景虚化"
+   ],
+   "prop": [
+    "包"
+   ],
+   "outfit": [
+    "长裤"
+   ]
+  },
+  "extra": [],
+  "tips": [
+   "栏杆做前景"
+  ],
+  "difficulty": 1,
+  "subject": "单人女生",
+  "original_name": "i06_rooftop_fisheye_filmloveletter_06.jpg",
+  "added_at": "2026-11-05T02:56:06+08:00",
+  "shot": {
+   "焦段": "24mm"
+  }
+ },
+ {
+  "id": "xa0d1a456b04f",
+  "type": "image",
+  "title": "躺靠伸腿仰拍",
+  "image": "imported/xa0d1a456b04f.jpg",
+  "thumb": "imported/thumbs/xa0d1a456b04f.jpg",
+  "w": 946,
+  "h": 1600,
+  "source_url": "https://www.douyin.com/note/7661942415808606949",
+  "kouling": "后仰靠坐，双腿伸向镜头",
+  "note": "抖音图文客片 batchI",
+  "tags": {
+   "light": [
+    "顺光"
+   ],
+   "scene": [
+    "天台",
+    "街道"
+   ],
+   "style": [
+    "街头"
+   ],
+   "mood": [
+    "松弛感"
+   ],
+   "posture": [
+    "坐"
+   ],
+   "shot": [
+    "全身"
+   ],
+   "angle": [
+    "低机位"
+   ],
+   "comp": [
+    "对角线"
+   ],
+   "outfit": [
+    "长裤"
+   ]
+  },
+  "extra": [],
+  "tips": [
+   "贴地超广角"
+  ],
+  "difficulty": 2,
+  "subject": "单人女生",
+  "original_name": "i06_rooftop_fisheye_filmloveletter_07.jpg",
+  "added_at": "2026-11-05T02:56:06+08:00",
+  "shot": {
+   "焦段": "14mm"
+  }
+ },
+ {
+  "id": "xffd9521b69d4",
+  "type": "image",
+  "title": "风吹发坐铁架",
+  "image": "imported/xffd9521b69d4.jpg",
+  "thumb": "imported/thumbs/xffd9521b69d4.jpg",
+  "w": 1067,
+  "h": 1600,
+  "source_url": "https://www.douyin.com/note/7661942415808606949",
+  "kouling": "坐铁架上，头发被风吹起",
+  "note": "抖音图文客片 batchI",
+  "tags": {
+   "light": [
+    "顺光"
+   ],
+   "scene": [
+    "天台",
+    "街道"
+   ],
+   "style": [
+    "街头"
+   ],
+   "mood": [
+    "酷"
+   ],
+   "posture": [
+    "坐"
+   ],
+   "shot": [
+    "全身"
+   ],
+   "angle": [
+    "低机位"
+   ],
+   "comp": [
+    "中心构图"
+   ],
+   "outfit": [
+    "长裤"
+   ]
+  },
+  "extra": [],
+  "tips": [
+   "蓝天与钢结构汇聚"
+  ],
+  "difficulty": 2,
+  "subject": "单人女生",
+  "original_name": "i06_rooftop_fisheye_filmloveletter_08.jpg",
+  "added_at": "2026-11-05T02:56:07+08:00",
+  "shot": {
+   "焦段": "14mm"
+  }
+ },
+ {
+  "id": "xf229597498ee",
+  "type": "image",
+  "title": "天台抱臂远眺",
+  "image": "imported/xf229597498ee.jpg",
+  "thumb": "imported/thumbs/xf229597498ee.jpg",
+  "w": 1067,
+  "h": 1600,
+  "source_url": "https://www.douyin.com/note/7645762418630577454",
+  "kouling": "抱臂站天台边，看镜头",
+  "note": "抖音图文客片 batchI",
+  "tags": {
+   "light": [
+    "阴天漫射"
+   ],
+   "scene": [
+    "天台"
+   ],
+   "style": [
+    "文艺"
+   ],
+   "mood": [
+    "安静"
+   ],
+   "posture": [
+    "站"
+   ],
+   "shot": [
+    "七分身"
+   ],
+   "angle": [
+    "平视"
+   ],
+   "comp": [
+    "竖构图"
+   ],
+   "outfit": [
+    "衬衫"
+   ]
+  },
+  "extra": [],
+  "tips": [
+   "阴天柔光，城市做背景"
+  ],
+  "difficulty": 1,
+  "subject": "单人女生",
+  "original_name": "i07_rooftop_cloudy_wangsen_01.jpg",
+  "added_at": "2026-11-05T02:56:07+08:00",
+  "shot": {
+   "焦段": "35mm"
+  }
+ },
+ {
+  "id": "x0f309e28e8f1",
+  "type": "image",
+  "title": "扶墙回头",
+  "image": "imported/x0f309e28e8f1.jpg",
+  "thumb": "imported/thumbs/x0f309e28e8f1.jpg",
+  "w": 1067,
+  "h": 1600,
+  "source_url": "https://www.douyin.com/note/7645762418630577454",
+  "kouling": "手扶矮墙，侧身回头",
+  "note": "抖音图文客片 batchI",
+  "tags": {
+   "light": [
+    "阴天漫射"
+   ],
+   "scene": [
+    "天台"
+   ],
+   "style": [
+    "文艺"
+   ],
+   "mood": [
+    "安静"
+   ],
+   "posture": [
+    "回头"
+   ],
+   "shot": [
+    "七分身"
+   ],
+   "angle": [
+    "侧拍"
+   ],
+   "comp": [
+    "引导线"
+   ],
+   "outfit": [
+    "衬衫"
+   ]
+  },
+  "extra": [],
+  "tips": [
+   "矮墙做引导线"
+  ],
+  "difficulty": 1,
+  "subject": "单人女生",
+  "original_name": "i07_rooftop_cloudy_wangsen_02.jpg",
+  "added_at": "2026-11-05T02:56:07+08:00",
+  "shot": {
+   "焦段": "50mm"
+  }
+ },
+ {
+  "id": "xada74ee6544c",
+  "type": "image",
+  "title": "坐矮墙仰头",
+  "image": "imported/xada74ee6544c.jpg",
+  "thumb": "imported/thumbs/xada74ee6544c.jpg",
+  "w": 1067,
+  "h": 1600,
+  "source_url": "https://www.douyin.com/note/7645762418630577454",
+  "kouling": "坐矮墙上仰头闭眼",
+  "note": "抖音图文客片 batchI",
+  "tags": {
+   "light": [
+    "阴天漫射"
+   ],
+   "scene": [
+    "天台"
+   ],
+   "style": [
+    "文艺"
+   ],
+   "mood": [
+    "安静"
+   ],
+   "posture": [
+    "坐"
+   ],
+   "shot": [
+    "半身"
+   ],
+   "angle": [
+    "侧拍"
+   ],
+   "comp": [
+    "竖构图"
+   ],
+   "outfit": [
+    "衬衫"
+   ]
+  },
+  "extra": [],
+  "tips": [
+   "侧面拍出下颌线"
+  ],
+  "difficulty": 1,
+  "subject": "单人女生",
+  "original_name": "i07_rooftop_cloudy_wangsen_03.jpg",
+  "added_at": "2026-11-05T02:56:07+08:00",
+  "shot": {
+   "焦段": "50mm"
+  }
+ },
+ {
+  "id": "x0d38c6e8ab8e",
+  "type": "image",
+  "title": "靠栏杆仰头",
+  "image": "imported/x0d38c6e8ab8e.jpg",
+  "thumb": "imported/thumbs/x0d38c6e8ab8e.jpg",
+  "w": 1067,
+  "h": 1600,
+  "source_url": "https://www.douyin.com/note/7645762418630577454",
+  "kouling": "背靠栏杆，仰头望天",
+  "note": "抖音图文客片 batchI",
+  "tags": {
+   "light": [
+    "阴天漫射"
+   ],
+   "scene": [
+    "天台",
+    "栏杆"
+   ],
+   "style": [
+    "文艺"
+   ],
+   "mood": [
+    "松弛感"
+   ],
+   "posture": [
+    "靠"
+   ],
+   "shot": [
+    "全身"
+   ],
+   "angle": [
+    "侧拍"
+   ],
+   "comp": [
+    "竖构图"
+   ],
+   "outfit": [
+    "衬衫"
+   ]
+  },
+  "extra": [],
+  "tips": [
+   "侧拍拉出身形"
+  ],
+  "difficulty": 1,
+  "subject": "单人女生",
+  "original_name": "i07_rooftop_cloudy_wangsen_04.jpg",
+  "added_at": "2026-11-05T02:56:07+08:00",
+  "shot": {
+   "焦段": "35mm"
+  }
+ },
+ {
+  "id": "x26ff276bd8c1",
+  "type": "image",
+  "title": "栏杆边侧身",
+  "image": "imported/x26ff276bd8c1.jpg",
+  "thumb": "imported/thumbs/x26ff276bd8c1.jpg",
+  "w": 1067,
+  "h": 1600,
+  "source_url": "https://www.douyin.com/note/7645762418630577454",
+  "kouling": "侧身倚栏杆看远处",
+  "note": "抖音图文客片 batchI",
+  "tags": {
+   "light": [
+    "阴天漫射"
+   ],
+   "scene": [
+    "天台",
+    "栏杆"
+   ],
+   "style": [
+    "文艺"
+   ],
+   "mood": [
+    "安静"
+   ],
+   "posture": [
+    "靠"
+   ],
+   "shot": [
+    "全身"
+   ],
+   "angle": [
+    "侧拍"
+   ],
+   "comp": [
+    "竖构图"
+   ],
+   "outfit": [
+    "衬衫"
+   ]
+  },
+  "extra": [],
+  "tips": [
+   "楼宇做背景"
+  ],
+  "difficulty": 1,
+  "subject": "单人女生",
+  "original_name": "i07_rooftop_cloudy_wangsen_05.jpg",
+  "added_at": "2026-11-05T02:56:07+08:00",
+  "shot": {
+   "焦段": "35mm"
+  }
+ },
+ {
+  "id": "x0a7263f4f0e9",
+  "type": "image",
+  "title": "坐墙沿双手交握",
+  "image": "imported/x0a7263f4f0e9.jpg",
+  "thumb": "imported/thumbs/x0a7263f4f0e9.jpg",
+  "w": 1067,
+  "h": 1600,
+  "source_url": "https://www.douyin.com/note/7645762418630577454",
+  "kouling": "坐墙沿双手交握看镜头",
+  "note": "抖音图文客片 batchI",
+  "tags": {
+   "light": [
+    "阴天漫射"
+   ],
+   "scene": [
+    "天台"
+   ],
+   "style": [
+    "文艺"
+   ],
+   "mood": [
+    "温柔"
+   ],
+   "posture": [
+    "坐"
+   ],
+   "shot": [
+    "七分身"
+   ],
+   "angle": [
+    "平视"
+   ],
+   "comp": [
+    "竖构图"
+   ],
+   "outfit": [
+    "衬衫"
+   ]
+  },
+  "extra": [],
+  "tips": [
+   "阴天天空留白"
+  ],
+  "difficulty": 1,
+  "subject": "单人女生",
+  "original_name": "i07_rooftop_cloudy_wangsen_06.jpg",
+  "added_at": "2026-11-05T02:56:07+08:00",
+  "shot": {
+   "焦段": "35mm"
+  }
+ },
+ {
+  "id": "x24b737771275",
+  "type": "image",
+  "title": "矮墙侧坐远景",
+  "image": "imported/x24b737771275.jpg",
+  "thumb": "imported/thumbs/x24b737771275.jpg",
+  "w": 1067,
+  "h": 1600,
+  "source_url": "https://www.douyin.com/note/7645762418630577454",
+  "kouling": "侧坐矮墙一端，望向远处",
+  "note": "抖音图文客片 batchI",
+  "tags": {
+   "light": [
+    "阴天漫射"
+   ],
+   "scene": [
+    "天台"
+   ],
+   "style": [
+    "文艺"
+   ],
+   "mood": [
+    "安静"
+   ],
+   "posture": [
+    "坐"
+   ],
+   "shot": [
+    "全身"
+   ],
+   "angle": [
+    "低机位"
+   ],
+   "comp": [
+    "留白"
+   ],
+   "outfit": [
+    "衬衫"
+   ]
+  },
+  "extra": [],
+  "tips": [
+   "大面积天空留白"
+  ],
+  "difficulty": 1,
+  "subject": "单人女生",
+  "original_name": "i07_rooftop_cloudy_wangsen_07.jpg",
+  "added_at": "2026-11-05T02:56:07+08:00",
+  "shot": {
+   "焦段": "35mm"
+  }
+ },
+ {
+  "id": "x2254a6f6074b",
+  "type": "image",
+  "title": "芒草丛闭眼侧脸",
+  "image": "imported/x2254a6f6074b.jpg",
+  "thumb": "imported/thumbs/x2254a6f6074b.jpg",
+  "w": 1600,
+  "h": 1067,
+  "source_url": "https://www.douyin.com/note/7700583713093497448",
+  "kouling": "站芒草丛中闭眼仰脸",
+  "note": "抖音图文客片 batchI",
+  "tags": {
+   "light": [
+    "顺光"
+   ],
+   "scene": [
+    "芦苇芒草"
+   ],
+   "style": [
+    "森系"
+   ],
+   "mood": [
+    "安静"
+   ],
+   "posture": [
+    "站"
+   ],
+   "shot": [
+    "半身"
+   ],
+   "angle": [
+    "侧拍"
+   ],
+   "comp": [
+    "前景虚化"
+   ],
+   "outfit": [
+    "外套"
+   ]
+  },
+  "extra": [],
+  "tips": [
+   "芒草前景虚化"
+  ],
+  "difficulty": 1,
+  "subject": "单人女生",
+  "original_name": "i09_reed_silvergrass_trench_01.jpg",
+  "added_at": "2026-11-05T02:56:07+08:00",
+  "shot": {
+   "焦段": "85mm"
+  }
+ },
+ {
+  "id": "xc85da6a821f7",
+  "type": "image",
+  "title": "芒草中抬手",
+  "image": "imported/xc85da6a821f7.jpg",
+  "thumb": "imported/thumbs/xc85da6a821f7.jpg",
+  "w": 1067,
+  "h": 1600,
+  "source_url": "https://www.douyin.com/note/7700583713093497448",
+  "kouling": "站芒草丛中，一手举过头",
+  "note": "抖音图文客片 batchI",
+  "tags": {
+   "light": [
+    "顺光"
+   ],
+   "scene": [
+    "芦苇芒草"
+   ],
+   "style": [
+    "森系"
+   ],
+   "mood": [
+    "温柔"
+   ],
+   "posture": [
+    "站"
+   ],
+   "shot": [
+    "全身"
+   ],
+   "angle": [
+    "平视"
+   ],
+   "comp": [
+    "竖构图"
+   ],
+   "outfit": [
+    "外套"
+   ]
+  },
+  "extra": [],
+  "tips": [
+   "带出全身与草丛"
+  ],
+  "difficulty": 1,
+  "subject": "单人女生",
+  "original_name": "i09_reed_silvergrass_trench_03.jpg",
+  "added_at": "2026-11-05T02:56:07+08:00",
+  "shot": {
+   "焦段": "50mm"
+  }
+ },
+ {
+  "id": "x5e327073beda",
+  "type": "image",
+  "title": "手持芒草仰望",
+  "image": "imported/x5e327073beda.jpg",
+  "thumb": "imported/thumbs/x5e327073beda.jpg",
+  "w": 1067,
+  "h": 1600,
+  "source_url": "https://www.douyin.com/note/7700583713093497448",
+  "kouling": "手握一枝芒草，仰脸看天",
+  "note": "抖音图文客片 batchI",
+  "tags": {
+   "light": [
+    "顺光"
+   ],
+   "scene": [
+    "芦苇芒草"
+   ],
+   "style": [
+    "森系"
+   ],
+   "mood": [
+    "安静"
+   ],
+   "posture": [
+    "站"
+   ],
+   "shot": [
+    "半身"
+   ],
+   "angle": [
+    "侧拍"
+   ],
+   "comp": [
+    "留白"
+   ],
+   "outfit": [
+    "外套"
+   ]
+  },
+  "extra": [],
+  "tips": [
+   "天空留白"
+  ],
+  "difficulty": 1,
+  "subject": "单人女生",
+  "original_name": "i09_reed_silvergrass_trench_04.jpg",
+  "added_at": "2026-11-05T02:56:07+08:00",
+  "shot": {
+   "焦段": "85mm"
+  }
+ },
+ {
+  "id": "x8e152171ef8f",
+  "type": "image",
+  "title": "芒草深处远景",
+  "image": "imported/x8e152171ef8f.jpg",
+  "thumb": "imported/thumbs/x8e152171ef8f.jpg",
+  "w": 1198,
+  "h": 1600,
+  "source_url": "https://www.douyin.com/note/7700583713093497448",
+  "kouling": "站芒草深处，低头",
+  "note": "抖音图文客片 batchI",
+  "tags": {
+   "light": [
+    "顺光"
+   ],
+   "scene": [
+    "芦苇芒草"
+   ],
+   "style": [
+    "森系"
+   ],
+   "mood": [
+    "安静"
+   ],
+   "posture": [
+    "站"
+   ],
+   "shot": [
+    "环境人像"
+   ],
+   "angle": [
+    "平视"
+   ],
+   "comp": [
+    "前景虚化"
+   ],
+   "outfit": [
+    "外套"
+   ]
+  },
+  "extra": [],
+  "tips": [
+   "人物居中，芒草环绕"
+  ],
+  "difficulty": 1,
+  "subject": "单人女生",
+  "original_name": "i09_reed_silvergrass_trench_05.jpg",
+  "added_at": "2026-11-05T02:56:07+08:00",
+  "shot": {
+   "焦段": "85mm"
+  }
+ },
+ {
+  "id": "x377a008bf350",
+  "type": "image",
+  "title": "风衣侧脸近景",
+  "image": "imported/x377a008bf350.jpg",
+  "thumb": "imported/thumbs/x377a008bf350.jpg",
+  "w": 1200,
+  "h": 1600,
+  "source_url": "https://www.douyin.com/note/7700583713093497448",
+  "kouling": "侧脸看向一侧",
+  "note": "抖音图文客片 batchI",
+  "tags": {
+   "light": [
+    "顺光"
+   ],
+   "scene": [
+    "芦苇芒草"
+   ],
+   "style": [
+    "森系"
+   ],
+   "mood": [
+    "安静"
+   ],
+   "posture": [
+    "站"
+   ],
+   "shot": [
+    "半身"
+   ],
+   "angle": [
+    "侧拍"
+   ],
+   "comp": [
+    "前景虚化"
+   ],
+   "outfit": [
+    "外套"
+   ]
+  },
+  "extra": [],
+  "tips": [
+   "芒草虚化做背景"
+  ],
+  "difficulty": 1,
+  "subject": "单人女生",
+  "original_name": "i09_reed_silvergrass_trench_06.jpg",
+  "added_at": "2026-11-05T02:56:07+08:00",
+  "shot": {
+   "焦段": "85mm"
+  }
+ },
+ {
+  "id": "x6ba542bf9a83",
+  "type": "image",
+  "title": "坐芒草丛抱膝",
+  "image": "imported/x6ba542bf9a83.jpg",
+  "thumb": "imported/thumbs/x6ba542bf9a83.jpg",
+  "w": 1201,
+  "h": 1600,
+  "source_url": "https://www.douyin.com/note/7700583713093497448",
+  "kouling": "坐草丛中，一手搭膝看镜头",
+  "note": "抖音图文客片 batchI",
+  "tags": {
+   "light": [
+    "顺光"
+   ],
+   "scene": [
+    "芦苇芒草"
+   ],
+   "style": [
+    "森系"
+   ],
+   "mood": [
+    "温柔"
+   ],
+   "posture": [
+    "坐"
+   ],
+   "shot": [
+    "全身"
+   ],
+   "angle": [
+    "平视"
+   ],
+   "comp": [
+    "前景虚化"
+   ],
+   "outfit": [
+    "外套"
+   ]
+  },
+  "extra": [],
+  "tips": [
+   "前景草虚化"
+  ],
+  "difficulty": 1,
+  "subject": "单人女生",
+  "original_name": "i09_reed_silvergrass_trench_07.jpg",
+  "added_at": "2026-11-05T02:56:07+08:00",
+  "shot": {
+   "焦段": "85mm"
+  }
+ },
+ {
+  "id": "x536b8c53b1ee",
+  "type": "image",
+  "title": "芒草中站立看镜头",
+  "image": "imported/x536b8c53b1ee.jpg",
+  "thumb": "imported/thumbs/x536b8c53b1ee.jpg",
+  "w": 1067,
+  "h": 1600,
+  "source_url": "https://www.douyin.com/note/7700583713093497448",
+  "kouling": "站芒草中双手自然垂放",
+  "note": "抖音图文客片 batchI",
+  "tags": {
+   "light": [
+    "顺光"
+   ],
+   "scene": [
+    "芦苇芒草"
+   ],
+   "style": [
+    "森系"
+   ],
+   "mood": [
+    "温柔"
+   ],
+   "posture": [
+    "站"
+   ],
+   "shot": [
+    "全身"
+   ],
+   "angle": [
+    "平视"
+   ],
+   "comp": [
+    "前景虚化"
+   ],
+   "outfit": [
+    "外套"
+   ]
+  },
+  "extra": [],
+  "tips": [
+   "大光圈前后虚化"
+  ],
+  "difficulty": 1,
+  "subject": "单人女生",
+  "original_name": "i09_reed_silvergrass_trench_08.jpg",
+  "added_at": "2026-11-05T02:56:07+08:00",
+  "shot": {
+   "焦段": "85mm"
+  }
+ },
+ {
+  "id": "x2b00713df8e1",
+  "type": "image",
+  "title": "抱花仰脸",
+  "image": "imported/x2b00713df8e1.jpg",
+  "thumb": "imported/thumbs/x2b00713df8e1.jpg",
+  "w": 1047,
+  "h": 1600,
+  "source_url": "https://www.douyin.com/note/7688636029838513381",
+  "kouling": "抱花与书，仰脸闭眼",
+  "note": "抖音图文客片 batchI",
+  "tags": {
+   "light": [
+    "柔光"
+   ],
+   "scene": [
+    "芦苇芒草"
+   ],
+   "style": [
+    "森系"
+   ],
+   "mood": [
+    "安静"
+   ],
+   "posture": [
+    "站"
+   ],
+   "shot": [
+    "七分身"
+   ],
+   "angle": [
+    "平视"
+   ],
+   "comp": [
+    "竖构图"
+   ],
+   "prop": [
+    "花束",
+    "书",
+    "帽子"
+   ],
+   "outfit": [
+    "长裙"
+   ]
+  },
+  "extra": [],
+  "tips": [
+   "蒲苇做背景"
+  ],
+  "difficulty": 1,
+  "subject": "单人女生",
+  "original_name": "i10_pampas_chair_wanbao_01.jpg",
+  "added_at": "2026-11-05T02:56:08+08:00",
+  "shot": {
+   "焦段": "50mm"
+  }
+ },
+ {
+  "id": "x0563a673eabc",
+  "type": "image",
+  "title": "背影蒲苇丛",
+  "image": "imported/x0563a673eabc.jpg",
+  "thumb": "imported/thumbs/x0563a673eabc.jpg",
+  "w": 1059,
+  "h": 1600,
+  "source_url": "https://www.douyin.com/note/7688636029838513381",
+  "kouling": "背身走入蒲苇丛",
+  "note": "抖音图文客片 batchI",
+  "tags": {
+   "light": [
+    "柔光"
+   ],
+   "scene": [
+    "芦苇芒草"
+   ],
+   "style": [
+    "森系"
+   ],
+   "mood": [
+    "安静"
+   ],
+   "posture": [
+    "站"
+   ],
+   "shot": [
+    "全身"
+   ],
+   "angle": [
+    "背影"
+   ],
+   "comp": [
+    "竖构图"
+   ],
+   "prop": [
+    "帽子"
+   ],
+   "outfit": [
+    "长裙"
+   ]
+  },
+  "extra": [],
+  "tips": [
+   "背影留出环境"
+  ],
+  "difficulty": 1,
+  "subject": "单人女生",
+  "original_name": "i10_pampas_chair_wanbao_02.jpg",
+  "added_at": "2026-11-05T02:56:08+08:00",
+  "shot": {
+   "焦段": "35mm"
+  }
+ },
+ {
+  "id": "xe634c47da7f9",
+  "type": "image",
+  "title": "折叠椅举草帽背影",
+  "image": "imported/xe634c47da7f9.jpg",
+  "thumb": "imported/thumbs/xe634c47da7f9.jpg",
+  "w": 1067,
+  "h": 1600,
+  "source_url": "https://www.douyin.com/note/7688636029838513381",
+  "kouling": "坐折叠椅上，背身高举草帽",
+  "note": "抖音图文客片 batchI",
+  "tags": {
+   "light": [
+    "柔光"
+   ],
+   "scene": [
+    "芦苇芒草"
+   ],
+   "style": [
+    "森系"
+   ],
+   "mood": [
+    "松弛感"
+   ],
+   "posture": [
+    "坐"
+   ],
+   "shot": [
+    "全身"
+   ],
+   "angle": [
+    "背影"
+   ],
+   "comp": [
+    "中心构图"
+   ],
+   "prop": [
+    "帽子",
+    "花束"
+   ],
+   "outfit": [
+    "长裙"
+   ]
+  },
+  "extra": [],
+  "tips": [
+   "背影+道具"
+  ],
+  "difficulty": 1,
+  "subject": "单人女生",
+  "original_name": "i10_pampas_chair_wanbao_03.jpg",
+  "added_at": "2026-11-05T02:56:08+08:00",
+  "shot": {
+   "焦段": "35mm"
+  }
+ },
+ {
+  "id": "xd273237f8228",
+  "type": "image",
+  "title": "蒲苇中奔跑",
+  "image": "imported/xd273237f8228.jpg",
+  "thumb": "imported/thumbs/xd273237f8228.jpg",
+  "w": 1053,
+  "h": 1600,
+  "source_url": "https://www.douyin.com/note/7688636029838513381",
+  "kouling": "抱花奔跑，裙摆飘起",
+  "note": "抖音图文客片 batchI",
+  "tags": {
+   "light": [
+    "柔光"
+   ],
+   "scene": [
+    "芦苇芒草"
+   ],
+   "style": [
+    "森系"
+   ],
+   "mood": [
+    "活泼"
+   ],
+   "posture": [
+    "走"
+   ],
+   "shot": [
+    "全身"
+   ],
+   "angle": [
+    "侧拍"
+   ],
+   "comp": [
+    "前景虚化"
+   ],
+   "prop": [
+    "帽子",
+    "花束"
+   ],
+   "outfit": [
+    "长裙"
+   ]
+  },
+  "extra": [],
+  "tips": [
+   "慢门或跟拍"
+  ],
+  "difficulty": 2,
+  "subject": "单人女生",
+  "original_name": "i10_pampas_chair_wanbao_04.jpg",
+  "added_at": "2026-11-05T02:56:08+08:00",
+  "shot": {
+   "焦段": "50mm"
+  }
+ },
+ {
+  "id": "xaacbc9632661",
+  "type": "image",
+  "title": "书遮脸",
+  "image": "imported/xaacbc9632661.jpg",
+  "thumb": "imported/thumbs/xaacbc9632661.jpg",
+  "w": 1050,
+  "h": 1600,
+  "source_url": "https://www.douyin.com/note/7688636029838513381",
+  "kouling": "书与花遮住脸，只露眼睛",
+  "note": "抖音图文客片 batchI",
+  "tags": {
+   "light": [
+    "柔光"
+   ],
+   "scene": [
+    "芦苇芒草"
+   ],
+   "style": [
+    "森系"
+   ],
+   "mood": [
+    "俏皮"
+   ],
+   "posture": [
+    "站"
+   ],
+   "shot": [
+    "半身"
+   ],
+   "angle": [
+    "平视"
+   ],
+   "comp": [
+    "中心构图"
+   ],
+   "prop": [
+    "花束",
+    "书"
+   ],
+   "outfit": [
+    "长裙"
+   ]
+  },
+  "extra": [],
+  "tips": [
+   "玩遮挡"
+  ],
+  "difficulty": 1,
+  "subject": "单人女生",
+  "original_name": "i10_pampas_chair_wanbao_05.jpg",
+  "added_at": "2026-11-05T02:56:08+08:00",
+  "shot": {
+   "焦段": "50mm"
+  }
+ },
+ {
+  "id": "x59fb370b7391",
+  "type": "image",
+  "title": "草帽遮脸坐椅",
+  "image": "imported/x59fb370b7391.jpg",
+  "thumb": "imported/thumbs/x59fb370b7391.jpg",
+  "w": 1038,
+  "h": 1600,
+  "source_url": "https://www.douyin.com/note/7688636029838513381",
+  "kouling": "坐折叠椅，草帽遮住半脸",
+  "note": "抖音图文客片 batchI",
+  "tags": {
+   "light": [
+    "柔光"
+   ],
+   "scene": [
+    "芦苇芒草"
+   ],
+   "style": [
+    "森系"
+   ],
+   "mood": [
+    "害羞"
+   ],
+   "posture": [
+    "坐"
+   ],
+   "shot": [
+    "全身"
+   ],
+   "angle": [
+    "平视"
+   ],
+   "comp": [
+    "竖构图"
+   ],
+   "prop": [
+    "帽子",
+    "花束"
+   ],
+   "outfit": [
+    "长裙"
+   ]
+  },
+  "extra": [],
+  "tips": [
+   "花束放脚边做前景"
+  ],
+  "difficulty": 1,
+  "subject": "单人女生",
+  "original_name": "i10_pampas_chair_wanbao_06.jpg",
+  "added_at": "2026-11-05T02:56:08+08:00",
+  "shot": {
+   "焦段": "50mm"
+  }
+ },
+ {
+  "id": "x296d36fb5cdf",
+  "type": "image",
+  "title": "坐椅侧望",
+  "image": "imported/x296d36fb5cdf.jpg",
+  "thumb": "imported/thumbs/x296d36fb5cdf.jpg",
+  "w": 1036,
+  "h": 1600,
+  "source_url": "https://www.douyin.com/note/7688636029838513381",
+  "kouling": "坐折叠椅侧身望远",
+  "note": "抖音图文客片 batchI",
+  "tags": {
+   "light": [
+    "柔光"
+   ],
+   "scene": [
+    "芦苇芒草"
+   ],
+   "style": [
+    "森系"
+   ],
+   "mood": [
+    "安静"
+   ],
+   "posture": [
+    "坐"
+   ],
+   "shot": [
+    "全身"
+   ],
+   "angle": [
+    "侧拍"
+   ],
+   "comp": [
+    "竖构图"
+   ],
+   "prop": [
+    "帽子",
+    "花束"
+   ],
+   "outfit": [
+    "长裙"
+   ]
+  },
+  "extra": [],
+  "tips": [
+   "蒲苇做背景"
+  ],
+  "difficulty": 1,
+  "subject": "单人女生",
+  "original_name": "i10_pampas_chair_wanbao_07.jpg",
+  "added_at": "2026-11-05T02:56:08+08:00",
+  "shot": {
+   "焦段": "50mm"
+  }
+ },
+ {
+  "id": "xc3feebe0cd6a",
+  "type": "image",
+  "title": "蹲坐蒲苇丛笑",
+  "image": "imported/xc3feebe0cd6a.jpg",
+  "thumb": "imported/thumbs/xc3feebe0cd6a.jpg",
+  "w": 1052,
+  "h": 1600,
+  "source_url": "https://www.douyin.com/note/7688636029838513381",
+  "kouling": "蹲坐草地看镜头笑",
+  "note": "抖音图文客片 batchI",
+  "tags": {
+   "light": [
+    "柔光"
+   ],
+   "scene": [
+    "芦苇芒草"
+   ],
+   "style": [
+    "森系"
+   ],
+   "mood": [
+    "开心"
+   ],
+   "posture": [
+    "蹲"
+   ],
+   "shot": [
+    "全身"
+   ],
+   "angle": [
+    "平视"
+   ],
+   "comp": [
+    "前景虚化"
+   ],
+   "prop": [
+    "帽子",
+    "花束"
+   ],
+   "outfit": [
+    "长裙"
+   ]
+  },
+  "extra": [],
+  "tips": [
+   "前景蒲苇虚化"
+  ],
+  "difficulty": 1,
+  "subject": "单人女生",
+  "original_name": "i10_pampas_chair_wanbao_08.jpg",
+  "added_at": "2026-11-05T02:56:08+08:00",
+  "shot": {
+   "焦段": "85mm"
+  }
+ },
+ {
+  "id": "x48ceacc6f71b",
+  "type": "image",
+  "title": "背布袋回头笑",
+  "image": "imported/x48ceacc6f71b.jpg",
+  "thumb": "imported/thumbs/x48ceacc6f71b.jpg",
+  "w": 1057,
+  "h": 1600,
+  "source_url": "https://www.douyin.com/note/7688636029838513381",
+  "kouling": "背帆布包侧身回头笑",
+  "note": "抖音图文客片 batchI",
+  "tags": {
+   "light": [
+    "柔光"
+   ],
+   "scene": [
+    "芦苇芒草"
+   ],
+   "style": [
+    "森系"
+   ],
+   "mood": [
+    "开心"
+   ],
+   "posture": [
+    "回头"
+   ],
+   "shot": [
+    "半身"
+   ],
+   "angle": [
+    "侧拍"
+   ],
+   "comp": [
+    "前景虚化"
+   ],
+   "prop": [
+    "帽子",
+    "包"
+   ],
+   "outfit": [
+    "长裙"
+   ]
+  },
+  "extra": [],
+  "tips": [
+   "蒲苇做前景"
+  ],
+  "difficulty": 1,
+  "subject": "单人女生",
+  "original_name": "i10_pampas_chair_wanbao_09.jpg",
+  "added_at": "2026-11-05T02:56:08+08:00",
+  "shot": {
+   "焦段": "85mm"
+  }
+ },
+ {
+  "id": "xcd3fb9603a16",
+  "type": "image",
+  "title": "折叠椅举花背影",
+  "image": "imported/xcd3fb9603a16.jpg",
+  "thumb": "imported/thumbs/xcd3fb9603a16.jpg",
+  "w": 1053,
+  "h": 1600,
+  "source_url": "https://www.douyin.com/note/7688636029838513381",
+  "kouling": "坐折叠椅背身举花",
+  "note": "抖音图文客片 batchI",
+  "tags": {
+   "light": [
+    "柔光"
+   ],
+   "scene": [
+    "芦苇芒草"
+   ],
+   "style": [
+    "森系"
+   ],
+   "mood": [
+    "松弛感"
+   ],
+   "posture": [
+    "坐"
+   ],
+   "shot": [
+    "全身"
+   ],
+   "angle": [
+    "背影"
+   ],
+   "comp": [
+    "中心构图"
+   ],
+   "prop": [
+    "帽子",
+    "花束"
+   ],
+   "outfit": [
+    "长裙"
+   ]
+  },
+  "extra": [],
+  "tips": [
+   "背影居中"
+  ],
+  "difficulty": 1,
+  "subject": "单人女生",
+  "original_name": "i10_pampas_chair_wanbao_10.jpg",
+  "added_at": "2026-11-05T02:56:08+08:00",
+  "shot": {
+   "焦段": "35mm"
   }
  }
 ]
