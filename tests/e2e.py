@@ -179,7 +179,7 @@ with sync_playwright() as pw:
           and page.evaluate("getComputedStyle(document.querySelector('#viewer')).backgroundColor") == "rgb(0, 0, 0)" and page.locator("#card").is_hidden(), str(box))
     check("viewer: shows only the image, no caption/text by default", page.locator("#viewer").inner_text().strip() == "" and page.locator("#vw-bar").is_hidden() and page.locator("#viewer .vimg:visible").count() >= 1,
           repr(page.locator("#viewer").inner_text()))
-    check("viewer: starts at the tapped photo (1/606) and swaps thumb -> full image", vid() == ui_ids[0] and page.evaluate("document.querySelector('#viewer').dataset.index") == "0"
+    check("viewer: starts at the tapped photo (1/682) and swaps thumb -> full image", vid() == ui_ids[0] and page.evaluate("document.querySelector('#viewer').dataset.index") == "0"
           and page.wait_for_function("document.querySelectorAll('#viewer .vpane')[1].querySelector('img').getAttribute('src').indexOf('thumbs')<0", timeout=8000) is not None)
     page.keyboard.press("ArrowRight"); page.wait_for_timeout(600)
     check("viewer: arrow key -> next photo in the same (grid) order", vid() == ui_ids[1], vid())
@@ -392,7 +392,7 @@ with sync_playwright() as pw:
     check("offline thumbnail download", "已保存" in page.locator("#offline-st").inner_text(), page.locator("#offline-st").inner_text())
     check("about line shows photos / custom / sequences, no 示意图", "示意图" not in page.locator("#about").inner_text() and f"照片 {photos}" in page.locator("#about").inner_text(), page.locator("#about").inner_text()[:60])
     sw_keys = page.evaluate("caches.keys()")
-    check("service worker cache is v4.0.0 and old shell caches are gone", "ps-shell-v4.0.0" in sw_keys and not [k for k in sw_keys if k.startswith("ps-shell-") and k != "ps-shell-v4.0.0"], str(sw_keys))
+    check("service worker cache is v4.1.0 and old shell caches are gone", "ps-shell-v4.1.0" in sw_keys and not [k for k in sw_keys if k.startswith("ps-shell-") and k != "ps-shell-v4.1.0"], str(sw_keys))
     # viewer again, online and SW-controlled, so full images flow through the service worker
     page.locator("#tabs button[data-v=lib]").click(); page.evaluate("window.scrollTo(0,0)"); page.wait_for_timeout(300)
     page.locator(".pc .art").first.click(); page.wait_for_selector("#viewer:not([hidden])")
@@ -407,8 +407,8 @@ with sync_playwright() as pw:
     core = _re.search(r"const CORE = \[(.*?)\]", swsrc, _re.S).group(1)
     caps = {k: int(v) for k, v in _re.findall(r"const (MAX_\w+) = (\d+)", swsrc)}
     check("sw.js: imported.json not precached; thumbs cap > photo count; full cap is an LRU limit; trim is awaited", "imported.json" not in core and caps.get("MAX_THUMBS", 0) >= photos * 2 and 0 < caps.get("MAX_FULL", 0) < photos
-          and "trim(c, max)" in swsrc and "e.waitUntil" in swsrc and "VERSION = \"v4.0.0\"" in swsrc, str(caps))
-    shell_keys = page.evaluate("caches.open('ps-shell-v4.0.0').then(c => c.keys()).then(ks => ks.map(r => new URL(r.url).pathname))")
+          and "trim(c, max)" in swsrc and "e.waitUntil" in swsrc and "VERSION = \"v4.1.0\"" in swsrc, str(caps))
+    shell_keys = page.evaluate("caches.open('ps-shell-v4.1.0').then(c => c.keys()).then(ks => ks.map(r => new URL(r.url).pathname))")
     check("data/imported.json is still cached (network-first fallback) for offline use", any(u.endswith("data/imported.json") for u in shell_keys), str(len(shell_keys)))
     errs = [e for e in errors]
     check("zero console errors / page errors / failed requests", not errs, "; ".join(errs[:5]))
