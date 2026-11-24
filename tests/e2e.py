@@ -179,7 +179,7 @@ with sync_playwright() as pw:
           and page.evaluate("getComputedStyle(document.querySelector('#viewer')).backgroundColor") == "rgb(0, 0, 0)" and page.locator("#card").is_hidden(), str(box))
     check("viewer: shows only the image, no caption/text by default", page.locator("#viewer").inner_text().strip() == "" and page.locator("#vw-bar").is_hidden() and page.locator("#viewer .vimg:visible").count() >= 1,
           repr(page.locator("#viewer").inner_text()))
-    check("viewer: starts at the tapped photo (1/839) and swaps thumb -> full image", vid() == ui_ids[0] and page.evaluate("document.querySelector('#viewer').dataset.index") == "0"
+    check("viewer: starts at the tapped photo (1/894) and swaps thumb -> full image", vid() == ui_ids[0] and page.evaluate("document.querySelector('#viewer').dataset.index") == "0"
           and page.wait_for_function("document.querySelectorAll('#viewer .vpane')[1].querySelector('img').getAttribute('src').indexOf('thumbs')<0", timeout=8000) is not None)
     page.keyboard.press("ArrowRight"); page.wait_for_timeout(600)
     check("viewer: arrow key -> next photo in the same (grid) order", vid() == ui_ids[1], vid())
